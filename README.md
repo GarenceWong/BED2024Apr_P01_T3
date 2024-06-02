@@ -1,2 +1,2 @@
-# Zehao Healthcare
+# ZehaoHealthcare
 Assignment
