@@ -113,10 +113,10 @@ body {
 
 .booknow {
     position: absolute;
-    top: 200px; /* Adjust the vertical position from the bottom */
-    left: 9.6%; /* Center horizontally */
-    transform: translateX(-50%); /* Center horizontally */
-    z-index: 2; /* Ensure button appears above the image */
+    top: 200px;
+    left: 9.6%;
+    transform: translateX(-50%);
+    z-index: 2;
 }
 
 .booknow img{
@@ -139,3 +139,39 @@ body {
     font-weight: bold;
 }
 
+.rectangles-section {
+    display: flex;
+    justify-content: center;
+    gap: 50px;
+    padding: 0px 10px;
+    background-color: #ffffff;
+}
+
+.rectangle {
+    background-color: #E3CDE2;
+    color: #333333;
+    padding: 20px 40px;
+    border-radius: 20px;
+    width: 300px;
+    height: 400px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    text-decoration: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.rectangle-icon {
+    margin-bottom: 20px;
+    margin-top: 20px;
+}
+
+.rectangle a{
+    font-size: 24px;
+    text-align: center;
+    text-decoration: none;
+    margin-top: 120px;
+    justify-content: center;
+}
