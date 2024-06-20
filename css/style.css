@@ -216,11 +216,12 @@ body {
     color: white;
 }
 
-/* Login Page //////////////////////////////////////////////////////// */
+/* Login Page */
 .login-container {
     display: flex;
     height: calc(100vh - 71px);
     overflow: hidden;
+    background-color: #EEEEEE;
 }
 
 .poster-container {
@@ -245,7 +246,7 @@ body {
 
 .login-box {
     max-width: 400px;
-    padding: 30px 60px;
+    padding: 10px 70px;
     background-color: #E3CDE2;
     border-radius: 20px;
     text-align: center;
@@ -256,21 +257,24 @@ body {
     font-size: 20px;
 }
 
-.login-box h3 {
+.login-box h1 {
     margin: 10px 0;
     font-size: 36px;
 }
 
 .login-box .button {
-    width: 50%;
-    margin: 10px 0;
-    padding: 10px 20px;
+    display: block;
+    width: 40%;
+    margin: 20px auto;
+    padding: 10px 30px;
     border: none;
     background-color: #EEEEEE;
     color: #333333;
     cursor: pointer;
     border-radius: 20px;
     font-size: 36px;
+    text-decoration: none;
+    text-align: center;
 }
 
 .login-box .button:hover {
