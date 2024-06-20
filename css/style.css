@@ -11,7 +11,7 @@ body {
     padding: 0;
     box-sizing: border-box;
 }
-
+/* Landing Page */
 .header {
     display: flex;
     align-items: center;
@@ -19,6 +19,7 @@ body {
     padding: 10px 20px;
     background-color: #EEEEEE;
     border-bottom: 6px solid #E3CDE2;
+    height: 45px;
 }
 
 .logo-container {
@@ -131,6 +132,7 @@ body {
     margin: 0 auto;
     padding-left: 150px;
     padding-right: 150px;
+    padding-bottom: 100px;
 }
 
 .services-container p{
@@ -168,10 +170,110 @@ body {
     margin-top: 20px;
 }
 
-.rectangle a{
-    font-size: 24px;
+.rectangles-section a {
+    display: block;
+    text-decoration: none;
+}
+
+.rectangle span{
+    font-size: 36px;
     text-align: center;
     text-decoration: none;
-    margin-top: 120px;
+    margin-top: 50px;
     justify-content: center;
+    font-weight: bold;
+}
+
+.rectangle b{
+    font-size: 20px;
+    text-align: center;
+    text-decoration: none;
+    margin-top: 50px;
+    justify-content: center;
+}
+
+.footer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #333333;
+    height: 50px;
+    width: 100%;
+    padding: 10px;
+    box-sizing: border-box; 
+}
+
+.footer .footer-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    text-align: center;
+}
+
+.footer .footer-container p {
+    margin: 0;
+    color: white;
+}
+
+/* Login Page //////////////////////////////////////////////////////// */
+.login-container {
+    display: flex;
+    height: calc(100vh - 71px);
+    overflow: hidden;
+}
+
+.poster-container {
+    display: flex;
+    justify-content: left;
+    align-items: left;
+    padding-right: 20px;
+}
+
+.poster {
+    max-height: 100vh;
+    width: auto;
+}
+
+.login-box-container {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-left: 350px;
+}
+
+.login-box {
+    max-width: 400px;
+    padding: 30px 60px;
+    background-color: #E3CDE2;
+    border-radius: 20px;
+    text-align: center;
+    margin: 0 auto; 
+}
+
+.login-box h2{
+    font-size: 20px;
+}
+
+.login-box h3 {
+    margin: 10px 0;
+    font-size: 36px;
+}
+
+.login-box .button {
+    width: 50%;
+    margin: 10px 0;
+    padding: 10px 20px;
+    border: none;
+    background-color: #EEEEEE;
+    color: #333333;
+    cursor: pointer;
+    border-radius: 20px;
+    font-size: 36px;
+}
+
+.login-box .button:hover {
+    background-color: #8E699C;
+    color: #EEEEEE;
 }
