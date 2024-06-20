@@ -241,10 +241,12 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    padding-left: 350px;
+    padding-left: 290px;
 }
 
 .login-box {
+    width: 400px;
+    height: 300px;
     max-width: 400px;
     padding: 10px 70px;
     background-color: #E3CDE2;
@@ -253,7 +255,7 @@ body {
     margin: 0 auto; 
 }
 
-.login-box h2{
+.login-box h3{
     font-size: 20px;
 }
 
@@ -280,4 +282,38 @@ body {
 .login-box .button:hover {
     background-color: #8E699C;
     color: #EEEEEE;
+}
+
+.login-box input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+
+  .login-box .userlogin-button {
+    display: block;
+    width: 20%;
+    padding: 10px;
+    background-color: #8E699C;
+    color: #fff;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    margin: 10px auto;
+    text-align: center; 
+  }
+  
+  .login-box a {
+    display: block;
+    text-align: center;
+    color: #0066FF;
+    text-decoration: none;
+    padding-top: 10px; 
+  }
+
+  .login-box h2 {
+    margin: 20px 0;
+    font-size: 36px;
 }
