@@ -246,7 +246,6 @@ body {
 
 .login-box {
     width: 400px;
-    height: 300px;
     max-width: 400px;
     padding: 10px 70px;
     background-color: #E3CDE2;
@@ -317,3 +316,16 @@ body {
     margin: 20px 0;
     font-size: 36px;
 }
+
+.login-box .usersignup-button {
+    display: block;
+    width: 20%;
+    padding: 10px;
+    background-color: #8E699C;
+    color: #fff;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    margin: 10px auto;
+    text-align: center; 
+  }
