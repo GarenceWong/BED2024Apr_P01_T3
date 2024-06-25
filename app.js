@@ -1,22 +1,38 @@
-const express = require('express');
-const bodyParser = require("body-parser");
+const express = require("express");
+const sql = require("mssql");
+const dbConfig = require("./dbConfig");
+const { signup, login } = require("./controllers/usersController");
+
 const app = express();
+const port = process.env.PORT || 3003;
 
-app.use(express.json())
+// Middleware to parse JSON bodies
+app.use(express.json());
 
-const users = []
+// Signup route
+app.post("/signup", signup);
 
-app.get('/users', (req, res) => {
-    res.json(users)
-})
+// Login route (to be implemented in usersController.js)
+app.post("/login", login);
 
-app.post('/users', (req, res) => {
-    const user = { name: req.body.name, password: req.body.password }
-    users.push(user)
-    res.status(201).send()
-})
+// Start the server
+app.listen(port, async () => {
+  try {
+    await sql.connect(dbConfig);
+    console.log("Database connection established successfully");
+  } catch (err) {
+    console.error("Database connection error:", err);
+    process.exit(1);
+  }
 
-app.listen(3000)
+  console.log(`Server listening on port ${port}`);
+});
 
+// Gracefully shut down
+process.on("SIGINT", async () => {
+  console.log("Server is gracefully shutting down");
+  await sql.close();
+  console.log("Database connection closed");
+  process.exit(0);
+});
 
-//appjs call controller call model//
