@@ -1,6 +1,6 @@
 module.exports = {
-    user: "username",
-    password: "password",
+    user: "healthcare-api",
+    password: "123",
     server: "localhost",
     database: "healthcare_db",
     trustServerCertificate: true,

@@ -17,3 +17,6 @@ app.post('/users', (req, res) => {
 })
 
 app.listen(3000)
+
+
+//appjs call controller call model//
