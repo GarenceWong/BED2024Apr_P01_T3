@@ -2,6 +2,7 @@ const express = require("express");
 const sql = require("mssql");
 const dbConfig = require("./dbConfig");
 const { signup, login } = require("./controllers/usersController");
+const { doctorLogin } = require("./controllers/doctorlogincontroller"); // Import doctorLogin function from doctorController
 
 const app = express();
 const port = process.env.PORT || 3003;
@@ -9,11 +10,10 @@ const port = process.env.PORT || 3003;
 // Middleware to parse JSON bodies
 app.use(express.json());
 
-// Signup route
-app.post("/signup", signup);
-
-// Login route (to be implemented in usersController.js)
-app.post("/login", login);
+// Routes
+app.post("/signup", signup); // User signup route
+app.post("/login", login); // User login route
+app.post("/doctor/login", doctorLogin); // Doctor login route
 
 // Start the server
 app.listen(port, async () => {
@@ -35,4 +35,3 @@ process.on("SIGINT", async () => {
   console.log("Database connection closed");
   process.exit(0);
 });
-
