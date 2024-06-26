@@ -20,15 +20,15 @@ class User {
         VALUES (@username, @email, @password, @number);
       `;
 
-      const request = pool.request();
+      const request = connection.request();
       request.input("username", sql.VarChar, username);
-      request.input("email", sql.VarChar, email);
+      request.input("email", sql.VarChar, email );
       request.input("password", sql.VarChar, password);
       request.input("number", sql.VarChar, number);
 
       const result = await request.query(sqlQuery);
 
-      sql.close();
+      connection.close();
       
       return new User(
         result.recordset[0].id,

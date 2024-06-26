@@ -33,11 +33,9 @@
             <h2>User</h2>
             <input type="text" id="username" placeholder="Full Name">
             <input type="password" id="password" placeholder="Password">
-            <input type="text" id="phonenumber" placeholder="Phone Number">
+            <input type="text" id="number" placeholder="Phone Number">
             <input type="email" id="email" placeholder="Email Address">
             <button type="button" onclick="submitFormData()" class="usersignup-button">Sign Up</button>
-
-
         </div>
     </div>
 </div>
@@ -45,7 +43,7 @@
     function submitFormData() {
     const username = document.getElementById('username').value;
     const password = document.getElementById('password').value;
-    const number = document.getElementById('phonenumber').value;
+    const number = document.getElementById('number').value;
     const email = document.getElementById('email').value;
 
     fetch('http://localhost:3003/signup', {
@@ -59,7 +57,7 @@
     .then(data => {
         console.log('Signup successful:', data);
         alert('Signup successful!');
-        window.location.href = '../html/landingpage.html'; // Redirect after successful signup
+        window.location.href = '../html/landingpage.html';
     })
     .catch(error => {
         console.error('Error signing up:', error);
