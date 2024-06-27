@@ -1,21 +1,20 @@
 const express = require("express");
+const cors = require("cors");
 const sql = require("mssql");
 const dbConfig = require("./dbConfig");
 const { signup, login } = require("./controllers/usersController");
-const { doctorLogin } = require("./controllers/doctorlogincontroller"); // Import doctorLogin function from doctorController
-
+const { doctorLogin } = require("./controllers/doctorlogincontroller");
+ 
 const app = express();
 const port = process.env.PORT || 3003;
-
-// Middleware to parse JSON bodies
+ 
+app.use(cors());
 app.use(express.json());
-
-// Routes
-app.post("/signup", signup); // User signup route
-app.post("/login", login); // User login route
-app.post("/doctor/login", doctorLogin); // Doctor login route
-
-// Start the server
+ 
+app.post("/signup", signup);
+app.post("/login", login);
+app.post("/doctor/login", doctorLogin);
+ 
 app.listen(port, async () => {
   try {
     await sql.connect(dbConfig);
@@ -24,11 +23,10 @@ app.listen(port, async () => {
     console.error("Database connection error:", err);
     process.exit(1);
   }
-
+ 
   console.log(`Server listening on port ${port}`);
 });
-
-// Gracefully shut down
+ 
 process.on("SIGINT", async () => {
   console.log("Server is gracefully shutting down");
   await sql.close();

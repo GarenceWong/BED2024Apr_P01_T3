@@ -6,28 +6,25 @@
     <link rel="stylesheet" href="../css/style.css">
     <title>ZehaoHealthcare</title>
 </head>
-<style>
-
-</style>
-
+ 
 <body>
     <header class="header">
         <div class="logo-container">
             <img src="../Images/Logo.png" alt="Logo" class="logo"/>
             <a href="../index.html" class="company-name">Zehao Healthcare</a>
         </div>
-    
+   
         <nav class="navbar">
             <a href="../html/aboutus.html">About Us</a>
             <a href="../html/contactus.html">Contact Us</a>
             <a href="../html/login.html" class="login-button">Login</a>
         </nav>
     </header>
-
+ 
     <div class="login-container">
         <div class="poster-container">
         <img src="../Images/Poster.jpg" alt="poster" class="poster"/>
-
+ 
         <div class="login-box-container">
         <div class="login-box">
             <h2>User</h2>
@@ -39,32 +36,42 @@
         </div>
     </div>
 </div>
+ 
 <script>
     function submitFormData() {
-    const username = document.getElementById('username').value;
-    const password = document.getElementById('password').value;
-    const number = document.getElementById('number').value;
-    const email = document.getElementById('email').value;
-
-    fetch('http://localhost:3003/signup', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ username, password, number, email })
-    })
-    .then(response => response.json())
-    .then(data => {
-        console.log('Signup successful:', data);
-        alert('Signup successful!');
-        window.location.href = '../html/userlogin.html';
-    })
-    .catch(error => {
-        console.error('Error signing up:', error);
-        alert('Signup failed. Please try again.');
-    });
-}
-</script>
-
+        const username = document.getElementById('username').value;
+        const password = document.getElementById('password').value;
+        const number = document.getElementById('number').value;
+        const email = document.getElementById('email').value;
+   
+        // Log the form data to verify it's being gathered correctly
+        console.log("Form Data:", { username, password, number, email });
+   
+        fetch('http://localhost:3003/signup', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ username, password, number, email })
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Signup failed');
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log('Signup successful:', data);
+            alert('Signup successful!');
+            window.location.href = '../html/userlogin.html';
+        })
+        .catch(error => {
+            console.error('Error signing up:', error);
+            alert('Signup failed. Please try again.');
+        });
+    }
+    </script>
+   
+ 
 </body>
 </html>
