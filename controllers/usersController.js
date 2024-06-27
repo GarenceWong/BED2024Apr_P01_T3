@@ -1,7 +1,7 @@
 // usersController.js
 const sql = require("mssql");
 const bcrypt = require("bcrypt");
-const dbConfig = require("../../dbconfig")
+const dbConfig = require("../dbConfig")
 const User = require("../models/user");
 
 async function signup(req, res, next) {
