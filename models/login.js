@@ -1,48 +1,48 @@
 const sql = require("mssql");
 const dbConfig = require("../dbConfig");
+const bcrypt = require("bcrypt");
 
 class Login {
-  constructor(id, userId, loginTime) {
-    this.id = id;
-    this.userId = userId;
-    this.loginTime = loginTime;
+  constructor(email, password) {
+    this.email = email;
+    this.password = password;
   }
 
-  static async createLogin(userId) {
-    const connection = await sql.connect(dbConfig);
+  static async getUserByEmail(email) {
+    try {
+      const connection = await sql.connect(dbConfig);
+      const sqlQuery = `SELECT * FROM Users WHERE email = @Email`;
+      
+      const request = connection.request();
+      request.input("Email", sql.VarChar, email);
+      const result = await request.query(sqlQuery);
+      connection.close();
 
-    const sqlQuery = `
-      INSERT INTO Logins (userId)
-      OUTPUT INSERTED.id, INSERTED.userId, INSERTED.loginTime
-      VALUES (@userId)
-    `;
-
-    const request = connection.request();
-    request.input("userId", sql.Int, userId);
-    const result = await request.query(sqlQuery);
-
-    connection.close();
-
-    return new Login(
-      result.recordset[0].id,
-      result.recordset[0].userId,
-      result.recordset[0].loginTime
-    );
+      if (result.recordset.length > 0) {
+        const user = result.recordset[0];
+        return new Login(user.email, user.password);
+      }
+      return null;
+    } catch (err) {
+      console.error("Error fetching user by email:", err);
+      throw err;
+    }
   }
 
-  static async getLoginsByUserId(userId) {
-    const connection = await sql.connect(dbConfig);
-
-    const sqlQuery = `SELECT * FROM Logins WHERE userId = @userId`;
-
-    const request = connection.request();
-    request.input("userId", sql.Int, userId);
-    const result = await request.query(sqlQuery);
-
-    connection.close();
-
-    return result.recordset.map(row => new Login(row.id, row.userId, row.loginTime));
+  async validatePassword(password) {
+    try {
+      return await bcrypt.compare(password, this.password);
+    } catch (err) {
+      console.error("Error validating password:", err);
+      throw err;
+    }
   }
 }
 
 module.exports = Login;
+
+
+
+
+
+

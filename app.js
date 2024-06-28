@@ -2,8 +2,9 @@ const express = require("express");
 const cors = require("cors");
 const sql = require("mssql");
 const dbConfig = require("./dbConfig");
-const { signup, login } = require("./controllers/usersController");
+const { signup } = require("./controllers/usersController");
 const { doctorLogin } = require("./controllers/doctorlogincontroller");
+const { login } = require('./controllers/loginController');
  
 const app = express();
 const port = process.env.PORT || 3003;
