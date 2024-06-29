@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../css/style.css">
     <title>ZehaoHealthcare</title>
+    <script src="../javascript/adminscript.js"></script>
 </head>
 <style>
     body {
@@ -15,10 +17,10 @@
 <body>
     <header class="header">
         <div class="logo-container">
-            <img src="../Images/Logo.png" alt="Logo" class="logo"/>
+            <img src="../Images/Logo.png" alt="Logo" class="logo" />
             <a href="../index.html" class="company-name">Zehao Healthcare</a>
         </div>
-    
+
         <nav class="navbar">
             <a href="../html/aboutus.html">About Us</a>
             <a href="../html/contactus.html">Contact Us</a>
@@ -28,19 +30,20 @@
 
     <div class="login-container">
         <div class="poster-container">
-        <img src="../Images/Poster.jpg" alt="poster" class="poster"/>
+            <img src="../Images/Poster.jpg" alt="poster" class="poster" />
 
-        <div class="login-box-container">
-        <div class="login-box">
-            <h2>Admin</h2>
-            <input type="email" placeholder="Email">
-            <input type="password" placeholder="Password">
-            <a href="../html/userpage.html" class="userlogin-button">Login</a>
-
+            <div class="login-box-container">
+                <div class="login-box">
+                    <h2>Admin</h2>
+                    <input type="email" id="email" placeholder="Email">
+                    <input type="password" id="password" placeholder="Password">
+                    <button onclick="login()">Login</button>
+                    <p id="error-message" style="color:red;"></p>
+                </div>
+            </div>
         </div>
     </div>
-</div>
-
 
 </body>
+
 </html>

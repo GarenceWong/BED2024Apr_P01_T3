@@ -5,6 +5,7 @@ const dbConfig = require("./dbConfig");
 const { signup } = require("./controllers/usersController");
 const { doctorLogin } = require("./controllers/doctorlogincontroller");
 const { login } = require('./controllers/loginController');
+const { adminLogin } = require('./controllers/admincontroller');
  
 const app = express();
 const port = process.env.PORT || 3003;
@@ -15,6 +16,7 @@ app.use(express.json());
 app.post("/signup", signup);
 app.post("/login", login);
 app.post("/doctor/login", doctorLogin);
+app.post("/admin/login", adminLogin);
  
 app.listen(port, async () => {
   try {

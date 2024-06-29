@@ -11,7 +11,7 @@ class Admin {
     static async getAdminByEmail(email) {
         try {
             const connection = await sql.connect(dbConfig);
-            const sqlQuery = `SELECT * FROM Users WHERE email = @Email`;
+            const sqlQuery = `SELECT * FROM Admin WHERE email = @Email`;
 
             const request = connection.request();
             request.input("Email", sql.VarChar, email);
@@ -19,19 +19,20 @@ class Admin {
             connection.close();
 
             if (result.recordset.length > 0) {
-                const user = result.recordset[0];
-                return new Login(user.email, user.password);
+                const adminData = result.recordset[0];
+                return new Admin(adminData.id, adminData.email, adminData.password); // Return Admin object
             }
             return null;
         } catch (err) {
-            console.error("Error fetching user by email:", err);
+            console.error("Error fetching admin by email:", err);
             throw err;
         }
     }
 
     async validatePassword(password) {
         try {
-            return await password === this.password;
+            // Replace with proper password hashing and comparison
+            return password === this.password; // This should be replaced with proper secure password comparison logic
         } catch (err) {
             console.error("Error validating password:", err);
             throw err;
@@ -40,3 +41,4 @@ class Admin {
 }
 
 module.exports = Admin;
+
