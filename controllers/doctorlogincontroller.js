@@ -12,12 +12,12 @@ exports.doctorLogin = async (req, res) => {
       return res.status(400).json({ message: "Invalid username or password" });
     }
 
-    // Check if the passwords match (assuming you're comparing hashed passwords in real scenarios)
+    // Check if the passwords match
     if (doctor.password !== password) {
       return res.status(400).json({ message: "Invalid username or password" });
     }
 
-    // If credentials are correct, return a success response with the doctor data
+    // If credentials are correct, return a success response
     res.status(200).json({
       id: doctor.id,
       username: doctor.username,

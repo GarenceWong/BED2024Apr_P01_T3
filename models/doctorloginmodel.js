@@ -12,8 +12,8 @@ class Doctor {
       const connection = await sql.connect(dbConfig);
   
       const sqlQuery = `
-        INSERT INTO Doctors (username, password)
-        OUTPUT INSERTED.id, INSERTED.username
+        INSERT INTO DoctorLogin (username, password)
+        OUTPUT INSERTED.username
         VALUES (@username, @password)
       `;
   
@@ -25,16 +25,16 @@ class Doctor {
       connection.close();
   
       return new Doctor(
-        result.recordset[0].id,
         result.recordset[0].username,
-        password // Assuming you want to return the hashed password as well
+        username,
+        password
       );
     }
   
     static async getDoctorByUsername(username) {
       const connection = await sql.connect(dbConfig);
   
-      const sqlQuery = `SELECT * FROM Doctors WHERE username = @username`;
+      const sqlQuery = `SELECT * FROM DoctorLogin WHERE username = @username`;
   
       const request = connection.request();
       request.input("username", sql.VarChar(50), username);
