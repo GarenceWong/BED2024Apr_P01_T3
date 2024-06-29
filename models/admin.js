@@ -11,23 +11,16 @@ class Admin {
     static async getAdminByEmail(email) {
         try {
             const connection = await sql.connect(dbConfig);
-            console.log("Database connection established");
-
-            console.log("Email being queried:", email); 
-
             const sqlQuery = `SELECT * FROM Admin WHERE email = @Email`;
-            console.log("SQL Query:", sqlQuery);
 
             const request = connection.request();
             request.input("Email", sql.VarChar, email);
             const result = await request.query(sqlQuery);
-            console.log("Query Result:", result.recordset);
 
             connection.close();
 
             if (result.recordset.length > 0) {
                 const adminData = result.recordset[0];
-                console.log("Admin Data:", adminData);
                 return new Admin(adminData.id, adminData.email, adminData.password);
             }
             return null;
