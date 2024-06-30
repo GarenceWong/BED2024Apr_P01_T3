@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/appointments.css">
+    <title>ZehaoHealthcare</title>
+</head>
+<body>
+    <header class="header">
+        <div class="logo-container">
+            <img src="../Images/Logo.png" alt="Logo" class="logo" />
+            <a href="adminhomepage.html" class="company-name">Zehao Healthcare</a>
+        </div>
+        <nav class="navbar">
+            <a href="../html/aboutus.html">About Us</a>
+            <a href="../html/contactus.html">Contact Us</a>
+            <span id="username"></span>
+        </nav>
+    </header>
+
+    <div class="subheader">
+        <b>Appointments</b>
+    </div>
+
+    <main>
+        <div class="header-content">
+            <h1>Appointments</h1>
+            <button onclick="location.href='newappointment.html'" class="new-appointment-btn">New Appointment</button>
+        </div>
+        
+        <table id="appointments-table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Date</th>
+                    <th>Time</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody id="appointments-body">
+                <!-- Appointments data will be dynamically inserted here -->
+            </tbody>
+        </table>
+    </main>
+
+</body>
+</html>

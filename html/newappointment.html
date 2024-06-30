@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/appointments.css">
+    <title>ZehaoHealthcare</title>
+</head>
+
+<body>
+    <header class="header">
+        <div class="logo-container">
+            <img src="../Images/Logo.png" alt="Logo" class="logo" />
+            <a href="adminhomepage.html" class="company-name">Zehao Healthcare</a>
+        </div>
+        <nav class="navbar">
+            <a href="../html/aboutus.html">About Us</a>
+            <a href="../html/contactus.html">Contact Us</a>
+            <span id="username"></span>
+        </nav>
+    </header>
+
+    <div class="subheader">
+        <b>Appointments</b>
+    </div>
+    <h1>New Appointment</h1>
+    <form id="appointment-form" action="/new-appointment" method="POST">
+        <label for="patient-name">Patient Name:</label><br>
+        <input type="text" id="patient-name" name="patientName" required><br><br>
+
+        <label for="appointment-date">Appointment Date:</label><br>
+        <input type="date" id="appointment-date" name="appointmentDate" required><br><br>
+
+        <label for="appointment-time">Appointment Time:</label><br>
+        <input type="time" id="appointment-time" name="appointmentTime" required><br><br>
+
+        <label>Status:</label><br>
+        <input type="checkbox" id="status" name="status" value="confirmed">
+        <label for="status">Confirmed</label><br><br>
+
+        <input type="submit" value="Add Appointment">
+        <input type="button" value="Cancel" onclick="window.location.href='adminhomepage.html';">
+    </form>
+</body>
+
+</html>

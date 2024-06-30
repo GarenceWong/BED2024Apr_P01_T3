@@ -17,6 +17,28 @@ app.post("/signup", signup);
 app.post("/login", login);
 app.post("/doctor/login", doctorLogin);
 app.post("/admin/login", adminLogin);
+
+app.post('/new-appointment', async (req, res) => {
+  try {
+      const { patientName, appointmentDate, appointmentTime, status } = req.body;
+
+      // Validate inputs if necessary
+
+      let pool = await sql.connect(dbConfig);
+      let result = await pool.request()
+          .input('name', sql.VarChar(100), patientName)
+          .input('appointmentDate', sql.Date, appointmentDate)
+          .input('appointmentTime', sql.Time, new Date('1970-01-01T' + appointmentTime)) 
+          .input('status', sql.VarChar(20), status)
+          .query('INSERT INTO Appointments (name, appointmentDate, appointmentTime, status) VALUES (@name, @appointmentDate, @appointmentTime, @status)');
+
+      console.log('Appointment added successfully:', result);
+      res.status(200).send('Appointment added successfully.');
+  } catch (err) {
+      console.error('Error adding new appointment:', err.message);
+      res.status(500).send('Error adding new appointment. Please try again later.');
+  }
+});
  
 app.listen(port, async () => {
   try {
@@ -29,7 +51,7 @@ app.listen(port, async () => {
  
   console.log(`Server listening on port ${port}`);
 });
- 
+
 process.on("SIGINT", async () => {
   console.log("Server is gracefully shutting down");
   await sql.close();
