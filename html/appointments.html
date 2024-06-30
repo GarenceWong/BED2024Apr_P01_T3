@@ -40,37 +40,43 @@
                 </tr>
             </thead>
             <tbody id="appointments-body">
-                <!-- Appointments data will be dynamically inserted here -->
             </tbody>
         </table>
     </main>
 
     <script>
-        document.addEventListener('DOMContentLoaded', async () => {
+        function formatDate(isoDate) {
+            const date = new Date(isoDate);
+            return date.toLocaleDateString('en-US');
+        }
+
+        async function fetchAppointments() {
             try {
-                const response = await fetch('http://localhost:3003/get-appointments'); // Replace with your endpoint to fetch appointments
+                const response = await fetch('http://localhost:3003/get-appointments');
                 if (!response.ok) {
                     throw new Error('Failed to fetch appointments');
                 }
                 const appointments = await response.json();
-                const tableBody = document.getElementById('appointments-body');
+                const appointmentsBody = document.getElementById('appointments-body');
+                appointmentsBody.innerHTML = '';
+
                 appointments.forEach(appointment => {
                     const row = document.createElement('tr');
                     row.innerHTML = `
                         <td>${appointment.id}</td>
                         <td>${appointment.name}</td>
-                        <td>${appointment.appointmentDate}</td>
+                        <td>${formatDate(appointment.appointmentDate)}</td>
                         <td>${appointment.appointmentTime}</td>
                         <td>${appointment.status}</td>
                     `;
-                    tableBody.appendChild(row);
+                    appointmentsBody.appendChild(row);
                 });
             } catch (error) {
-                console.error('Error fetching appointments:', error.message);
-                alert('Failed to fetch appointments. Please try again later.');
+                console.error('Error fetching appointments:', error);
             }
-        });
-    </script>
+        }
 
+        window.onload = fetchAppointments;
+    </script>
 </body>
 </html>

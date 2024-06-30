@@ -40,19 +40,16 @@ app.post('/new-appointment', async (req, res) => {
   }
 });
  
-// Replace this with your database query logic to fetch appointments
 async function fetchAppointmentsFromDatabase() {
   try {
       let pool = await sql.connect(dbConfig);
       let result = await pool.request().query('SELECT * FROM Appointments');
-      return result.recordset; // Assuming appointments are retrieved as an array of objects
+      return result.recordset;
   } catch (error) {
       console.error('Error fetching appointments from database:', error.message);
       throw error;
   }
 }
-
-// Endpoint to fetch appointments
 app.get('/get-appointments', async (req, res) => {
   try {
       const appointments = await fetchAppointmentsFromDatabase();
