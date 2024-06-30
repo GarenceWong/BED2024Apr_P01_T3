@@ -22,13 +22,13 @@ app.post('/new-appointment', async (req, res) => {
   try {
       const { patientName, appointmentDate, appointmentTime, status } = req.body;
 
-      // Validate inputs if necessary
+      console.log('Received data:', { patientName, appointmentDate, appointmentTime, status });
 
       let pool = await sql.connect(dbConfig);
       let result = await pool.request()
           .input('name', sql.VarChar(100), patientName)
           .input('appointmentDate', sql.Date, appointmentDate)
-          .input('appointmentTime', sql.Time, new Date('1970-01-01T' + appointmentTime)) 
+          .input('appointmentTime', sql.Time, new Date('2000-01-01T' + appointmentTime)) // Assuming appointmentTime is in HH:mm:ss format
           .input('status', sql.VarChar(20), status)
           .query('INSERT INTO Appointments (name, appointmentDate, appointmentTime, status) VALUES (@name, @appointmentDate, @appointmentTime, @status)');
 
