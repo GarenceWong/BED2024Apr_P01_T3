@@ -22,7 +22,13 @@
         <nav class="navbar">
             <a href="../html/aboutus.html">About Us</a>
             <a href="../html/contactus.html">Contact Us</a>
-            <span id="username"></span>
+            <div class="user-info">
+                <span id="username"></span>
+                <img src="../Images/dropdownarrow.png" alt="dropdownarrow" class="dropdown-arrow" onclick="toggleDropdown()"/>
+                <div id="dropdown-menu" class="dropdown-content">
+                    <a href="../html/updatepersonal.html">Update Personal Details</a>
+                    <a href="../index.html">Sign Out</a>
+                </div>
         </nav>
     </header>
     
@@ -76,7 +82,33 @@
     </footer>
 
 <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const userName = localStorage.getItem('userName');
+            if (userName) {
+                document.getElementById('username').textContent = `${userName}`;
+            }
+        });
 
+function toggleDropdown() {
+    const dropdown = document.getElementById('dropdown-menu');
+    if (dropdown.style.display === "block") {
+        dropdown.style.display = "none";
+    } else {
+        dropdown.style.display = "block";
+    }
+}
+
+window.onclick = function(event) {
+    if (!event.target.matches('.dropdown-arrow')) {
+        const dropdowns = document.getElementsByClassName("dropdown-content");
+        for (let i = 0; i < dropdowns.length; i++) {
+            let openDropdown = dropdowns[i];
+            if (openDropdown.style.display === "block") {
+                openDropdown.style.display = "none";
+            }
+        }
+    }
+}
 </script>
 
 </body>

@@ -69,6 +69,7 @@
         .then(data => {
             console.log('Login successful:', data);
             alert('Login successful!');
+            localStorage.setItem('userName', data.username);
             window.location.href = '../html/userpage.html';
         })
         .catch(error => {
