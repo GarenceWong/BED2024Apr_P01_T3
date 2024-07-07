@@ -42,41 +42,42 @@
     </div>
 </div>
 <script>
-    function submitLoginData() {
-        const email = document.getElementById('email').value;
-        const password = document.getElementById('password').value;
-
-        if (!email || !password) {
-        alert('Please enter both email and password.');
-        return;
-    }
-
-        console.log("Login Data:", { email, password });
-
-        fetch('http://localhost:3003/login', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ email, password })
-        })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Login failed');
-            }
-            return response.json();
-        })
-        .then(data => {
-            console.log('Login successful:', data);
-            alert('Login successful!');
-            localStorage.setItem('userName', data.username);
-            window.location.href = '../html/userpage.html';
-        })
-        .catch(error => {
-            console.error('Error logging in:', error);
-            alert('Login failed. Please try again.');
-        });
-    }
+    function submitLoginData() { 
+        const email = document.getElementById('email').value; 
+        const password = document.getElementById('password').value; 
+ 
+        if (!email || !password) { 
+        alert('Please enter both email and password.'); 
+        return; 
+    } 
+ 
+        console.log("Login Data:", { email, password }); 
+ 
+        fetch('http://localhost:3003/login', { 
+            method: 'POST', 
+            headers: { 
+                'Content-Type': 'application/json' 
+            }, 
+            body: JSON.stringify({ email, password }) 
+        }) 
+        .then(response => { 
+            if (!response.ok) { 
+                throw new Error('Login failed'); 
+            } 
+            return response.json(); 
+        }) 
+        .then(data => { 
+            console.log('Login successful:', data); 
+            alert('Login successful!'); 
+            const username = email.split('@')[0]; 
+            localStorage.setItem('userName', username); 
+            window.location.href = '../html/userpage.html'; 
+        }) 
+        .catch(error => { 
+            console.error('Error logging in:', error); 
+            alert('Login failed. Please try again.'); 
+        }); 
+    } 
 </script>
 
 </body>
