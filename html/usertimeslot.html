@@ -27,14 +27,18 @@
     </header>
 
     <div class="userappointment-container">
-        <div class="userappointment-box">
-            <h1>Choose a Timeslot</h1>
+        <div class="usertimeslot-box">
+            <h2>Choose a Timeslot</h2>
             <label for="date">Select Preferred Date:</label>
             <select id="date">
                 <option>2024-10-10</option>
                 <option>2024-10-11</option>
                 <option>2024-10-12</option>
                 <option>2024-10-13</option>
+                <option>2024-10-14</option>
+                <option>2024-10-15</option>
+                <option>2024-10-16</option>
+                <option>2024-10-17</option>
             </select>
 
             <div class="timeslots">
@@ -52,11 +56,16 @@
                 <button class="timeslot disabled">13:30PM</button>
                 <button class="timeslot">14:00PM</button>
                 <button class="timeslot disabled">14:30PM</button>
-                <!-- Add more buttons as needed -->
+                <button class="timeslot">15:00PM</button>
+                <button class="timeslot">15:30PM</button>
+                <button class="timeslot">16:00PM</button>
             </div>
             <div class="actions">
-                <button class="discard" onclick="showPage('no-appointments')">Discard Changes</button>
-                <button class="save" onclick="showPage('upcoming-appointments')">Save</button>
+                <a>*Unavailable timings are grayed out</a>
+                <div class="button-group">
+                    <button class="discard">Back</button>
+                    <button type="submit" class="save" onclick="saveAppointment()">Save</button>
+                </div>
             </div>
     </div>
 
@@ -88,6 +97,17 @@
                 }
             }
         }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const timeslotButtons = document.querySelectorAll('.timeslot:not(.disabled)');
+            timeslotButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                 timeslotButtons.forEach(btn => btn.classList.remove('selected'));
+                 button.classList.add('selected');
+        });
+    });
+});
+
     </script>
 </body>
 </html>

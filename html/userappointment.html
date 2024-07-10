@@ -27,13 +27,21 @@
     </header>
     <main>
         <div class="userappointment-container">
-            <div class="userappointment-box">
-            <h2>Upcoming Appointment</h2>
-            <p>Currently No Upcoming Appointment</p>
-            <a href="../html/usertimeslot.html" class="add-button">
-                <img src="../Images/adding.png" alt="Add Appointment">
-            </a>
-        </div>
+            <div class="userappointment-box" id="appointmentBox">
+                <h2>Upcoming Appointment</h2>
+                <div id="appointmentDetails" class="appointment-details" style="display: none;">
+                    <div class="appointment-info">
+                        <span id="appointmentDate"></span>
+                        <span id="appointmentTime"></span>
+                    </div>
+                    <button class="cancel" onclick="cancelAppointment()">Cancel</button>
+                    <button class="reschedule" onclick="rescheduleAppointment()">Reschedule</button>
+                </div>
+                <p id="noAppointment">Currently No Upcoming Appointment</p>
+                <a href="../html/usertimeslot.html" class="add-button" id="addButton">
+                    <img src="../Images/adding.png" alt="Add Appointment">
+                </a>
+            </div>
         </div>
     </main>
 
