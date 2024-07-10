@@ -22,12 +22,10 @@ class PersonalDetails {
   static async getPersonalDetailsById(id) {
     try {
       const connection = await sql.connect(dbConfig);
-
       const sqlQuery = "SELECT * FROM PersonalDetails WHERE id = @Id";
       const request = connection.request();
       request.input("Id", sql.Int, id);
       const result = await request.query(sqlQuery);
-
       connection.close();
 
       if (result.recordset.length > 0) {
@@ -60,13 +58,11 @@ class PersonalDetails {
   static async createPersonalDetails(details) {
     try {
       const connection = await sql.connect(dbConfig);
-
       const sqlQuery = `
         INSERT INTO PersonalDetails (firstName, lastName, fullName, gender, governmentId, dob, nationality, residence, phone, email, address, medicalCondition, allergies)
         OUTPUT INSERTED.id, INSERTED.firstName, INSERTED.lastName, INSERTED.fullName, INSERTED.gender, INSERTED.governmentId, INSERTED.dob, INSERTED.nationality, INSERTED.residence, INSERTED.phone, INSERTED.email, INSERTED.address, INSERTED.medicalCondition, INSERTED.allergies
         VALUES (@FirstName, @LastName, @FullName, @Gender, @GovernmentId, @Dob, @Nationality, @Residence, @Phone, @Email, @Address, @MedicalCondition, @Allergies)
       `;
-
       const request = connection.request();
       request.input("FirstName", sql.VarChar, details.firstName);
       request.input("LastName", sql.VarChar, details.lastName);
@@ -83,7 +79,6 @@ class PersonalDetails {
       request.input("Allergies", sql.VarChar, details.allergies);
 
       const result = await request.query(sqlQuery);
-
       connection.close();
 
       if (result.recordset.length > 0) {
@@ -107,7 +102,6 @@ class PersonalDetails {
       }
 
       return null;
-
     } catch (err) {
       console.error("Error creating personal details:", err.message);
       throw err;
@@ -116,3 +110,5 @@ class PersonalDetails {
 }
 
 module.exports = PersonalDetails;
+
+
