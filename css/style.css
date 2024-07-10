@@ -493,6 +493,9 @@ input[type="text"], input[type="email"], input[type="tel"], input[type="date"] {
 }
 
 .add-button {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
     position: absolute;
     bottom: 20px;
     right: 20px;
@@ -504,3 +507,26 @@ input[type="text"], input[type="email"], input[type="tel"], input[type="date"] {
     cursor: pointer;
 }
 
+/* User Timeslot Page */
+.timeslots {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.timeslot {
+    background-color: #ecf0f1;
+    margin: 5px;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.timeslot.disabled {
+    background-color: #bdc3c7;
+    cursor: not-allowed;
+}
+
+.actions {
+    margin-top: 20px;
+}
