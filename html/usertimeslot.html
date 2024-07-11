@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/style.css">
+    <title>Zehao Healthcare</title>
+</head>
+<body>
+    <header class="header">
+        <div class="logo-container">
+            <img src="../Images/Logo.png" alt="Logo" class="logo"/>
+            <a href="userpage.html" class="company-name">Zehao Healthcare</a>
+        </div>
+        <nav class="navbar">
+            <a href="../html/aboutus.html">About Us</a>
+            <a href="../html/contactus.html">Contact Us</a>
+            <div class="user-info">
+                <span id="username">Ze hao</span>
+                <img src="../Images/dropdownarrow.png" alt="dropdownarrow" class="dropdown-arrow" onclick="toggleDropdown()"/>
+                <div id="dropdown-menu" class="dropdown-content">
+                    <a href="../html/updatepersonal.html">Update Personal Details</a>
+                    <a href="../index.html">Sign Out</a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <div class="userappointment-container">
+        <div class="usertimeslot-box">
+            <h2>Choose a Timeslot</h2>
+            <label for="date">Select Preferred Date:</label>
+            <select id="date">
+                <option>2024-10-10</option>
+                <option>2024-10-11</option>
+                <option>2024-10-12</option>
+                <option>2024-10-13</option>
+                <option>2024-10-14</option>
+                <option>2024-10-15</option>
+                <option>2024-10-16</option>
+                <option>2024-10-17</option>
+            </select>
+
+            <div class="timeslots">
+                <h3>Timings:</h3>
+                <!-- Timeslots buttons -->
+                <button class="timeslot">9:00AM</button>
+                <button class="timeslot disabled">9:30AM</button>
+                <button class="timeslot">10:00AM</button>
+                <button class="timeslot disabled">10:30AM</button>
+                <button class="timeslot disabled">11:00AM</button>
+                <button class="timeslot">11:30AM</button>
+                <button class="timeslot">12:00PM</button>
+                <button class="timeslot">12:30PM</button>
+                <button class="timeslot disabled">13:00PM</button>
+                <button class="timeslot disabled">13:30PM</button>
+                <button class="timeslot">14:00PM</button>
+                <button class="timeslot disabled">14:30PM</button>
+                <button class="timeslot">15:00PM</button>
+                <button class="timeslot">15:30PM</button>
+                <button class="timeslot">16:00PM</button>
+            </div>
+            <div class="actions">
+                <a>*Unavailable timings are grayed out</a>
+                <div class="button-group">
+                    <button class="discard">Back</button>
+                    <button type="submit" class="save" onclick="saveAppointment()">Save</button>
+                </div>
+            </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const userName = localStorage.getItem('userName');
+            if (userName) {
+                document.getElementById('username').textContent = userName;
+            }
+        });
+
+        function toggleDropdown() {
+            const dropdown = document.getElementById('dropdown-menu');
+            if (dropdown.style.display === "block") {
+                dropdown.style.display = "none";
+            } else {
+                dropdown.style.display = "block";
+            }
+        }
+
+        window.onclick = function(event) {
+            if (!event.target.matches('.dropdown-arrow')) {
+                const dropdowns = document.getElementsByClassName("dropdown-content");
+                for (let i = 0; i < dropdowns.length; i++) {
+                    let openDropdown = dropdowns[i];
+                    if (openDropdown.style.display === "block") {
+                        openDropdown.style.display = "none";
+                    }
+                }
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const timeslotButtons = document.querySelectorAll('.timeslot:not(.disabled)');
+            timeslotButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                 timeslotButtons.forEach(btn => btn.classList.remove('selected'));
+                 button.classList.add('selected');
+        });
+    });
+});
+
+    </script>
+</body>
+</html>

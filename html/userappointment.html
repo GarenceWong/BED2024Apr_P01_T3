@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/style.css">
+    <title>Zehao Healthcare</title>
+</head>
+<body>
+    <header class="header">
+        <div class="logo-container">
+            <img src="../Images/Logo.png" alt="Logo" class="logo"/>
+            <a href="userpage.html" class="company-name">Zehao Healthcare</a>
+        </div>
+        <nav class="navbar">
+            <a href="../html/aboutus.html">About Us</a>
+            <a href="../html/contactus.html">Contact Us</a>
+            <div class="user-info">
+                <span id="username">Ze hao</span>
+                <img src="../Images/dropdownarrow.png" alt="dropdownarrow" class="dropdown-arrow" onclick="toggleDropdown()"/>
+                <div id="dropdown-menu" class="dropdown-content">
+                    <a href="../html/updatepersonal.html">Update Personal Details</a>
+                    <a href="../index.html">Sign Out</a>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <main>
+        <div class="userappointment-container">
+            <div class="userappointment-box" id="appointmentBox">
+                <h2>Upcoming Appointment</h2>
+                <div id="appointmentDetails" class="appointment-details" style="display: none;">
+                    <div class="appointment-info">
+                        <span id="appointmentDate"></span>
+                        <span id="appointmentTime"></span>
+                    </div>
+                    <button class="cancel" onclick="cancelAppointment()">Cancel</button>
+                    <button class="reschedule" onclick="rescheduleAppointment()">Reschedule</button>
+                </div>
+                <p id="noAppointment">Currently No Upcoming Appointment</p>
+                <a href="../html/usertimeslot.html" class="add-button" id="addButton">
+                    <img src="../Images/adding.png" alt="Add Appointment">
+                </a>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const userName = localStorage.getItem('userName');
+            if (userName) {
+                document.getElementById('username').textContent = userName;
+            }
+        });
+
+        function toggleDropdown() {
+            const dropdown = document.getElementById('dropdown-menu');
+            if (dropdown.style.display === "block") {
+                dropdown.style.display = "none";
+            } else {
+                dropdown.style.display = "block";
+            }
+        }
+
+        window.onclick = function(event) {
+            if (!event.target.matches('.dropdown-arrow')) {
+                const dropdowns = document.getElementsByClassName("dropdown-content");
+                for (let i = 0; i < dropdowns.length; i++) {
+                    let openDropdown = dropdowns[i];
+                    if (openDropdown.style.display === "block") {
+                        openDropdown.style.display = "none";
+                    }
+                }
+            }
+        }
+    </script>
+</body>
+</html>

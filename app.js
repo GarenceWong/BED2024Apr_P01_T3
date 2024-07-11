@@ -6,17 +6,20 @@ const { signup } = require("./controllers/usersController");
 const { doctorLogin } = require("./controllers/doctorlogincontroller");
 const { login } = require('./controllers/loginController');
 const { adminLogin } = require('./controllers/admincontroller');
- 
+const { addPersonalDetails, fetchPersonalDetails } = require('./controllers/personalDetailController');
+
 const app = express();
 const port = process.env.PORT || 3003;
- 
+
 app.use(cors());
 app.use(express.json());
- 
+
 app.post("/signup", signup);
 app.post("/login", login);
 app.post("/doctor/login", doctorLogin);
 app.post("/admin/login", adminLogin);
+app.post('/personal-details', addPersonalDetails);
+app.get('/personal-details/:id', fetchPersonalDetails);
 
 app.post('/new-appointment', async (req, res) => {
   try {
@@ -39,7 +42,7 @@ app.post('/new-appointment', async (req, res) => {
       res.status(500).send('Error adding new appointment. Please try again later.');
   }
 });
- 
+
 async function fetchAppointmentsFromDatabase() {
   try {
       let pool = await sql.connect(dbConfig);
@@ -67,7 +70,7 @@ app.listen(port, async () => {
     console.error("Database connection error:", err);
     process.exit(1);
   }
- 
+
   console.log(`Server listening on port ${port}`);
 });
 
@@ -77,5 +80,4 @@ process.on("SIGINT", async () => {
   console.log("Database connection closed");
   process.exit(0);
 });
-
 
