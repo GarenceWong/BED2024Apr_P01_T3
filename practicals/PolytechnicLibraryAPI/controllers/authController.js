@@ -1,14 +1,17 @@
 const bcrypt = require("bcryptjs");
+const User = require("../models/user");
 
 async function registerUser(req, res) {
   const { username, password, role } = req.body;
 
   try {
     // Validate user data
-    // ... your validation logic here ...
+    if (!username || !password || !role) {
+      return res.status(400).json({ message: "All fields are required" });
+    }
 
     // Check for existing username
-    const existingUser = await getUserByUsername(username);
+    const existingUser = await User.getUserByUsername(username);
     if (existingUser) {
       return res.status(400).json({ message: "Username already exists" });
     }
@@ -18,7 +21,8 @@ async function registerUser(req, res) {
     const hashedPassword = await bcrypt.hash(password, salt);
 
     // Create user in database
-    // ... your database logic here ...
+    const newUser = { username, passwordHash: hashedPassword, role };
+    await User.createUser(newUser);
 
     return res.status(201).json({ message: "User created successfully" });
   } catch (err) {
@@ -26,3 +30,7 @@ async function registerUser(req, res) {
     return res.status(500).json({ message: "Internal server error" });
   }
 }
+
+module.exports = {
+  registerUser,
+};

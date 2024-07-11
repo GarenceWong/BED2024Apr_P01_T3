@@ -1,9 +1,14 @@
-const express = require("express");
-const booksController = require("./controllers/booksController");
-const usersController = require("./controllers/usersController");
-const sql = require("mssql");
-const dbConfig = require("./dbConfig");
-const bodyParser = require("body-parser");
+require('dotenv').config();
+
+const express = require('express');
+const booksController = require('./controllers/booksController');
+const authController = require('./controllers/authController');
+const { verifyJWT, checkRole } = require('./middlewares/authMiddleware');
+const validateBook = require('./middlewares/validateBook'); // Import validateBook middleware
+const sql = require('mssql');
+const bodyParser = require('body-parser');
+const usersController = require('./controllers/usersController');
+
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -11,16 +16,7 @@ const port = process.env.PORT || 3000;
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-function validateBook(req, res, next) {
-  const { title, author } = req.body;
-  if (!title || !author) {
-    res.status(400).send('Missing book title or author');
-    return;
-  }
-  next();
-}
-
-// Middleware to log the incoming request details
+// Middleware to log requests
 app.use((req, res, next) => {
   console.log(`Received request: ${req.method} ${req.path}`);
   console.log('Query params:', req.query);
@@ -34,7 +30,9 @@ app.get('/test', (req, res) => {
   res.json({ query: req.query });
 });
 
-// Routes for users
+// User routes
+app.post("/register", authController.registerUser);
+app.post("/login", authController.loginUser);
 app.post("/users", usersController.createUser);
 app.get("/users", usersController.getAllUsers);
 app.get("/users/:id", usersController.getUserById);
@@ -42,13 +40,28 @@ app.put("/users/:id", usersController.updateUser);
 app.delete("/users/:id", usersController.deleteUser);
 app.get('/users/search', usersController.searchUsers);
 
-// Routes for books
-app.get("/books", booksController.getAllBooks);
-app.get("/books/:id", booksController.getBookById);
-app.post("/books", validateBook, booksController.createBook);
-app.put("/books/:id", validateBook, booksController.updateBook);
-app.delete("/books/:id", booksController.deleteBook);
+// Book routes
+app.get("/books", verifyJWT, checkRole(["member", "librarian"]), booksController.getAllBooks);
+app.get("/books/:id", verifyJWT, checkRole(["member", "librarian"]), booksController.getBookById);
+app.post("/books", verifyJWT, checkRole(["librarian"]), validateBook, booksController.createBook);
+app.put("/books/:id", verifyJWT, checkRole(["librarian"]), validateBook, booksController.updateBook);
+app.delete("/books/:id", verifyJWT, checkRole(["librarian"]), booksController.deleteBook);
 
+// Database connection setup
+const dbConfig = {
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  server: process.env.DB_SERVER,
+  database: process.env.DB_DATABASE,
+  options: {
+    encrypt: false, // Use true for Azure SQL Database
+    enableArithAbort: true
+  },
+  port: parseInt(process.env.DB_PORT, 10),
+  connectionTimeout: parseInt(process.env.DB_CONNECTION_TIMEOUT, 10)
+};
+
+// Start server and connect to database
 app.listen(port, async () => {
   try {
     await sql.connect(dbConfig);
@@ -61,13 +74,10 @@ app.listen(port, async () => {
   console.log(`Server listening on port ${port}`);
 });
 
+// Gracefully close database connection on SIGINT
 process.on("SIGINT", async () => {
   console.log("Server is gracefully shutting down");
   await sql.close();
   console.log("Database connection closed");
   process.exit(0);
 });
-
-
-
-
