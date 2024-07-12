@@ -138,10 +138,9 @@
             }
         }
 
-        document.getElementById('personal-details-form').addEventListener('submit', async function(event) {
-            event.preventDefault(); // Prevent the default form submission
-
-            const formData = new FormData(event.target);
+        async function savePersonal() {
+            const form = document.getElementById('personal-details-form');
+            const formData = new FormData(form);
             const data = {
                 firstName: formData.get('firstName'),
                 lastName: formData.get('lastName'),
@@ -189,10 +188,17 @@
                 alert('Error saving personal details: ' + error.message);
                 console.error('Error saving personal details:', error);
             }
+        }
+
+        document.getElementById('personal-details-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            savePersonal();
         });
     </script>
 </body>
 </html>
+
+
 
 
 
