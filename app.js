@@ -7,6 +7,7 @@ const { doctorLogin } = require("./controllers/doctorlogincontroller");
 const { login } = require('./controllers/loginController');
 const { adminLogin } = require('./controllers/admincontroller');
 const { addPersonalDetails, fetchPersonalDetails } = require('./controllers/personalDetailController');
+const { createTimeslot, getTimeslots } = require('./controllers/timeslotController');
 
 const app = express();
 const port = process.env.PORT || 3003;
@@ -20,6 +21,8 @@ app.post("/doctor/login", doctorLogin);
 app.post("/admin/login", adminLogin);
 app.post('/personal-details', addPersonalDetails);
 app.get('/personal-details/:id', fetchPersonalDetails);
+app.post('/new-timeslot', createTimeslot);
+app.get('/get-timeslots', getTimeslots);
 
 app.post('/new-appointment', async (req, res) => {
   try {

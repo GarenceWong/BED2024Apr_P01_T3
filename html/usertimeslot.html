@@ -64,9 +64,10 @@
                 <a>*Unavailable timings are grayed out</a>
                 <div class="button-group">
                     <button class="discard">Back</button>
-                    <button type="submit" class="save" onclick="saveAppointment()">Save</button>
+                    <button type="submit" class="save" onclick="saveTimeslot()">Save</button>
                 </div>
             </div>
+        </div>
     </div>
 
     <script>
@@ -102,11 +103,66 @@
             const timeslotButtons = document.querySelectorAll('.timeslot:not(.disabled)');
             timeslotButtons.forEach(button => {
                 button.addEventListener('click', function() {
-                 timeslotButtons.forEach(btn => btn.classList.remove('selected'));
-                 button.classList.add('selected');
+                    timeslotButtons.forEach(btn => btn.classList.remove('selected'));
+                    button.classList.add('selected');
+                });
+            });
         });
-    });
-});
+
+        function saveTimeslot() {
+    const username = localStorage.getItem('userName');
+    const timeslotDate = document.getElementById('date').value;
+    const selectedButton = document.querySelector('.timeslot.selected');
+    const timeslotTime = selectedButton ? selectedButton.textContent : null;
+    const status = "Pending"; 
+
+    if (username && timeslotDate && timeslotTime) {
+
+        let timeParts = timeslotTime.match(/(\d+):(\d+)(AM|PM)/);
+        let hours = parseInt(timeParts[1]);
+        const minutes = timeParts[2];
+        const period = timeParts[3];
+
+        if (period === 'PM' && hours < 12) {
+            hours += 12;
+        } else if (period === 'AM' && hours === 12) {
+            hours = 0;
+        }
+
+        const formattedTime = `${hours.toString().padStart(2, '0')}:${minutes.padStart(2, '0')}:00`;
+
+        const data = {
+            username,
+            timeslotDate,
+            timeslotTime: formattedTime,
+            status
+        };
+
+        fetch('http://localhost:3003/new-timeslot', { 
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            return response.text();
+        })
+        .then(result => {
+            alert(result);
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert(`Failed to save timeslot: ${error.message}`);
+        });
+    } else {
+        alert('Please select a date and time slot.');
+    }
+}
+
 
     </script>
 </body>

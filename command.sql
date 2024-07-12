@@ -24,6 +24,15 @@ CREATE TABLE PersonalDetails (
     allergies VARCHAR(255)
 );
 
+CREATE TABLE Timeslots (
+    id INT PRIMARY KEY IDENTITY(1,1),
+    username VARCHAR(100),
+    timeslotDate DATE,
+    timeslotTime TIME,
+    status VARCHAR(10)
+);
+
+
 
 
 /* Admin Table */

@@ -17,7 +17,7 @@
             <img src="../Images/Logo.png" alt="Logo" class="logo"/>
             <a href="userpage.html" class="company-name">Zehao Healthcare</a>
         </div>
-    
+   
         <nav class="navbar">
             <a href="../html/aboutus.html">About Us</a>
             <a href="../html/contactus.html">Contact Us</a>
@@ -31,7 +31,7 @@
             </div>
         </nav>
     </header>
-
+ 
     <div class="personal-container">
         <div class="personal-box">
             <h1>Update Personal Details</h1>
@@ -48,7 +48,7 @@
                     <label for="full-name">Full Name as in Identity Card</label>
                     <input type="text" id="full-name" name="fullName" required>
                 </div>
-                
+               
                 <div class="gender">
                     <label for="gender">Gender</label>
                     <div class="radio-options">
@@ -58,7 +58,7 @@
                         <label for="female">Female</label>
                     </div>
                 </div>
-
+ 
                 <div>
                     <label for="government-id">Government ID</label>
                     <input type="text" id="government-id" name="governmentId" required>
@@ -97,18 +97,18 @@
                 </div>
                 <div class="buttons">
                     <button type="button" onclick="window.location.reload();">Discard Changes</button>
-                    <button type="submit" class="save" onclick="savePersonal()">Save</button>
+                    <button type="submit" class="save">Save</button>
                 </div>
             </form>
         </div>
     </div>
-
+ 
     <footer class="footer">
         <div class="footer-container">
             <p>Copyright © 2024 by Zehao Healthcare Pte Ltd. All Rights Reserved.</p>
         </div>
     </footer>
-
+ 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const userName = localStorage.getItem('userName');
@@ -116,7 +116,7 @@
                 document.getElementById('username').textContent = userName;
             }
         });
-
+ 
         function toggleDropdown() {
             const dropdown = document.getElementById('dropdown-menu');
             if (dropdown.style.display === "block") {
@@ -125,7 +125,7 @@
                 dropdown.style.display = "block";
             }
         }
-
+ 
         window.onclick = function(event) {
             if (!event.target.matches('.dropdown-arrow')) {
                 const dropdowns = document.getElementsByClassName("dropdown-content");
@@ -137,7 +137,7 @@
                 }
             }
         }
-
+ 
         async function savePersonal() {
             const form = document.getElementById('personal-details-form');
             const formData = new FormData(form);
@@ -156,25 +156,25 @@
                 medicalCondition: formData.get('medicalCondition'),
                 allergies: formData.get('allergies')
             };
-
+ 
             console.log("Data to be sent:", data); // Log the data being sent
-
+ 
             try {
-                const response = await fetch('/personal-details', {
+                const response = await fetch('http://127.0.0.1:3003/personal-details', { // Ensure the correct port is used
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
                     },
                     body: JSON.stringify(data)
                 });
-
+ 
                 const text = await response.text(); // Read the raw response text
                 console.log("Raw response text:", text);
-
+ 
                 try {
                     const result = JSON.parse(text); // Parse the text to JSON
                     console.log("Parsed response JSON:", result);
-
+ 
                     if (response.ok) {
                         alert('Personal details saved successfully.');
                     } else {
@@ -189,7 +189,7 @@
                 console.error('Error saving personal details:', error);
             }
         }
-
+ 
         document.getElementById('personal-details-form').addEventListener('submit', function(event) {
             event.preventDefault();
             savePersonal();
@@ -197,6 +197,7 @@
     </script>
 </body>
 </html>
+
 
 
 
