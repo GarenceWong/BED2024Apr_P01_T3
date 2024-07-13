@@ -464,6 +464,8 @@ input[type="text"], input[type="email"], input[type="tel"], input[type="date"] {
     display: flex;
     height: 100%;
     overflow: hidden;
+    align-items: center;
+    justify-content: center;
 }
 
 .userappointment-box {
@@ -477,18 +479,14 @@ input[type="text"], input[type="email"], input[type="tel"], input[type="date"] {
     flex-direction: column;
     align-items: center;
     height: 500px;
+    overflow: hidden;
+    box-sizing: border-box;
 }
 
 .userappointment-box h2 {
     font-size: 36px;
     margin-top: 30px;
-}
-
-.userappointment-box p {
-    font-size: 24px;
-    color: rgb(99, 99, 99);
-    flex: 1;
-    padding-top: 150px;
+    text-align: center;
 }
 
 .add-button {
@@ -504,6 +502,72 @@ input[type="text"], input[type="email"], input[type="tel"], input[type="date"] {
     width: 60px;
     height: 60px;
     cursor: pointer;
+}
+
+/* After appended */
+
+#appointmentsContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-left: 40px;
+    margin-right: 40px;
+}
+
+.appointment-info span {
+    font-size: 20px;
+    color: #555;
+}
+
+#noAppointment {
+    font-size: 24px;
+    color: rgb(99, 99, 99);
+    flex: 1;
+    padding-top: 150px;
+}
+
+.appointment-details {
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 15px 15px;
+    margin-bottom: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+}
+
+.appointment-info {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+}
+
+.appointment-details .appointment-info {
+    flex: 1;
+    gap: 5px;
+}
+
+.appointment-details button {
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.appointment-details .cancel {
+    background-color: #ff4d4d;
+    color: white;
+    margin-right: 15px;
+    font-size: 16px;
+}
+
+.appointment-details .reschedule {
+    background-color: #4d79ff;
+    color: white;
+    font-size: 16px;
 }
 
 /* User Timeslot Page */

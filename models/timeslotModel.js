@@ -23,11 +23,13 @@ async function addTimeslot(timeslot) {
     }
 }
 
-async function fetchTimeslots() {
+async function fetchTimeslots(username) {
     let pool;
     try {
         pool = await sql.connect(dbConfig);
-        let result = await pool.request().query('SELECT * FROM Timeslots');
+        let result = await pool.request()
+            .input('username', sql.VarChar(100), username)
+            .query('SELECT * FROM Timeslots WHERE username = @username');
         return result.recordset;
     } catch (error) {
         console.error('Error fetching timeslots from database:', error.message); // Log the detailed error
@@ -43,6 +45,7 @@ module.exports = {
     addTimeslot,
     fetchTimeslots
 };
+
 
 
 

@@ -8,6 +8,9 @@ const { login } = require('./controllers/loginController');
 const { adminLogin } = require('./controllers/admincontroller');
 const { addPersonalDetails, fetchPersonalDetails } = require('./controllers/personalDetailController');
 const { createTimeslot, getTimeslots } = require('./controllers/timeslotController');
+const { handleDeleteAppointment, handleUpdateAppointment } = require('./controllers/userAppointmentController');
+
+
 
 const app = express();
 const port = process.env.PORT || 3003;
@@ -23,6 +26,13 @@ app.post('/personal-details', addPersonalDetails);
 app.get('/personal-details/:id', fetchPersonalDetails);
 app.post('/new-timeslot', createTimeslot);
 app.get('/get-timeslots', getTimeslots);
+app.delete('/delete-appointment/:id', handleDeleteAppointment);
+app.put('/update-appointment', handleUpdateAppointment);
+
+
+
+
+
 
 app.post('/new-appointment', async (req, res) => {
   try {

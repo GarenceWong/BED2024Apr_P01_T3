@@ -18,7 +18,8 @@ async function createTimeslot(req, res) {
 
 async function getTimeslots(req, res) {
     try {
-        const timeslots = await fetchTimeslots();
+        const username = req.query.username;
+        const timeslots = await fetchTimeslots(username);
         res.json(timeslots);
     } catch (error) {
         console.error('Error fetching timeslots:', error.message); // Log the detailed error
@@ -30,6 +31,7 @@ module.exports = {
     createTimeslot,
     getTimeslots
 };
+
 
 
 
