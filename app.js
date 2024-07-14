@@ -8,7 +8,7 @@ const { login } = require('./controllers/loginController');
 const { adminLogin } = require('./controllers/admincontroller');
 const { addPersonalDetails, fetchPersonalDetails } = require('./controllers/personalDetailController');
 const { createTimeslot, getTimeslots } = require('./controllers/timeslotController');
-const { handleDeleteAppointment, handleUpdateAppointment } = require('./controllers/userAppointmentController');
+const { handleDeleteAppointment, handleUpdateAppointment, getUserAppointment } = require('./controllers/userAppointmentController');
 
 
 
@@ -28,6 +28,7 @@ app.post('/new-timeslot', createTimeslot);
 app.get('/get-timeslots', getTimeslots);
 app.delete('/delete-appointment/:id', handleDeleteAppointment);
 app.put('/update-appointment', handleUpdateAppointment);
+app.get('/get-appointment/:id', getUserAppointment);
 
 
 

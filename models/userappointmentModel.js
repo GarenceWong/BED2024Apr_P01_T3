@@ -27,10 +27,25 @@ async function updateAppointment(appointmentId, newDate, newTime) {
     }
 }
 
+async function getAppointmentById(appointmentId) {
+    try {
+        let pool = await sql.connect(dbConfig);
+        const result = await pool.request()
+            .input('id', sql.Int, appointmentId)
+            .query('SELECT * FROM Timeslots WHERE id = @id');
+        return result.recordset[0];
+    } catch (error) {
+        console.error('SQL error:', error);
+        throw error;
+    }
+}
+
 module.exports = {
     deleteAppointment,
-    updateAppointment
+    updateAppointment,
+    getAppointmentById
 };
+
 
 
 
