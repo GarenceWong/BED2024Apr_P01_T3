@@ -8,13 +8,25 @@ const validateBook = require('./middlewares/validateBook'); // Import validateBo
 const sql = require('mssql');
 const bodyParser = require('body-parser');
 const usersController = require('./controllers/usersController');
-
+const swaggerUi = require("swagger-ui-express");
+const swaggerDocument = require("./swagger-output.json"); // Import generated spec
+const dbConfig = require('./dbConfig'); // Import dbConfig
 
 const app = express();
 const port = process.env.PORT || 3000;
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+
+// Log environment variables to verify they are loaded correctly
+console.log("Environment Variables:");
+console.log("PORT:", process.env.PORT);
+console.log("DB_USER:", process.env.DB_USER);
+console.log("DB_PASSWORD:", process.env.DB_PASSWORD);
+console.log("DB_SERVER:", process.env.DB_SERVER);
+console.log("DB_DATABASE:", process.env.DB_DATABASE);
+console.log("DB_PORT:", process.env.DB_PORT);
+console.log("DB_CONNECTION_TIMEOUT:", process.env.DB_CONNECTION_TIMEOUT);
 
 // Middleware to log requests
 app.use((req, res, next) => {
@@ -29,6 +41,8 @@ app.get('/test', (req, res) => {
   console.log('Query params in /test:', req.query);
   res.json({ query: req.query });
 });
+
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 // User routes
 app.post("/register", authController.registerUser);
@@ -47,27 +61,14 @@ app.post("/books", verifyJWT, checkRole(["librarian"]), validateBook, booksContr
 app.put("/books/:id", verifyJWT, checkRole(["librarian"]), validateBook, booksController.updateBook);
 app.delete("/books/:id", verifyJWT, checkRole(["librarian"]), booksController.deleteBook);
 
-// Database connection setup
-const dbConfig = {
-  user: process.env.DB_USER,
-  password: process.env.DB_PASSWORD,
-  server: process.env.DB_SERVER,
-  database: process.env.DB_DATABASE,
-  options: {
-    encrypt: false, // Use true for Azure SQL Database
-    enableArithAbort: true
-  },
-  port: parseInt(process.env.DB_PORT, 10),
-  connectionTimeout: parseInt(process.env.DB_CONNECTION_TIMEOUT, 10)
-};
-
 // Start server and connect to database
 app.listen(port, async () => {
   try {
     await sql.connect(dbConfig);
     console.log("Database connection established successfully");
   } catch (err) {
-    console.error("Database connection error:", err);
+    console.error("Database connection error:", err.message);
+    console.error("Error details:", err);
     process.exit(1);
   }
 
