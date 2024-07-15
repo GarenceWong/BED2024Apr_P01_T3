@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/style.css">
+    <title>Zehao Healthcare</title>
+</head>
+<body>
+    <header class="header">
+        <div class="logo-container">
+            <img src="../Images/Logo.png" alt="Logo" class="logo"/>
+            <a href="userpage.html" class="company-name">Zehao Healthcare</a>
+        </div>
+        <nav class="navbar">
+            <a href="../html/aboutus.html">About Us</a>
+            <a href="../html/contactus.html">Contact Us</a>
+            <div class="user-info">
+                <span id="username"></span>
+                <img src="../Images/dropdownarrow.png" alt="dropdownarrow" class="dropdown-arrow" onclick="toggleDropdown()"/>
+                <div id="dropdown-menu" class="dropdown-content">
+                    <a href="../html/updatepersonal.html">Update Personal Details</a>
+                    <a href="../index.html">Sign Out</a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <div class="userreport-container">
+        <div class="userreport-box">
+            <h1>Medical Report</h1>
+            <form id="medical-report">
+                <label for="condition">Condition</label>
+                <div id="condition" name="condition"></div>
+                <label for="medication">Prescribed Medication</label>
+                <div id="medication" name="medication"></div>
+            </form>
+        </div>
+    </div>
+
+
+
+
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+            const userName = localStorage.getItem('userName');
+            if (userName) {
+                document.getElementById('username').textContent = userName;
+                fetchAppointments(userName);
+            }
+        });
+
+        function toggleDropdown() {
+            const dropdown = document.getElementById('dropdown-menu');
+            dropdown.style.display = dropdown.style.display === "block" ? "none" : "block";
+        }
+
+        window.onclick = function(event) {
+            if (!event.target.matches('.dropdown-arrow')) {
+                const dropdowns = document.getElementsByClassName("dropdown-content");
+                for (let i = 0; i < dropdowns.length; i++) {
+                    let openDropdown = dropdowns[i];
+                    if (openDropdown.style.display === "block") {
+                        openDropdown.style.display = "none";
+                    }
+                }
+            }
+        }
+
+</script>
+</body>
+</html>
