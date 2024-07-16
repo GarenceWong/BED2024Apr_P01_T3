@@ -55,3 +55,11 @@ CREATE TABLE Appointments (
 );
 
 /* Doctor Table */
+CREATE TABLE DoctorLogin (
+    username VARCHAR(50) PRIMARY KEY,
+    password VARCHAR(255) NOT NULL
+);
+
+-- Insert the predefined username and password
+INSERT INTO DoctorLogin (username, password)
+VALUES ('docz@gmail.com', '123456');
