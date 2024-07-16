@@ -94,7 +94,7 @@ body {
 .search-bar {
     width: 600px;
     padding: 10px;
-    font-size: 16px;
+    font-size: 16px;    
     border: 1px solid black;
     border-radius: 25px;
     background-color: #d9d9d9;
@@ -105,3 +105,49 @@ body {
     font-weight: 600;
 }
 /* search bar end */
+
+/* patient display area start */
+.patient-list-container {
+    width: 80%; /* Adjust as needed */
+    height: 300px; /* Adjust as needed */
+    margin: 20px auto; /* Center the container and add top margin */
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    overflow-y: scroll;
+}
+
+.patient-list-header {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    background-color: #EEEEEE;
+    border-bottom: 1px solid #ccc;
+    font-weight: bold;
+}
+
+.patient-list-header span {
+    flex: 1;
+    text-align: center;
+}
+
+.patient-list {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.patient-list li {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+}
+
+.patient-list li span {
+    flex: 1;
+    text-align: center;
+}
+
+.patient-list li:last-child {
+    border-bottom: none;
+}/* patient display area end */
