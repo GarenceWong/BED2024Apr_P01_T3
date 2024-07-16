@@ -1,5 +1,6 @@
 const express = require("express");
 const cors = require("cors");
+const fileUpload = require('express-fileupload'); 
 const sql = require("mssql");
 const dbConfig = require("./dbConfig");
 const { signup } = require("./controllers/usersController");
@@ -9,7 +10,7 @@ const { adminLogin } = require('./controllers/admincontroller');
 const { addPersonalDetails, fetchPersonalDetails } = require('./controllers/personalDetailController');
 const { createTimeslot, getTimeslots } = require('./controllers/timeslotController');
 const { handleDeleteAppointment, handleUpdateAppointment, getUserAppointment } = require('./controllers/userAppointmentController');
-
+const { submitVerificationDetails, verifyUserHandler, checkVerificationStatus } = require('./controllers/verificationController');
 
 
 const app = express();
@@ -17,6 +18,7 @@ const port = process.env.PORT || 3003;
 
 app.use(cors());
 app.use(express.json());
+app.use(fileUpload());
 
 app.post("/signup", signup);
 app.post("/login", login);
@@ -29,7 +31,9 @@ app.get('/get-timeslots', getTimeslots);
 app.delete('/delete-appointment/:id', handleDeleteAppointment);
 app.put('/update-appointment', handleUpdateAppointment);
 app.get('/get-appointment/:id', getUserAppointment);
-
+app.post('/submit-verification', submitVerificationDetails);
+app.post('/verify-user', verifyUserHandler);
+app.get('/verification-status/:verificationID', checkVerificationStatus);
 
 
 

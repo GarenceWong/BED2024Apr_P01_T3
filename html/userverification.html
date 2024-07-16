@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/style.css">
+    <title>ZehaoHealthcare</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="logo-container">
+            <img src="../Images/Logo.png" alt="Logo" class="logo"/>
+            <a href="userpage.html" class="company-name">Zehao Healthcare</a>
+        </div>
+   
+        <nav class="navbar">
+            <a href="../html/aboutus.html">About Us</a>
+            <a href="../html/contactus.html">Contact Us</a>
+            <div class="user-info">
+                <span id="username"></span>
+                <img src="../Images/dropdownarrow.png" alt="dropdownarrow" class="dropdown-arrow" onclick="toggleDropdown()"/>
+                <div id="dropdown-menu" class="dropdown-content">
+                    <a href="../html/updatepersonal.html">Update Personal Details</a>
+                    <a href="../index.html">Sign Out</a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section class="verification-form">
+            <h2>Verification</h2>
+            <form id="verificationForm" method="POST" enctype="multipart/form-data">
+                <div class="form-group">
+                    <label for="housingType">Housing Type:</label>
+                    <select id="housingType" name="housingType" required>
+                        <option value="HDB">HDB</option>
+                        <option value="Condo">Condo</option>
+                        <option value="Landed">Landed</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="employmentStatus">Employment Status:</label>
+                    <select id="employmentStatus" name="employmentStatus" required>
+                        <option value="Full-Time">Full-Time Employment</option>
+                        <option value="Part-Time">Part-Time Employment</option>
+                        <option value="Self-Employed">Self-Employed</option>
+                        <option value="Unemployed">Unemployed</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="grossMonthlyIncome">Gross Monthly Income:</label>
+                    <input type="number" id="grossMonthlyIncome" name="grossMonthlyIncome" step="0.01" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="cpfContributionHistory">CPF Contribution History:</label>
+                    <input type="file" id="cpfContributionHistory" name="cpfContributionHistory">
+                </div>
+
+                <div class="form-group">
+                    <label for="nricFrontBack">NRIC Front & Back:</label>
+                    <input type="file" id="nricFrontBack" name="nricFrontBack">
+                </div>
+
+                <button type="submit">Submit</button>
+            </form>
+        </section>
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const userName = localStorage.getItem('userName');
+            if (userName) {
+                document.getElementById('username').textContent = userName;
+            }
+        });
+
+        function toggleDropdown() {
+            const dropdown = document.getElementById('dropdown-menu');
+            if (dropdown.style.display === "block") {
+                dropdown.style.display = "none";
+            } else {
+                dropdown.style.display = "block";
+            }
+        }
+
+        window.onclick = function(event) {
+            if (!event.target.matches('.dropdown-arrow')) {
+                const dropdowns = document.getElementsByClassName("dropdown-content");
+                for (let i = 0; i < dropdowns.length; i++) {
+                    let openDropdown = dropdowns[i];
+                    if (openDropdown.style.display === "block") {
+                        openDropdown.style.display = "none";
+                    }
+                }
+            }
+        }
+
+        async function submitVerificationForm() {
+            const form = document.getElementById('verificationForm');
+            const formData = new FormData(form);
+
+            try {
+                const response = await fetch('/submit-verification', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                const text = await response.text(); // Read the raw response text
+                console.log("Raw response text:", text);
+
+                try {
+                    const result = JSON.parse(text); // Parse the text to JSON
+                    console.log("Parsed response JSON:", result);
+
+                    if (response.ok) {
+                        alert('Verification details submitted successfully.');
+                    } else {
+                        alert('Error submitting verification details: ' + result.message);
+                    }
+                } catch (e) {
+                    console.error("Failed to parse response JSON:", e);
+                    alert('Error submitting verification details: Failed to parse response JSON.');
+                }
+            } catch (error) {
+                alert('Error submitting verification details: ' + error.message);
+                console.error('Error submitting verification details:', error);
+            }
+        }
+
+        document.getElementById('verificationForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            submitVerificationForm();
+        });
+    </script>
+</body>
+</html>

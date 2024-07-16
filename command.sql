@@ -32,6 +32,16 @@ CREATE TABLE Timeslots (
     status VARCHAR(10)
 );
 
+CREATE TABLE Verification (
+    VerificationID INT IDENTITY(1,1) PRIMARY KEY,
+    HousingType VARCHAR(50) NOT NULL,
+    EmploymentStatus VARCHAR(50) NOT NULL,
+    GrossMonthlyIncome DECIMAL(10, 2) NOT NULL,
+    CPFContributionHistory NVARCHAR(MAX) NULL, 
+    NRICFrontBack NVARCHAR(MAX) NULL, 
+    VerificationStatus BIT DEFAULT 0 
+);
+
 
 
 
