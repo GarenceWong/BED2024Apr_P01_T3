@@ -1,9 +1,8 @@
-/*Color Palette
-#EEEEEE - Light Gray
-#E3CDE2 - Light Pink
-#8E699C - Purple
-#333333 - Black
-*/
+/* Color Palette */
+/* #EEEEEE - Light Gray */
+/* #E3CDE2 - Light Pink */
+/* #8E699C - Purple */
+/* #333333 - Black */
 
 body {
     font-family: Arial, sans-serif;
@@ -74,51 +73,49 @@ body {
 .appointment-rectangle {
     background-color: #8E699C;
     color: #ffffff;
-    width: 1707px;
+    width: 100%;
     height: 50px;
     display: flex;
     align-items: center;
     justify-content: center;
-    margin: 1; /* make it place right under the head */
+    margin-top: 20px; /* Adjust margin as needed */
     font-size: 24px;
 }
 
-
-/* search bar start */
+/* Search Bar */
 .search-bar-container {
     display: flex;
     justify-content: center;
-    margin: 58px auto 0; /* Add top margin for space between the rectangle and search bar */
+    margin-top: 20px; /* Adjust margin as needed */
 }
 
 .search-bar {
     width: 600px;
     padding: 10px;
-    font-size: 16px;    
-    border: 1px solid black;
+    font-size: 16px;
+    border: 1px solid #333;
     border-radius: 25px;
     background-color: #d9d9d9;
 }
 
 .search-bar::placeholder {
-    color: #000000 50%; /* Light grey placeholder text */
+    color: #333;
     font-weight: 600;
 }
-/* search bar end */
 
-/* patient display area start */
+/* Patient List */
 .patient-list-container {
-    width: 80%; /* Adjust as needed */
-    height: 600px; /* Adjust as needed */
-    margin: 20px auto; /* Center the container and add top margin */
+    width: 80%;
+    height: 600px;
+    margin: 20px auto;
     border: 1px solid #ccc;
     border-radius: 10px;
-    overflow-y: scroll;
+    overflow-y: auto; /* Changed to auto for scroll only when necessary */
 }
 
 .patient-list-header {
     display: flex;
-    justify-content: space-between;
+    align-items: center;
     padding: 10px;
     background-color: #EEEEEE;
     border-bottom: 1px solid #ccc;
@@ -130,24 +127,14 @@ body {
     text-align: center;
 }
 
-.patient-list {
-    list-style-type: none;
-    padding: 0;
-    margin: 0;
-}
-
-.patient-list li {
+.patient-list-row {
     display: flex;
-    justify-content: space-between;
-    padding: 10px;
+    align-items: center;
+    padding: 10px; /* Reduced padding for better alignment */
     border-bottom: 1px solid #ccc;
 }
 
-.patient-list li span {
+.patient-list-row span {
     flex: 1;
     text-align: center;
 }
-
-.patient-list li:last-child {
-    border-bottom: none;
-}/* patient display area end */
