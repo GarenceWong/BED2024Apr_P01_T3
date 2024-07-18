@@ -161,7 +161,7 @@
             .then(response => response.json())
             .then(result => {
                 if (result.success) {
-                    alert(`Appointment ID: ${id} has been rescheduled`);
+                    alert(`Appointment has been rescheduled`);
                     window.location.href = 'userappointments.html'; // Navigate back to the appointments page
                 } else {
                     alert('Error rescheduling appointment');

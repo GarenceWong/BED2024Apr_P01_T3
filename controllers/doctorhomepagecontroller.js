@@ -1,6 +1,5 @@
 const { getAllTimeslots } = require('../models/doctorhomepagemodel');
 
-// Controller to handle fetching timeslots
 async function getTimeslots(req, res) {
     try {
         const timeslots = await getAllTimeslots();

@@ -1,7 +1,6 @@
 const sql = require("mssql");
 const dbConfig = require("../dbConfig");
 
-// Function to fetch all timeslots from the database
 async function getAllTimeslots() {
     try {
         let pool = await sql.connect(dbConfig);

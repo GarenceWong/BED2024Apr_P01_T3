@@ -43,36 +43,40 @@
 
     <script>
         async function fetchTimeslots() {
-            try {
-                const response = await fetch('/get-timeslots');
-                if (!response.ok) {
-                    throw new Error('Failed to fetch timeslots');
-                }
-                const timeslots = await response.json();
-                const timeslotsContainer = document.getElementById('timeslots-container');
-                
-                // Clear existing content
-                timeslotsContainer.innerHTML = '';
-            
-                timeslots.forEach((timeslot, index) => {
-                    const timeslotRow = document.createElement('div');
-                    timeslotRow.classList.add('patient-list-row');
-                    timeslotRow.innerHTML = `
-                        <span class="row-number">${index + 1}</span>
-                        <span class="row-patient">${timeslot.username}</span>
-                        <span class="row-date">${new Date(timeslot.timeslotDate).toLocaleDateString()}</span>
-                        <span class="row-time">${timeslot.timeslotTime}</span>
-                        <span class="row-status">${timeslot.status}</span>
-                    `;
-                    timeslotsContainer.appendChild(timeslotRow);
-                });
-            } catch (error) {
-                console.error('Error fetching timeslots:', error);
-            }
+    try {
+        const response = await fetch('http://localhost:3003/get-timeslots');
+        if (!response.ok) {
+            throw new Error('Failed to fetch timeslots');
         }
+        const timeslots = await response.json();
+        const timeslotsContainer = document.getElementById('timeslots-container');
         
-        // Ensure the function runs when the window is loaded
-        window.onload = fetchTimeslots;
+        // Clear existing content
+        timeslotsContainer.innerHTML = '';
+    
+        timeslots.forEach((timeslot, index) => {
+            const timeslotRow = document.createElement('div');
+            timeslotRow.classList.add('patient-list-row');
+            timeslotRow.innerHTML = `
+                <span class="row-number">${index + 1}</span>
+                <span class="row-patient">${timeslot.username}</span>
+                <span class="row-date">${new Date(timeslot.timeslotDate).toLocaleDateString()}</span>
+                <span class="row-time">${timeslot.timeslotTime}</span>
+                <span class="row-status">${timeslot.status}</span>
+            `;
+            timeslotsContainer.appendChild(timeslotRow);
+        });
+    } catch (error) {
+        console.error('Error fetching timeslots:', error);
+    }
+}
+
+window.onload = fetchTimeslots;
+
+
+        
+        
     </script>
 </body>
 </html>
+

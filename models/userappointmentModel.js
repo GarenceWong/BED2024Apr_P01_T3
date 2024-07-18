@@ -47,11 +47,7 @@ async function updateAppointment(appointmentId, newDate, newTime) {
         throw error;
     }
 }
- 
- 
- 
- 
- 
+
 async function getAppointmentById(appointmentId) {
     try {
         let pool = await sql.connect(dbConfig);

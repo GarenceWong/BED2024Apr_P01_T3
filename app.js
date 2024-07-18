@@ -7,7 +7,8 @@ const { doctorLogin } = require("./controllers/doctorlogincontroller");
 const { login } = require('./controllers/loginController');
 const { adminLogin } = require('./controllers/admincontroller');
 const { addPersonalDetails, fetchPersonalDetails } = require('./controllers/personalDetailController');
-const { createTimeslot, getTimeslots } = require('./controllers/timeslotController');
+const { createTimeslot } = require('./controllers/timeslotController');
+const { getTimeslots } = require('./controllers/doctorhomepagecontroller'); // Ensure this is the only one
 const { handleDeleteAppointment, handleUpdateAppointment, getUserAppointment } = require('./controllers/userAppointmentController');
 const { submitVerificationDetails, verifyUserHandler, checkVerificationStatus } = require('./controllers/verificationController');
 
@@ -25,7 +26,7 @@ app.post("/admin/login", adminLogin);
 app.post('/personal-details', addPersonalDetails);
 app.get('/personal-details/:id', fetchPersonalDetails);
 app.post('/new-timeslot', createTimeslot);
-app.get('/get-timeslots', getTimeslots);
+app.get('/get-timeslots', getTimeslots); // Ensure this route is correctly defined
 app.delete('/delete-appointment/:id', handleDeleteAppointment);
 app.put('/update-appointment', handleUpdateAppointment);
 app.get('/get-appointment/:id', getUserAppointment);
