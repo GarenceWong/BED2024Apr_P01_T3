@@ -12,7 +12,6 @@ const { createTimeslot, getTimeslots } = require('./controllers/timeslotControll
 const { handleDeleteAppointment, handleUpdateAppointment, getUserAppointment } = require('./controllers/userAppointmentController');
 const { submitVerificationDetails, verifyUserHandler, checkVerificationStatus } = require('./controllers/verificationController');
 
-
 const app = express();
 const port = process.env.PORT || 3003;
 
@@ -34,10 +33,6 @@ app.get('/get-appointment/:id', getUserAppointment);
 app.post('/submit-verification', submitVerificationDetails);
 app.post('/verify-user', verifyUserHandler);
 app.get('/verification-status/:verificationID', checkVerificationStatus);
-
-
-
-
 
 app.post('/new-appointment', async (req, res) => {
   try {
@@ -98,4 +93,3 @@ process.on("SIGINT", async () => {
   console.log("Database connection closed");
   process.exit(0);
 });
-

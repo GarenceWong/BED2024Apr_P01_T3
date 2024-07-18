@@ -1,11 +1,11 @@
 const sql = require('mssql');
 const dbConfig = require('../dbConfig');
-
+ 
 async function addTimeslot(timeslot) {
     let pool;
     try {
         pool = await sql.connect(dbConfig);
-        
+       
         let result = await pool.request()
             .input('username', sql.VarChar(100), timeslot.username)
             .input('timeslotDate', sql.Date, timeslot.timeslotDate)
@@ -22,7 +22,7 @@ async function addTimeslot(timeslot) {
         }
     }
 }
-
+ 
 async function fetchTimeslots(username) {
     let pool;
     try {
@@ -40,7 +40,7 @@ async function fetchTimeslots(username) {
         }
     }
 }
-
+ 
 module.exports = {
     addTimeslot,
     fetchTimeslots

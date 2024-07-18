@@ -7,5 +7,7 @@ module.exports = {
     options: {
       port: 1433,
       connectionTimeout: 60000,
+      encrypt: true,
+      enableArithAbort: true
     },
   };

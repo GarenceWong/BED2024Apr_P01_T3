@@ -37,7 +37,7 @@
             </div>
         </div>
     </main>
-
+ 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const userName = localStorage.getItem('userName');
@@ -46,12 +46,12 @@
                 fetchAppointments(userName);
             }
         });
-
+ 
         function toggleDropdown() {
             const dropdown = document.getElementById('dropdown-menu');
             dropdown.style.display = dropdown.style.display === "block" ? "none" : "block";
         }
-
+ 
         window.onclick = function(event) {
             if (!event.target.matches('.dropdown-arrow')) {
                 const dropdowns = document.getElementsByClassName("dropdown-content");
@@ -63,7 +63,7 @@
                 }
             }
         }
-
+ 
         function fetchAppointments(username) {
             fetch(`http://localhost:3003/get-timeslots?username=${username}`)
                 .then(response => response.json())
@@ -76,56 +76,56 @@
                 })
                 .catch(error => console.error('Error fetching appointments:', error));
         }
-
+ 
         function displayAppointments(timeslots) {
             const appointmentsContainer = document.getElementById('appointmentsContainer');
             appointmentsContainer.innerHTML = ''; // Clear previous appointments
             document.getElementById('noAppointment').style.display = 'none';
-
+ 
             // Limit the number of displayed appointments to 3
             const maxAppointments = 3;
-
+ 
             timeslots.slice(0, maxAppointments).forEach(timeslot => {
                 const appointmentDetails = document.createElement('div');
                 appointmentDetails.className = 'appointment-details';
-
+ 
                 const appointmentInfo = document.createElement('div');
                 appointmentInfo.className = 'appointment-info';
-
+ 
                 // Format the date
                 const formattedDate = timeslot.timeslotDate.split('T')[0]; // YYYY-MM-DD
-
+ 
                 // Extract the time part (HH:MM) from the timeslotTime string
                 const timeString = timeslot.timeslotTime.split('T')[1];
                 const formattedTime = timeString.split(':').slice(0, 2).join(':'); // HH:MM
-
+ 
                 const appointmentDate = document.createElement('span');
                 appointmentDate.textContent = `Date: ${formattedDate}`;
-
+ 
                 const appointmentTime = document.createElement('span');
                 appointmentTime.textContent = `Time: ${formattedTime}`;
-
+ 
                 appointmentInfo.appendChild(appointmentDate);
                 appointmentInfo.appendChild(appointmentTime);
-
+ 
                 const cancelButton = document.createElement('button');
                 cancelButton.className = 'cancel';
                 cancelButton.textContent = 'Cancel';
                 cancelButton.onclick = () => cancelAppointment(timeslot.id);
-
+ 
                 const rescheduleButton = document.createElement('button');
                 rescheduleButton.className = 'reschedule';
                 rescheduleButton.textContent = 'Reschedule';
                 rescheduleButton.onclick = () => rescheduleAppointment(timeslot.id);
-
+ 
                 appointmentDetails.appendChild(appointmentInfo);
                 appointmentDetails.appendChild(cancelButton);
                 appointmentDetails.appendChild(rescheduleButton);
-
+ 
                 appointmentsContainer.appendChild(appointmentDetails);
             });
         }
-
+ 
         function cancelAppointment(appointmentId) {
             fetch(`http://localhost:3003/delete-appointment/${appointmentId}`, {
                 method: 'DELETE'
@@ -140,11 +140,11 @@
             })
             .catch(error => console.error('Error:', error));
         }
-
+ 
         function rescheduleAppointment(appointmentId) {
             window.location.href = `usertimeslot.html?appointmentId=${appointmentId}`;
         }
-
+ 
         // This function should be in usertimeslot.html to handle the actual update
         function updateAppointment(id, newDate, newTime) {
             fetch(`http://localhost:3003/update-appointment`, {
