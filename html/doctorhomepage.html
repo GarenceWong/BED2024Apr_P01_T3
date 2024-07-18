@@ -10,7 +10,7 @@
     <header class="header">
         <div class="logo-container">
             <img src="../Images/Logo.png" alt="Logo" class="logo" />
-            <a href="adminhomepage.html" class="company-name">Zehao Healthcare</a>
+            <a href="doctorhomepage.html" class="company-name">Zehao Healthcare</a>
         </div>
 
         <nav class="navbar">
@@ -36,6 +36,36 @@
             <span class="header-time">Time</span>
             <span class="header-status">Status</span>
         </div>
-    </div>    
+        <div id="timeslots-container">
+            <!-- Timeslots will be dynamically populated here -->
+        </div>
+    </div>
+
+    <script>
+        async function fetchTimeslots() {
+            try {
+                const response = await fetch('/get-timeslots');
+                const timeslots = await response.json();
+                const timeslotsContainer = document.getElementById('timeslots-container');
+                
+                timeslots.forEach((timeslot, index) => {
+                    const timeslotRow = document.createElement('div');
+                    timeslotRow.classList.add('patient-list-row');
+                    timeslotRow.innerHTML = `
+                        <span class="row-number">${index + 1}</span>
+                        <span class="row-patient">${timeslot.username}</span>
+                        <span class="row-date">${new Date(timeslot.timeslotDate).toLocaleDateString()}</span>
+                        <span class="row-time">${timeslot.timeslotTime}</span>
+                        <span class="row-status">${timeslot.status}</span>
+                    `;
+                    timeslotsContainer.appendChild(timeslotRow);
+                });
+            } catch (error) {
+                console.error('Error fetching timeslots:', error);
+            }
+        }
+
+        window.onload = fetchTimeslots;
+    </script>
 </body>
 </html>

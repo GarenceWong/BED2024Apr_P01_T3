@@ -109,7 +109,7 @@ body {
 /* patient display area start */
 .patient-list-container {
     width: 80%; /* Adjust as needed */
-    height: 300px; /* Adjust as needed */
+    height: 600px; /* Adjust as needed */
     margin: 20px auto; /* Center the container and add top margin */
     border: 1px solid #ccc;
     border-radius: 10px;
