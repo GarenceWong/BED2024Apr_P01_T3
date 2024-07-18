@@ -1,6 +1,5 @@
 const express = require("express");
 const cors = require("cors");
-const fileUpload = require('express-fileupload'); 
 const sql = require("mssql");
 const dbConfig = require("./dbConfig");
 const { signup } = require("./controllers/usersController");
@@ -17,8 +16,8 @@ const port = process.env.PORT || 3003;
 
 app.use(cors());
 app.use(express.json());
-app.use(fileUpload());
 
+// Routes
 app.post("/signup", signup);
 app.post("/login", login);
 app.post("/doctor/login", doctorLogin);
@@ -34,11 +33,13 @@ app.post('/submit-verification', submitVerificationDetails);
 app.post('/verify-user', verifyUserHandler);
 app.get('/verification-status/:verificationID', checkVerificationStatus);
 
+// Serve static files (optional if you have static content)
+// app.use(express.static('public'));
+
+// Example endpoint to handle new appointments
 app.post('/new-appointment', async (req, res) => {
   try {
       const { patientName, appointmentDate, appointmentTime, status } = req.body;
-
-      console.log('Received data:', { patientName, appointmentDate, appointmentTime, status });
 
       let pool = await sql.connect(dbConfig);
       let result = await pool.request()
@@ -56,40 +57,41 @@ app.post('/new-appointment', async (req, res) => {
   }
 });
 
-async function fetchAppointmentsFromDatabase() {
+// Example endpoint to fetch appointments from database
+app.get('/get-appointments', async (req, res) => {
   try {
       let pool = await sql.connect(dbConfig);
       let result = await pool.request().query('SELECT * FROM Appointments');
-      return result.recordset;
+      res.json(result.recordset);
   } catch (error) {
       console.error('Error fetching appointments from database:', error.message);
-      throw error;
-  }
-}
-app.get('/get-appointments', async (req, res) => {
-  try {
-      const appointments = await fetchAppointmentsFromDatabase();
-      res.json(appointments);
-  } catch (error) {
       res.status(500).json({ error: 'Failed to fetch appointments' });
   }
 });
 
-app.listen(port, async () => {
+// Start server
+const server = app.listen(port, async () => {
   try {
     await sql.connect(dbConfig);
     console.log("Database connection established successfully");
   } catch (err) {
-    console.error("Database connection error:", err);
+    console.error("Database connection error:", err.message);
     process.exit(1);
   }
 
   console.log(`Server listening on port ${port}`);
 });
 
+// Graceful shutdown
 process.on("SIGINT", async () => {
   console.log("Server is gracefully shutting down");
-  await sql.close();
-  console.log("Database connection closed");
-  process.exit(0);
+  try {
+    await server.close();
+    await sql.close();
+    console.log("Database connection closed");
+    process.exit(0);
+  } catch (err) {
+    console.error("Error during shutdown:", err.message);
+    process.exit(1);
+  }
 });

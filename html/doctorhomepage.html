@@ -45,9 +45,15 @@
         async function fetchTimeslots() {
             try {
                 const response = await fetch('/get-timeslots');
+                if (!response.ok) {
+                    throw new Error('Failed to fetch timeslots');
+                }
                 const timeslots = await response.json();
                 const timeslotsContainer = document.getElementById('timeslots-container');
                 
+                // Clear existing content
+                timeslotsContainer.innerHTML = '';
+            
                 timeslots.forEach((timeslot, index) => {
                     const timeslotRow = document.createElement('div');
                     timeslotRow.classList.add('patient-list-row');
@@ -64,7 +70,8 @@
                 console.error('Error fetching timeslots:', error);
             }
         }
-
+        
+        // Ensure the function runs when the window is loaded
         window.onload = fetchTimeslots;
     </script>
 </body>
