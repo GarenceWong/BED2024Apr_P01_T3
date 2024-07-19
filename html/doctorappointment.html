@@ -23,18 +23,60 @@
     <main class="main-content">
         <div class="medical-report-container">
             <h2>Medical Report</h2>
-            <form>
+            <form action="/submit-medical-report" method="post">
+                <label for="patient-name">Patient's Name</label>
+                <input type="text" id="patient-name" name="username" placeholder="Enter patient's name" required />
+
                 <label for="condition">Condition</label>
-                <textarea id="condition" name="condition" rows="4"></textarea>
+                <textarea id="condition" name="medicalCondition" rows="4" required></textarea>
 
                 <label for="prescribed-medication">Prescribed Medication</label>
-                <textarea id="prescribed-medication" name="prescribed-medication" rows="4"></textarea>
+                <textarea id="prescribed-medication" name="prescription" rows="4" required></textarea>
 
-                <button type="submit" class="prescribe-button">Prescribe</button>
+                <div class="button-container">
+                    <button type="submit" class="prescribe-button">Prescribe</button>
+                    <button type="button" class="cancel-button" onclick="window.location.href='doctorhomepage.html'">Cancel</button>
+                </div>
             </form>
         </div>
     </main>
 
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const form = document.querySelector('form');
+            
+            form.addEventListener('submit', async (event) => {
+                event.preventDefault(); // Prevent the default form submission
+                
+                // Collect form data
+                const formData = new FormData(form);
+                const data = {};
+                formData.forEach((value, key) => {
+                    data[key] = value;
+                });
     
-
+                try {
+                    // Send POST request to server
+                    const response = await fetch('/submit-medical-report', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify(data),
+                    });
+    
+                    if (response.ok) {
+                        alert('Medical report submitted successfully!');
+                        form.reset(); // Optionally, reset the form fields
+                    } else {
+                        alert('Failed to submit medical report. Please try again.');
+                    }
+                } catch (error) {
+                    console.error('Error submitting medical report:', error);
+                    alert('An error occurred. Please try again later.');
+                }
+            });
+        });
+    </script>
 </body>
+</html>

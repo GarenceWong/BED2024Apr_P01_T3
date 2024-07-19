@@ -71,7 +71,6 @@ body {
     color: #333;
 }
 
-
 /* Medical Report Form start */
 .main-content {
     display: flex;
@@ -81,17 +80,20 @@ body {
 }
 
 .medical-report-container {
-    background-color: #E3CDE2; /* Light Gray */
+    background-color: #E3CDE2; /* Light Pink */
     padding: 20px;
     border-radius: 10px;
     width: 60%; /* Adjust width as needed */
-    height: 500px; /* Increase the height */
+    height: auto; /* Let height adjust based on content */
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
 }
 
 .medical-report-container h2 {
     text-align: center;
     color: #333333; /* Black */
+    margin-bottom: 20px; /* Space below heading */
 }
 
 .medical-report-container form {
@@ -103,6 +105,15 @@ body {
 .medical-report-container label {
     font-size: 16px;
     color: #333333; /* Black */
+    margin-bottom: 5px; /* Space below label */
+}
+
+#patient-name {
+    width: 98%;
+    padding: 8px;
+    margin-bottom: 16px; /* Space below text box */
+    border: 1px solid #ccc;
+    border-radius: 4px;
 }
 
 .medical-report-container textarea {
@@ -112,7 +123,12 @@ body {
     border: 1px solid #ccc;
     border-radius: 5px;
     resize: none;
-    height: 130px;
+}
+
+.button-container {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px; /* Space between buttons */
 }
 
 .prescribe-button {
@@ -123,11 +139,25 @@ body {
     font-size: 16px;
     border-radius: 5px;
     cursor: pointer;
-    align-self: flex-end;
 }
 
 .prescribe-button:hover {
     background-color: #E3CDE2; /* Light Pink */
     color: #333333; /* Black */
+}
+
+.cancel-button {
+    background-color: #CCCCCC; /* Light Gray */
+    color: #333333; /* Black */
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.cancel-button:hover {
+    background-color: #999999; /* Darker Gray */
+    color: #ffffff; /* White */
 }
 /* Medical Report Form end */

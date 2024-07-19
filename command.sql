@@ -74,15 +74,18 @@ CREATE TABLE DoctorLogin (
 INSERT INTO DoctorLogin (username, password)
 VALUES ('docz@gmail.com', '123456');
 
--- medicalform start
 /* MedicalReports Table */
+ALTER TABLE Users
+ADD CONSTRAINT UQ_Users_Username UNIQUE (username);
+
 CREATE TABLE MedicalReports (
-    reportId INT PRIMARY KEY IDENTITY(1,1),
-    userId INT NOT NULL,
-    condition TEXT NOT NULL,
-    prescribedMedication TEXT NOT NULL,
-    reportDate DATE NOT NULL DEFAULT GETDATE(),
-    FOREIGN KEY (userId) REFERENCES Users(id)
+    id INT PRIMARY KEY IDENTITY(1,1),
+    username VARCHAR(255) NOT NULL,
+    medicalCondition VARCHAR(255) NOT NULL,
+    prescription TEXT,
+    FOREIGN KEY (username) REFERENCES Users(username)
 );
+
+
 -- medicalform end
 

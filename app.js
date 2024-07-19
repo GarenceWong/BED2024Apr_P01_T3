@@ -8,9 +8,10 @@ const { login } = require('./controllers/loginController');
 const { adminLogin } = require('./controllers/admincontroller');
 const { addPersonalDetails, fetchPersonalDetails } = require('./controllers/personalDetailController');
 const { createTimeslot } = require('./controllers/timeslotController');
-const { getTimeslots } = require('./controllers/doctorhomepagecontroller'); // Ensure this is the only one
+const { getTimeslots } = require('./controllers/doctorhomepagecontroller');
 const { handleDeleteAppointment, handleUpdateAppointment, getUserAppointment } = require('./controllers/userAppointmentController');
 const { submitVerificationDetails, verifyUserHandler, checkVerificationStatus } = require('./controllers/verificationController');
+const { submitMedicalReport } = require('./controllers/doctorappointmentcontroller'); 
 
 const app = express();
 const port = process.env.PORT || 3003;
@@ -26,7 +27,7 @@ app.post("/admin/login", adminLogin);
 app.post('/personal-details', addPersonalDetails);
 app.get('/personal-details/:id', fetchPersonalDetails);
 app.post('/new-timeslot', createTimeslot);
-app.get('/get-timeslots', getTimeslots); // Ensure this route is correctly defined
+app.get('/get-timeslots', getTimeslots);
 app.delete('/delete-appointment/:id', handleDeleteAppointment);
 app.put('/update-appointment', handleUpdateAppointment);
 app.get('/get-appointment/:id', getUserAppointment);
@@ -34,10 +35,9 @@ app.post('/submit-verification', submitVerificationDetails);
 app.post('/verify-user', verifyUserHandler);
 app.get('/verification-status/:verificationID', checkVerificationStatus);
 
-// Serve static files (optional if you have static content)
-// app.use(express.static('public'));
+// New route for submitting medical reports
+app.post('/submit-medical-report', submitMedicalReport);
 
-// Example endpoint to handle new appointments
 app.post('/new-appointment', async (req, res) => {
   try {
       const { patientName, appointmentDate, appointmentTime, status } = req.body;
@@ -58,7 +58,6 @@ app.post('/new-appointment', async (req, res) => {
   }
 });
 
-// Example endpoint to fetch appointments from database
 app.get('/get-appointments', async (req, res) => {
   try {
       let pool = await sql.connect(dbConfig);

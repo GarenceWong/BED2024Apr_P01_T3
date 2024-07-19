@@ -72,17 +72,25 @@
                     
                     // Add click event listener to each timeslotRow
                     timeslotRow.addEventListener('click', () => {
-                        // Example: Navigate to appointment details page
+                        // Copy the username to clipboard
+                        const username = timeslot.username;
+                        navigator.clipboard.writeText(username).then(() => {
+                            alert('Patient name copied to clipboard');
+                        }).catch((error) => {
+                            console.error('Failed to copy text:', error);
+                        });
+                        
+                        // Navigate to appointment details page
                         window.location.href = `doctorappointment.html?id=${timeslot.id}`;
                     });
-                    
+                
                     timeslotsContainer.appendChild(timeslotRow);
                 });
             } catch (error) {
                 console.error('Error fetching timeslots:', error);
             }
         }
-
+        
         window.onload = fetchTimeslots;
     </script>
 </body>
