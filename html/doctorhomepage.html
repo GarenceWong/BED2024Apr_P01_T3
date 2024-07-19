@@ -69,6 +69,13 @@
                         <span class="row-time">${formattedTime}</span>
                         <span class="row-status">${timeslot.status}</span>
                     `;
+                    
+                    // Add click event listener to each timeslotRow
+                    timeslotRow.addEventListener('click', () => {
+                        // Example: Navigate to appointment details page
+                        window.location.href = `doctorappointment.html?id=${timeslot.id}`;
+                    });
+                    
                     timeslotsContainer.appendChild(timeslotRow);
                 });
             } catch (error) {

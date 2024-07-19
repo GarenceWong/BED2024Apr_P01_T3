@@ -95,11 +95,11 @@ body {
     font-size: 16px;
     border: 1px solid #333;
     border-radius: 25px;
-    background-color: #d9d9d9;
+    background-color: #E3CDE2;
 }
 
 .search-bar::placeholder {
-    color: #333;
+    color: #8E699C;
     font-weight: 600;
 }
 
@@ -117,9 +117,10 @@ body {
     display: flex;
     align-items: center;
     padding: 10px;
-    background-color: #EEEEEE;
+    background-color: #8E699C;
     border-bottom: 1px solid #ccc;
     font-weight: bold;
+    color: white;
 }
 
 .patient-list-header span {
@@ -132,6 +133,11 @@ body {
     align-items: center;
     padding: 10px; /* Reduced padding for better alignment */
     border-bottom: 1px solid #ccc;
+    transition: background-color 0.3s; /* Smooth background color transition */
+}
+
+.patient-list-row:hover {
+    background-color: #EEEEEE; /* Light gray background on hover */
 }
 
 .patient-list-row span {

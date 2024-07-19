@@ -70,3 +70,16 @@ CREATE TABLE DoctorLogin (
 -- Insert the predefined username and password
 INSERT INTO DoctorLogin (username, password)
 VALUES ('docz@gmail.com', '123456');
+
+-- medicalform start
+/* MedicalReports Table */
+CREATE TABLE MedicalReports (
+    reportId INT PRIMARY KEY IDENTITY(1,1),
+    userId INT NOT NULL,
+    condition TEXT NOT NULL,
+    prescribedMedication TEXT NOT NULL,
+    reportDate DATE NOT NULL DEFAULT GETDATE(),
+    FOREIGN KEY (userId) REFERENCES Users(id)
+);
+-- medicalform end
+
