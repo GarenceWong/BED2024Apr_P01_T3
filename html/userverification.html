@@ -19,6 +19,7 @@
         </div>
    
         <nav class="navbar">
+            <a href="../html/userdonation.html">Donate</a>
             <a href="../html/aboutus.html">About Us</a>
             <a href="../html/contactus.html">Contact Us</a>
             <div class="user-info">
@@ -57,18 +58,14 @@
 
                 <div class="form-group">
                     <label for="grossMonthlyIncome">Gross Monthly Income:</label>
-                    <input type="number" id="grossMonthlyIncome" name="grossMonthlyIncome" step="0.01" required>
+                    <input type="text" id="grossMonthlyIncome" name="grossMonthlyIncome" required>
                 </div>
 
                 <div class="form-group">
-                    <label for="cpfContributionHistory">CPF Contribution History:</label>
-                    <input type="file" id="cpfContributionHistory" name="cpfContributionHistory">
+                    <label for="nricFrontBack">NRIC:</label>
+                    <input type="text" id="nricFrontBack" name="nricFrontBack" required>
                 </div>
-
-                <div class="form-group">
-                    <label for="nricFrontBack">NRIC Front & Back:</label>
-                    <input type="file" id="nricFrontBack" name="nricFrontBack">
-                </div>
+                
 
                 <button type="submit">Submit</button>
             </form>
@@ -114,21 +111,20 @@
                     body: formData
                 });
 
-                const text = await response.text(); // Read the raw response text
-                console.log("Raw response text:", text);
+                const contentType = response.headers.get('content-type');
+                if (!contentType || !contentType.includes('application/json')) {
+                    const text = await response.text(); // Read the raw response text
+                    console.log("Raw response text:", text);
+                    throw new Error('Response is not JSON');
+                }
 
-                try {
-                    const result = JSON.parse(text); // Parse the text to JSON
-                    console.log("Parsed response JSON:", result);
+                const result = await response.json(); // Parse the response JSON
+                console.log("Parsed response JSON:", result);
 
-                    if (response.ok) {
-                        alert('Verification details submitted successfully.');
-                    } else {
-                        alert('Error submitting verification details: ' + result.message);
-                    }
-                } catch (e) {
-                    console.error("Failed to parse response JSON:", e);
-                    alert('Error submitting verification details: Failed to parse response JSON.');
+                if (response.ok) {
+                    alert('Verification details submitted successfully.');
+                } else {
+                    alert('Error submitting verification details: ' + result.message);
                 }
             } catch (error) {
                 alert('Error submitting verification details: ' + error.message);

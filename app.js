@@ -13,6 +13,9 @@ const { handleDeleteAppointment, handleUpdateAppointment, getUserAppointment } =
 const { submitVerificationDetails, verifyUserHandler, checkVerificationStatus } = require('./controllers/verificationController');
 const { submitMedicalReport } = require('./controllers/doctorappointmentcontroller'); 
 
+const { handleAddDonation } = require('./controllers/userdonationController');
+
+
 const app = express();
 const port = process.env.PORT || 3003;
 
@@ -34,6 +37,7 @@ app.get('/get-appointment/:id', getUserAppointment);
 app.post('/submit-verification', submitVerificationDetails);
 app.post('/verify-user', verifyUserHandler);
 app.get('/verification-status/:verificationID', checkVerificationStatus);
+app.post('/add-donation', handleAddDonation);
 
 // New route for submitting medical reports
 app.post('/submit-medical-report', submitMedicalReport);

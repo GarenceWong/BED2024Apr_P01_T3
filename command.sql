@@ -36,13 +36,17 @@ CREATE TABLE Verification (
     VerificationID INT IDENTITY(1,1) PRIMARY KEY,
     HousingType VARCHAR(50) NOT NULL,
     EmploymentStatus VARCHAR(50) NOT NULL,
-    GrossMonthlyIncome DECIMAL(10, 2) NOT NULL,
-    CPFContributionHistory NVARCHAR(MAX) NULL, 
+    GrossMonthlyIncome VARCHAR(50) NOT NULL,
     NRICFrontBack NVARCHAR(MAX) NULL, 
     VerificationStatus BIT DEFAULT 0 
 );
 
-
+CREATE TABLE Donations (
+    Username NVARCHAR(100) NOT NULL,
+    DonationDate DATE NOT NULL,
+    MedicineName NVARCHAR(100) NOT NULL,
+    Quantity INT NOT NULL
+);
 
 
 /* Admin Table */
