@@ -19,11 +19,11 @@ async function submitVerificationDetails(req, res) {
 }
 
 async function verifyUserHandler(req, res) {
-    // Placeholder for the function implementation
+    res.status(501).json({ message: 'verifyUserHandler not implemented yet.' });
 }
 
 async function checkVerificationStatus(req, res) {
-    // Placeholder for the function implementation
+    res.status(501).json({ message: 'checkVerificationStatus not implemented yet.' });
 }
 
 module.exports = {
@@ -31,4 +31,7 @@ module.exports = {
     verifyUserHandler,
     checkVerificationStatus
 };
+
+
+
 

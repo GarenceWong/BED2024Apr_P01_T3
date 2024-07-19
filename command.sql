@@ -36,7 +36,7 @@ CREATE TABLE Verification (
     VerificationID INT IDENTITY(1,1) PRIMARY KEY,
     HousingType VARCHAR(50) NOT NULL,
     EmploymentStatus VARCHAR(50) NOT NULL,
-    GrossMonthlyIncome DECIMAL(10, 2) NOT NULL,
+    GrossMonthlyIncome VARCHAR(50) NOT NULL,
     NRICFrontBack NVARCHAR(MAX) NULL, 
     VerificationStatus BIT DEFAULT 0 
 );
