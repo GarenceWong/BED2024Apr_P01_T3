@@ -1,0 +1,126 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 20px;
+    background-color: #EEEEEE;
+    border-bottom: 6px solid #E3CDE2;
+    height: 45px;
+}
+
+.logo-container {
+    display: flex;
+    align-items: center;
+    padding-left: 150px;
+}
+
+.logo {
+    max-height: 30px;
+    margin-right: 10px;
+    padding-right: 10px;
+}
+
+.company-name {
+    text-decoration: none;
+    color: #333333;
+    font-size: 24px;
+}
+
+.navbar {
+    display: flex;
+    gap: 15px;
+    padding-right: 150px;
+}
+
+.navbar a {
+    text-decoration: none;
+    color: #333;
+    padding: 10px 15px;
+    font-size: 20px;
+}
+
+.navbar a:hover {
+    color: #8E699C;
+}
+
+.navbar .logout-button {
+    background-color: #8E699C;
+    color: #ffffff;
+    border: none;
+    border-radius: 20px;
+    padding: 10px 20px;
+    text-decoration: none;
+}
+
+.navbar .logout-button:hover {
+    background-color: #E3CDE2;
+    color: #333;
+}
+
+
+/* Medical Report Form start */
+.main-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: calc(100vh - 100px); /* Adjust based on header height */
+}
+
+.medical-report-container {
+    background-color: #EEEEEE; /* Light Gray */
+    padding: 20px;
+    border-radius: 10px;
+    width: 60%; /* Adjust width as needed */
+    height: 500px; /* Increase the height */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.medical-report-container h2 {
+    text-align: center;
+    color: #333333; /* Black */
+}
+
+.medical-report-container form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.medical-report-container label {
+    font-size: 16px;
+    color: #333333; /* Black */
+}
+
+.medical-report-container textarea {
+    width: 98%;
+    padding: 10px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    resize: none;
+    height: 130px;
+}
+
+.prescribe-button {
+    background-color: #8E699C; /* Purple */
+    color: #ffffff; /* White */
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    align-self: flex-end;
+}
+
+.prescribe-button:hover {
+    background-color: #E3CDE2; /* Light Pink */
+    color: #333333; /* Black */
+}
+/* Medical Report Form end */
