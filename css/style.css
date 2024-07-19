@@ -744,13 +744,19 @@ input[type="text"], input[type="email"], input[type="tel"], input[type="date"] {
     text-align: left;
 }
 
-.form-group select, .form-group input[type="number"], .form-group input[type="file"] {
+.form-group select,
+.form-group input[type="number"],
+.form-group input[type="text"] {
     flex-basis: 60%;
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 4px;
     background-color: rgb(240, 240, 240);
+    max-width: calc(150% - 10px);
+    box-sizing: border-box; 
 }
+
+
 
 .verification-form button {
     padding: 10px;

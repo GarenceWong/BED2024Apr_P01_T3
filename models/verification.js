@@ -7,11 +7,10 @@ async function addVerificationDetails(details) {
         .input('housingType', sql.VarChar(50), details.housingType)
         .input('employmentStatus', sql.VarChar(50), details.employmentStatus)
         .input('grossMonthlyIncome', sql.Decimal(10, 2), details.grossMonthlyIncome)
-        .input('cpfContributionHistory', sql.NVarChar(sql.MAX), details.cpfContributionHistory || null)
         .input('nricFrontBack', sql.NVarChar(sql.MAX), details.nricFrontBack || null)
         .query(`
-            INSERT INTO Verification (housingType, employmentStatus, grossMonthlyIncome, cpfContributionHistory, nricFrontBack)
-            VALUES (@housingType, @employmentStatus, @grossMonthlyIncome, @cpfContributionHistory, @nricFrontBack)
+            INSERT INTO Verification (housingType, employmentStatus, grossMonthlyIncome, nricFrontBack)
+            VALUES (@housingType, @employmentStatus, @grossMonthlyIncome, @nricFrontBack)
         `);
     return result;
 }
@@ -45,3 +44,4 @@ module.exports = {
     verifyUser,
     getVerificationStatus
 };
+

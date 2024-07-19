@@ -1,28 +1,13 @@
 const { addVerificationDetails } = require('../models/verification');
-const path = require('path');
 
 async function submitVerificationDetails(req, res) {
     try {
         const details = {
             housingType: req.body.housingType,
             employmentStatus: req.body.employmentStatus,
-            grossMonthlyIncome: req.body.grossMonthlyIncome
+            grossMonthlyIncome: req.body.grossMonthlyIncome,
+            nricFrontBack: req.body.nricFrontBack
         };
-
-        if (req.files) {
-            if (req.files.cpfContributionHistory) {
-                const cpfFile = req.files.cpfContributionHistory;
-                const cpfFilePath = path.join(__dirname, '../uploads', cpfFile.name);
-                await cpfFile.mv(cpfFilePath);
-                details.cpfContributionHistory = cpfFile.name;
-            }
-            if (req.files.nricFrontBack) {
-                const nricFile = req.files.nricFrontBack;
-                const nricFilePath = path.join(__dirname, '../uploads', nricFile.name);
-                await nricFile.mv(nricFilePath);
-                details.nricFrontBack = nricFile.name;
-            }
-        }
 
         const result = await addVerificationDetails(details);
         console.log('Verification details submitted successfully:', result);
@@ -46,3 +31,4 @@ module.exports = {
     verifyUserHandler,
     checkVerificationStatus
 };
+
