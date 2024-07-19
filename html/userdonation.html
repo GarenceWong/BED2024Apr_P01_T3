@@ -49,8 +49,8 @@
                     <p>Enter the details below to donate medicine:</p>
                     
                     <div class="donate-input-group">
-                        <input type="text" placeholder="Enter your username" alt="Username input" />
-                        <input type="date" alt="Expiration date input" />
+                        <input type="text" id="username-input" placeholder="Enter your username" alt="Username input" />
+                        <input type="date" id="donation-date" alt="Expiration date input" />
                     </div>
                     
                     <div class="donate-medication-details">
@@ -64,8 +64,8 @@
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td><input type="text" placeholder="Enter medicine name" alt="Medicine name input in table" /></td>
-                                    <td><input type="number" placeholder="0" alt="Quantity input in table" /></td>
+                                    <td><input type="text" id="medicine-name" placeholder="Enter medicine name" alt="Medicine name input in table" /></td>
+                                    <td><input type="number" id="quantity" placeholder="0" alt="Quantity input in table" /></td>
                                 </tr>
                             </tbody>
                         </table>
@@ -79,14 +79,13 @@
                     </div>
         
                     <div class="donate-action-buttons">
-                        <button class="donate-primary-button" alt="Primary button">Donate</button>
-                        <button class="donate-secondary-button" alt="Secondary button">Cancel</button>
+                        <button class="donate-primary-button" alt="Primary button" onclick="submitDonation()">Donate</button>
+                        <button class="donate-secondary-button" alt="Secondary button" onclick="cancelDonation()">Cancel</button>
                     </div>
                 </div>
             </div>
         </div>
     </donate>
-
 
     <footer class="footer">
         <div class="footer-container">
@@ -95,35 +94,74 @@
     </footer>
 
 <script>
-      document.addEventListener('DOMContentLoaded', () => { 
-            const userName = localStorage.getItem('userName'); 
-            if (userName) { 
-                document.getElementById('username').textContent = userName; 
-            } 
-        }); 
- 
-function toggleDropdown() { 
-    const dropdown = document.getElementById('dropdown-menu'); 
-    if (dropdown.style.display === "block") { 
-        dropdown.style.display = "none"; 
-    } else { 
-        dropdown.style.display = "block"; 
-    } 
-} 
- 
-window.onclick = function(event) { 
-    if (!event.target.matches('.dropdown-arrow')) { 
-        const dropdowns = document.getElementsByClassName("dropdown-content"); 
-        for (let i = 0; i < dropdowns.length; i++) { 
-            let openDropdown = dropdowns[i]; 
-            if (openDropdown.style.display === "block") { 
-                openDropdown.style.display = "none"; 
-            } 
-        } 
-    } 
-}
+    document.addEventListener('DOMContentLoaded', () => {
+        const userName = localStorage.getItem('userName');
+        if (userName) {
+            document.getElementById('username').textContent = userName;
+            document.getElementById('username-input').value = userName;
+        }
+    });
 
+    function toggleDropdown() {
+        const dropdown = document.getElementById('dropdown-menu');
+        if (dropdown.style.display === "block") {
+            dropdown.style.display = "none";
+        } else {
+            dropdown.style.display = "block";
+        }
+    }
+
+    window.onclick = function(event) {
+        if (!event.target.matches('.dropdown-arrow')) {
+            const dropdowns = document.getElementsByClassName("dropdown-content");
+            for (let i = 0; i < dropdowns.length; i++) {
+                let openDropdown = dropdowns[i];
+                if (openDropdown.style.display === "block") {
+                    openDropdown.style.display = "none";
+                }
+            }
+        }
+    }
+
+    function cancelDonation() {
+        window.location.href = '../html/userpage.html';
+    }
+
+    async function submitDonation() {
+        const username = document.getElementById('username-input').value;
+        const donationDate = document.getElementById('donation-date').value;
+        const medicineName = document.getElementById('medicine-name').value;
+        const quantity = document.getElementById('quantity').value;
+
+        const donation = {
+            username,
+            donationDate,
+            medicineName,
+            quantity
+        };
+
+        try {
+            const response = await fetch('http://localhost:3003/add-donation', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(donation)
+            });
+
+            if (response.ok) {
+                alert('Thank You for your Donation! We will send someone over to collect the medication shortly.');
+                window.location.href = '../html/userpage.html';
+            } else {
+                alert('Failed to add donation. Please try again.');
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            alert('An error occurred. Please try again later.');
+        }
+    }
 </script>
 
 </body>
 </html>
+

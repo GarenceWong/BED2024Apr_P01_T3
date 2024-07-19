@@ -11,6 +11,7 @@ const { createTimeslot } = require('./controllers/timeslotController');
 const { getTimeslots } = require('./controllers/doctorhomepagecontroller'); // Ensure this is the only one
 const { handleDeleteAppointment, handleUpdateAppointment, getUserAppointment } = require('./controllers/userAppointmentController');
 const { submitVerificationDetails, verifyUserHandler, checkVerificationStatus } = require('./controllers/verificationController');
+const { handleAddDonation } = require('./controllers/userdonationController');
 
 const app = express();
 const port = process.env.PORT || 3003;
@@ -33,6 +34,7 @@ app.get('/get-appointment/:id', getUserAppointment);
 app.post('/submit-verification', submitVerificationDetails);
 app.post('/verify-user', verifyUserHandler);
 app.get('/verification-status/:verificationID', checkVerificationStatus);
+app.post('/add-donation', handleAddDonation);
 
 // Serve static files (optional if you have static content)
 // app.use(express.static('public'));

@@ -41,6 +41,13 @@ CREATE TABLE Verification (
     VerificationStatus BIT DEFAULT 0 
 );
 
+CREATE TABLE Donations (
+    Username NVARCHAR(100) NOT NULL,
+    DonationDate DATE NOT NULL,
+    MedicineName NVARCHAR(100) NOT NULL,
+    Quantity INT NOT NULL
+);
+
 
 /* Admin Table */
 CREATE TABLE Admin (
