@@ -1,3 +1,10 @@
+/*Color Palette
+#EEEEEE - Light Gray
+#E3CDE2 - Light Pink
+#8E699C - Purple
+#333333 - Black
+*/
+
 body {
     font-family: Arial, sans-serif;
     margin: 0;
@@ -74,7 +81,7 @@ body {
 }
 
 .medical-report-container {
-    background-color: #EEEEEE; /* Light Gray */
+    background-color: #E3CDE2; /* Light Gray */
     padding: 20px;
     border-radius: 10px;
     width: 60%; /* Adjust width as needed */
