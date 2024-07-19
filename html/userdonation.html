@@ -9,6 +9,7 @@
 <style>
     body {
         font-family: Arial, sans-serif;
+        overflow: hidden;
     }
 </style>
 
@@ -34,8 +35,56 @@
     </header>
 
     <donate>
-
-
+        <div class="donate-container">
+            <div class="donate-form-wrapper">
+                <div class="donate-header">
+                    <div class="donate-header-content">
+                        <svg class="donate-header-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7v6h6V7h6m-2.5 9h-14M7 9h1m8-2h-7m7 4h-2m-1 3h4m-4 0h5m5-9V5h6v1" />
+                        </svg>
+                        <h1>Donate Medicine</h1>
+                    </div>
+                </div>
+                <div class="donate-form-content">
+                    <p>Enter the details below to donate medicine:</p>
+                    
+                    <div class="donate-input-group">
+                        <input type="text" placeholder="Enter your username" alt="Username input" />
+                        <input type="date" alt="Expiration date input" />
+                    </div>
+                    
+                    <div class="donate-medication-details">
+                        <table>
+                            <caption>Medication Details</caption>
+                            <thead>
+                                <tr>
+                                    <th>Medicine Name</th>
+                                    <th>Quantity</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><input type="text" placeholder="Enter medicine name" alt="Medicine name input in table" /></td>
+                                    <td><input type="number" placeholder="0" alt="Quantity input in table" /></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        
+                        <button class="donate-add-medication">
+                            <svg class="donate-add-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7v6h6V7h6m-2.5 9h-14M7 9h1m8-2h-7m7 4h-2m-1 3h4m-4 0h5m5-9V5h6v1" />
+                            </svg>
+                            Add Medication
+                        </button>
+                    </div>
+        
+                    <div class="donate-action-buttons">
+                        <button class="donate-primary-button" alt="Primary button">Donate</button>
+                        <button class="donate-secondary-button" alt="Secondary button">Cancel</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </donate>
 
 
