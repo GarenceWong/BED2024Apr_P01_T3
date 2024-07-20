@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/appointments.css">
+    <title>ZehaoHealthcare</title>
+    <style>
+        /* Add some basic styling for the detail view */
+        #enquiry-details {
+            display: none;
+            margin-top: 20px;
+        }
+
+        /* Add styles for the table rows */
+        #enquiries-table tr {
+            cursor: pointer;
+            /* Change the cursor to a pointer to indicate clickability */
+            transition: background-color 0.3s;
+            /* Smooth transition for background color change */
+        }
+
+        #enquiries-table tr:hover {
+            background-color: #f0f0f0;
+            /* Light background color on hover */
+        }
+
+        #enquiries-table tr:active {
+            background-color: #e0e0e0;
+            /* Slightly darker background color when clicked */
+        }
+    </style>
+</head>
+
+<body>
+    <header class="header">
+        <div class="logo-container">
+            <img src="../Images/Logo.png" alt="Logo" class="logo" />
+            <a href="adminhomepage.html" class="company-name">Zehao Healthcare</a>
+        </div>
+        <nav class="navbar">
+            <a href="../html/aboutus.html">About Us</a>
+            <a href="../html/contactus.html">Contact Us</a>
+            <span id="username"></span>
+        </nav>
+    </header>
+    <div class="subheader">
+        <b>Enquiries</b>
+    </div>
+
+    <main>
+        <table id="enquiries-table">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Subject</th>
+                    <th>Date</th>
+                </tr>
+            </thead>
+            <tbody id="enquiries-body">
+            </tbody>
+        </table>
+
+        <!-- Hidden section for displaying detailed view -->
+        <div id="enquiry-details">
+            <h2>Details</h2>
+            <p><strong>Name:</strong> <span id="detail-username"></span></p>
+            <p><strong>Title:</strong> <span id="detail-title"></span></p>
+            <p><strong>Content:</strong> <span id="detail-content"></span></p>
+        </div>
+    </main>
+
+    <script>
+        async function fetchEnquiries() {
+            try {
+                const response = await fetch('http://localhost:3003/get-enquiries');
+                if (!response.ok) {
+                    throw new Error('Failed to fetch enquiries');
+                }
+                const enquiries = await response.json();
+                const enquiriesBody = document.getElementById('enquiries-body');
+                enquiriesBody.innerHTML = '';
+
+                enquiries.forEach(enquiry => {
+                    const row = document.createElement('tr');
+                    row.setAttribute('data-id', enquiry.id); // Assuming you have an id field
+                    row.innerHTML = `
+                        <td>${enquiry.username}</td>
+                        <td>${enquiry.title}</td>
+                        <td>${enquiry.date}</td>
+                    `;
+                    row.addEventListener('click', () => showDetails(enquiry.id));
+                    enquiriesBody.appendChild(row);
+                });
+            } catch (error) {
+                console.error('Error fetching enquiries:', error);
+            }
+        }
+
+        async function showDetails(id) {
+            try {
+                const response = await fetch(`http://localhost:3003/get-enquiry/${id}`);
+                if (!response.ok) {
+                    throw new Error('Failed to fetch enquiry details');
+                }
+                const enquiry = await response.json();
+
+                document.getElementById('detail-username').textContent = enquiry.username;
+                document.getElementById('detail-title').textContent = enquiry.title;
+                document.getElementById('detail-content').textContent = enquiry.content;
+
+                document.getElementById('enquiry-details').style.display = 'block';
+            } catch (error) {
+                console.error('Error fetching enquiry details:', error);
+            }
+        }
+
+        window.onload = fetchEnquiries;
+    </script>
+</body>
+
+</html>

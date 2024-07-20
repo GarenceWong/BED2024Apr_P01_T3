@@ -43,8 +43,6 @@ CREATE TABLE Verification (
 );
 
 
-
-
 /* Admin Table */
 CREATE TABLE Admin (
     id INT PRIMARY KEY IDENTITY,
@@ -62,6 +60,14 @@ CREATE TABLE Appointments (
     appointmentDate DATE NOT NULL,
     appointmentTime TIME NOT NULL,
     status VARCHAR(20) CHECK (status IN ('confirmed', 'unconfirmed'))
+);
+
+CREATE TABLE enquiries (
+    id INT IDENTITY(1,1) PRIMARY KEY,
+    username NVARCHAR(50),
+    title NVARCHAR(100),
+    content NVARCHAR(MAX),
+    date DATE DEFAULT CAST(GETDATE() AS DATE)
 );
 
 /* Doctor Table */

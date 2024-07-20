@@ -33,7 +33,8 @@ app.get('/get-appointment/:id', getUserAppointment);
 app.post('/submit-verification', submitVerificationDetails);
 app.post('/verify-user', verifyUserHandler);
 app.get('/verification-status/:verificationID', checkVerificationStatus);
-
+/* app.get('/get-enquiries', fetchEnquiries);
+ */
 // Serve static files (optional if you have static content)
 // app.use(express.static('public'));
 
@@ -49,7 +50,6 @@ app.post('/new-appointment', async (req, res) => {
           .input('appointmentTime', sql.Time, new Date('2000-01-01T' + appointmentTime)) // Assuming appointmentTime is in HH:mm:ss format
           .input('status', sql.VarChar(20), status)
           .query('INSERT INTO Appointments (name, appointmentDate, appointmentTime, status) VALUES (@name, @appointmentDate, @appointmentTime, @status)');
-
       console.log('Appointment added successfully:', result);
       res.status(200).send('Appointment added successfully.');
   } catch (err) {
@@ -67,6 +67,33 @@ app.get('/get-appointments', async (req, res) => {
   } catch (error) {
       console.error('Error fetching appointments from database:', error.message);
       res.status(500).json({ error: 'Failed to fetch appointments' });
+  }
+});
+
+app.get('/get-enquiries', async (req, res) => {
+  try {
+      let pool = await sql.connect(dbConfig);
+      let result = await pool.request().query('SELECT id, username, title, CONVERT(varchar, date, 23) as date FROM enquiries');
+      res.json(result.recordset);
+      console.log('Fetched Succesfully')
+  } catch (error) {
+      console.error('Error fetching enquiries from database:', error.message);
+      res.status(500).json({ error: 'Failed to fetch enquiries' });
+  }
+});
+
+app.get('/get-enquiry/:id', async (req, res) => {
+  try {
+      const id = req.params.id;
+      let pool = await sql.connect(dbConfig);
+      let result = await pool.request()
+          .input('id', sql.Int, id)
+          .query('SELECT username, title, content FROM enquiries WHERE id = @id');
+      res.json(result.recordset[0]);
+      console.log('Fetched enquiry details successfully');
+  } catch (error) {
+      console.error('Error fetching enquiry details from database:', error.message);
+      res.status(500).json({ error: 'Failed to fetch enquiry details' });
   }
 });
 
