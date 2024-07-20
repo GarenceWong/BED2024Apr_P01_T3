@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/appointments.css">
+    <title>Enquiry Details</title>
+    <style>
+        .modal {
+            display: block; /* Show the modal */
+            position: fixed; /* Stay in place */
+            z-index: 1; /* Sit on top */
+            padding-top: 100px; /* Location of the box */
+            left: 0;
+            top: 0;
+            width: 100%; /* Full width */
+            height: 100%; /* Full height */
+            overflow: auto; /* Enable scroll if needed */
+            background-color: rgb(0, 0, 0); /* Fallback color */
+            background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            max-width: 500px;
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <header class="header">
+        <div class="logo-container">
+            <img src="../Images/Logo.png" alt="Logo" class="logo" />
+            <a href="adminhomepage.html" class="company-name">Zehao Healthcare</a>
+        </div>
+        <nav class="navbar">
+            <a href="../html/aboutus.html">About Us</a>
+            <a href="../html/contactus.html">Contact Us</a>
+            <span id="username"></span>
+        </nav>
+    </header>
+    <div class="subheader">
+        <b>Enquiries</b>
+    </div>
+    <div id="enquiryModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <h2>Enquiry Details</h2>
+            <p><strong>Name:</strong> <span id="detail-username"></span></p>
+            <p><strong>Title:</strong> <span id="detail-title"></span></p>
+            <p><strong>Content:</strong> <span id="detail-content"></span></p>
+        </div>
+    </div>
+
+    <script>
+        // Function to retrieve the enquiry ID from the query parameters
+        function getQueryParam(param) {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(param);
+        }
+
+        // Function to fetch and display the enquiry details
+        async function fetchEnquiryDetails(id) {
+            try {
+                const response = await fetch(`http://localhost:3003/get-enquiry/${id}`);
+                if (!response.ok) {
+                    throw new Error('Failed to fetch enquiry details');
+                }
+                const enquiry = await response.json();
+
+                document.getElementById('detail-username').textContent = enquiry.username;
+                document.getElementById('detail-title').textContent = enquiry.title;
+                document.getElementById('detail-content').textContent = enquiry.content;
+            } catch (error) {
+                console.error('Error fetching enquiry details:', error);
+            }
+        }
+
+        // Function to close the modal and go back to the main page
+        function closeModal() {
+            window.location.href = 'enquiries.html';
+        }
+
+        // Fetch and display the enquiry details when the page loads
+        window.onload = () => {
+            const enquiryId = getQueryParam('id');
+            if (enquiryId) {
+                fetchEnquiryDetails(enquiryId);
+            }
+        };
+    </script>
+</body>
+
+</html>

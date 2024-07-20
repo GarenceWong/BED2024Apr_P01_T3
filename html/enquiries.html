@@ -61,14 +61,6 @@
             <tbody id="enquiries-body">
             </tbody>
         </table>
-
-        <!-- Hidden section for displaying detailed view -->
-        <div id="enquiry-details">
-            <h2>Details</h2>
-            <p><strong>Name:</strong> <span id="detail-username"></span></p>
-            <p><strong>Title:</strong> <span id="detail-title"></span></p>
-            <p><strong>Content:</strong> <span id="detail-content"></span></p>
-        </div>
     </main>
 
     <script>
@@ -90,29 +82,13 @@
                         <td>${enquiry.title}</td>
                         <td>${enquiry.date}</td>
                     `;
-                    row.addEventListener('click', () => showDetails(enquiry.id));
+                    row.addEventListener('click', () => {
+                        window.location.href = `enquirydetails.html?id=${enquiry.id}`;
+                    });
                     enquiriesBody.appendChild(row);
                 });
             } catch (error) {
                 console.error('Error fetching enquiries:', error);
-            }
-        }
-
-        async function showDetails(id) {
-            try {
-                const response = await fetch(`http://localhost:3003/get-enquiry/${id}`);
-                if (!response.ok) {
-                    throw new Error('Failed to fetch enquiry details');
-                }
-                const enquiry = await response.json();
-
-                document.getElementById('detail-username').textContent = enquiry.username;
-                document.getElementById('detail-title').textContent = enquiry.title;
-                document.getElementById('detail-content').textContent = enquiry.content;
-
-                document.getElementById('enquiry-details').style.display = 'block';
-            } catch (error) {
-                console.error('Error fetching enquiry details:', error);
             }
         }
 
