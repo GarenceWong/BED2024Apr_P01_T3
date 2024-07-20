@@ -12,6 +12,8 @@ const { getTimeslots } = require('./controllers/doctorhomepagecontroller');
 const { handleDeleteAppointment, handleUpdateAppointment, getUserAppointment } = require('./controllers/userAppointmentController');
 const { submitVerificationDetails, verifyUserHandler, checkVerificationStatus } = require('./controllers/verificationController');
 const { submitMedicalReport } = require('./controllers/doctorappointmentcontroller'); 
+const { getEnquiries, getEnquiryByIdHandler } = require('./controllers/enquiryController');
+
 
 const { handleAddDonation } = require('./controllers/userdonationController');
 
@@ -40,6 +42,8 @@ app.post('/verify-user', verifyUserHandler);
 app.get('/verification-status/:verificationID', checkVerificationStatus);
 app.post('/add-donation', handleAddDonation);
 app.post('/submit-medical-report', submitMedicalReport);
+app.get('/get-enquiries', getEnquiries);
+app.get('/get-enquiry/:id', getEnquiryByIdHandler);
 
 // Additional routes for appointments
 app.post('/new-appointment', async (req, res) => {
