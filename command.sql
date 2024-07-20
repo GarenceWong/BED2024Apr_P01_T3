@@ -79,16 +79,13 @@ INSERT INTO DoctorLogin (username, password)
 VALUES ('docz@gmail.com', '123456');
 
 /* MedicalReports Table */
-ALTER TABLE Users
-ADD CONSTRAINT UQ_Users_Username UNIQUE (username);
-
 CREATE TABLE MedicalReports (
     id INT PRIMARY KEY IDENTITY(1,1),
     username VARCHAR(255) NOT NULL,
     medicalCondition VARCHAR(255) NOT NULL,
     prescription TEXT,
-    FOREIGN KEY (username) REFERENCES Users(username)
-);
+    FOREIGN KEY (id) REFERENCES Timeslots(id)
+); 
 
 
 -- medicalform end
