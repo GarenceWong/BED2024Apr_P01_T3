@@ -23,7 +23,7 @@
     <main class="main-content">
         <div class="medical-report-container">
             <h2>Medical Report</h2>
-            <form action="/submit-medical-report" method="post">
+            <form id="medical-report-form">
                 <label for="patient-name">Patient's Name</label>
                 <input type="text" id="patient-name" name="username" placeholder="Enter patient's name" required />
 
@@ -43,12 +43,11 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            const form = document.querySelector('form');
+            const form = document.getElementById('medical-report-form');
             
             form.addEventListener('submit', async (event) => {
                 event.preventDefault(); // Prevent the default form submission
                 
-                // Collect form data
                 const formData = new FormData(form);
                 const data = {};
                 formData.forEach((value, key) => {
@@ -56,7 +55,6 @@
                 });
     
                 try {
-                    // Send POST request to server
                     const response = await fetch('/submit-medical-report', {
                         method: 'POST',
                         headers: {

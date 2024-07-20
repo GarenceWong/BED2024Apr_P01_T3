@@ -68,6 +68,14 @@ CREATE TABLE Appointments (
     status VARCHAR(20) CHECK (status IN ('confirmed', 'unconfirmed'))
 );
 
+CREATE TABLE enquiries (
+    id INT IDENTITY(1,1) PRIMARY KEY,
+    username NVARCHAR(50),
+    title NVARCHAR(100),
+    content NVARCHAR(MAX),
+    date DATE DEFAULT CAST(GETDATE() AS DATE)
+);
+
 /* Doctor Table */
 CREATE TABLE DoctorLogin (
     username VARCHAR(50) PRIMARY KEY,

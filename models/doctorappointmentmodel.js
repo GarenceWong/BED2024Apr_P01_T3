@@ -1,4 +1,3 @@
-// models/doctorappointmentmodel.js
 const sql = require('mssql');
 const dbConfig = require('../dbConfig');
 
