@@ -9,25 +9,27 @@
     <style>
         .modal {
             display: block; /* Show the modal */
-            position: fixed; /* Stay in place */
             z-index: 1; /* Sit on top */
-            padding-top: 100px; /* Location of the box */
+            padding-top: 50px; /* Location of the box */
             left: 0;
             top: 0;
             width: 100%; /* Full width */
             height: 100%; /* Full height */
             overflow: auto; /* Enable scroll if needed */
-            background-color: rgb(0, 0, 0); /* Fallback color */
-            background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
+            margin-bottom: 1000px;
+
         }
+
 
         .modal-content {
             background-color: #fefefe;
-            margin: auto;
+            margin: 1% auto;
             padding: 20px;
             border: 1px solid #888;
-            width: 80%;
-            max-width: 500px;
+            width: 100%; /* Width of the modal */
+            max-width: 1000px; /* Maximum width of the modal */
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
         }
 
         .close {
