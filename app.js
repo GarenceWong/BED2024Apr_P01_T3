@@ -2,6 +2,7 @@ const express = require("express");
 const cors = require("cors");
 const sql = require("mssql");
 const dbConfig = require("./dbConfig");
+
 const { signup } = require("./controllers/usersController");
 const { doctorLogin } = require("./controllers/doctorlogincontroller");
 const { login } = require('./controllers/loginController');
@@ -10,11 +11,9 @@ const { addPersonalDetails, fetchPersonalDetails } = require('./controllers/pers
 const { createTimeslot } = require('./controllers/timeslotController');
 const { getTimeslots } = require('./controllers/doctorhomepagecontroller');
 const { handleDeleteAppointment, handleUpdateAppointment, getUserAppointment } = require('./controllers/userAppointmentController');
-const { submitVerificationDetails, verifyUserHandler, checkVerificationStatus } = require('./controllers/verificationController');
+const { submitVerificationDetails, verifyUserHandler, checkVerificationStatus, getVerifications, updateVerificationStatus } = require('./controllers/verificationController');
 const { submitMedicalReport } = require('./controllers/doctorappointmentcontroller'); 
-
 const { handleAddDonation } = require('./controllers/userdonationController');
-
 
 const app = express();
 const port = process.env.PORT || 3003;
@@ -38,9 +37,11 @@ app.post('/submit-verification', submitVerificationDetails);
 app.post('/verify-user', verifyUserHandler);
 app.get('/verification-status/:verificationID', checkVerificationStatus);
 app.post('/add-donation', handleAddDonation);
-
-// New route for submitting medical reports
 app.post('/submit-medical-report', submitMedicalReport);
+
+// New routes for fetching and updating verifications
+app.get('/get-verifications', getVerifications);
+app.post('/update-status', updateVerificationStatus);
 
 app.post('/new-appointment', async (req, res) => {
   try {
