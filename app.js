@@ -2,23 +2,28 @@ const express = require("express");
 const cors = require("cors");
 const sql = require("mssql");
 const dbConfig = require("./dbConfig");
+
+// Import controllers and models
 const { signup } = require("./controllers/usersController");
 const { doctorLogin } = require("./controllers/doctorlogincontroller");
 const { login } = require('./controllers/loginController');
 const { adminLogin } = require('./controllers/admincontroller');
 const { addPersonalDetails, fetchPersonalDetails } = require('./controllers/personalDetailController');
 const { createTimeslot } = require('./controllers/timeslotController');
-const { getTimeslots } = require('./controllers/doctorhomepagecontroller'); // Ensure this is the only one
+const { getTimeslots } = require('./controllers/doctorhomepagecontroller');
 const { handleDeleteAppointment, handleUpdateAppointment, getUserAppointment } = require('./controllers/userAppointmentController');
 const { submitVerificationDetails, verifyUserHandler, checkVerificationStatus } = require('./controllers/verificationController');
+const { submitMedicalReport } = require('./controllers/doctorappointmentcontroller');
+const { handleAddDonation } = require('./controllers/userdonationController');
 
 const app = express();
 const port = process.env.PORT || 3003;
 
 app.use(cors());
 app.use(express.json());
+app.use(express.urlencoded({ extended: true })); // Ensure URL-encoded data is parsed
 
-// Routes
+// Define routes
 app.post("/signup", signup);
 app.post("/login", login);
 app.post("/doctor/login", doctorLogin);
@@ -26,47 +31,71 @@ app.post("/admin/login", adminLogin);
 app.post('/personal-details', addPersonalDetails);
 app.get('/personal-details/:id', fetchPersonalDetails);
 app.post('/new-timeslot', createTimeslot);
-app.get('/get-timeslots', getTimeslots); // Ensure this route is correctly defined
+app.get('/get-timeslots', getTimeslots);
 app.delete('/delete-appointment/:id', handleDeleteAppointment);
 app.put('/update-appointment', handleUpdateAppointment);
 app.get('/get-appointment/:id', getUserAppointment);
 app.post('/submit-verification', submitVerificationDetails);
 app.post('/verify-user', verifyUserHandler);
 app.get('/verification-status/:verificationID', checkVerificationStatus);
-/* app.get('/get-enquiries', fetchEnquiries);
- */
-// Serve static files (optional if you have static content)
-// app.use(express.static('public'));
+app.post('/add-donation', handleAddDonation);
+app.post('/submit-medical-report', submitMedicalReport);
 
-// Example endpoint to handle new appointments
+// Additional routes for appointments
 app.post('/new-appointment', async (req, res) => {
-  try {
-      const { patientName, appointmentDate, appointmentTime, status } = req.body;
+    try {
+        const { patientName, appointmentDate, appointmentTime, status } = req.body;
 
+        let pool = await sql.connect(dbConfig);
+        let result = await pool.request()
+            .input('name', sql.VarChar(100), patientName)
+            .input('appointmentDate', sql.Date, appointmentDate)
+            .input('appointmentTime', sql.Time, new Date('2000-01-01T' + appointmentTime)) // Assuming appointmentTime is in HH:mm:ss format
+            .input('status', sql.VarChar(20), status)
+            .query('INSERT INTO Appointments (name, appointmentDate, appointmentTime, status) VALUES (@name, @appointmentDate, @appointmentTime, @status)');
+        console.log('Appointment added successfully:', result);
+        res.status(200).send('Appointment added successfully.');
+    } catch (err) {
+        console.error('Error adding new appointment:', err.message);
+        res.status(500).send('Error adding new appointment. Please try again later.');
+    }
+});
+
+app.get('/get-appointments', async (req, res) => {
+    try {
+        let pool = await sql.connect(dbConfig);
+        let result = await pool.request().query('SELECT * FROM Appointments');
+        res.json(result.recordset);
+    } catch (error) {
+        console.error('Error fetching appointments from database:', error.message);
+        res.status(500).json({ error: 'Failed to fetch appointments' });
+    }
+});
+
+app.get('/get-enquiries', async (req, res) => {
+  try {
       let pool = await sql.connect(dbConfig);
-      let result = await pool.request()
-          .input('name', sql.VarChar(100), patientName)
-          .input('appointmentDate', sql.Date, appointmentDate)
-          .input('appointmentTime', sql.Time, new Date('2000-01-01T' + appointmentTime)) // Assuming appointmentTime is in HH:mm:ss format
-          .input('status', sql.VarChar(20), status)
-          .query('INSERT INTO Appointments (name, appointmentDate, appointmentTime, status) VALUES (@name, @appointmentDate, @appointmentTime, @status)');
-      console.log('Appointment added successfully:', result);
-      res.status(200).send('Appointment added successfully.');
-  } catch (err) {
-      console.error('Error adding new appointment:', err.message);
-      res.status(500).send('Error adding new appointment. Please try again later.');
+      let result = await pool.request().query('SELECT id, username, title, CONVERT(varchar, date, 23) as date FROM enquiries');
+      res.json(result.recordset);
+      console.log('Fetched Succesfully')
+  } catch (error) {
+      console.error('Error fetching enquiries from database:', error.message);
+      res.status(500).json({ error: 'Failed to fetch enquiries' });
   }
 });
 
-// Example endpoint to fetch appointments from database
-app.get('/get-appointments', async (req, res) => {
+app.get('/get-enquiry/:id', async (req, res) => {
   try {
+      const id = req.params.id;
       let pool = await sql.connect(dbConfig);
-      let result = await pool.request().query('SELECT * FROM Appointments');
-      res.json(result.recordset);
+      let result = await pool.request()
+          .input('id', sql.Int, id)
+          .query('SELECT username, title, content FROM enquiries WHERE id = @id');
+      res.json(result.recordset[0]);
+      console.log('Fetched enquiry details successfully');
   } catch (error) {
-      console.error('Error fetching appointments from database:', error.message);
-      res.status(500).json({ error: 'Failed to fetch appointments' });
+      console.error('Error fetching enquiry details from database:', error.message);
+      res.status(500).json({ error: 'Failed to fetch enquiry details' });
   }
 });
 
@@ -99,27 +128,27 @@ app.get('/get-enquiry/:id', async (req, res) => {
 
 // Start server
 const server = app.listen(port, async () => {
-  try {
-    await sql.connect(dbConfig);
-    console.log("Database connection established successfully");
-  } catch (err) {
-    console.error("Database connection error:", err.message);
-    process.exit(1);
-  }
+    try {
+        await sql.connect(dbConfig);
+        console.log("Database connection established successfully");
+    } catch (err) {
+        console.error("Database connection error:", err.message);
+        process.exit(1);
+    }
 
-  console.log(`Server listening on port ${port}`);
+    console.log(`Server listening on port ${port}`);
 });
 
 // Graceful shutdown
 process.on("SIGINT", async () => {
-  console.log("Server is gracefully shutting down");
-  try {
-    await server.close();
-    await sql.close();
-    console.log("Database connection closed");
-    process.exit(0);
-  } catch (err) {
-    console.error("Error during shutdown:", err.message);
-    process.exit(1);
-  }
+    console.log("Server is gracefully shutting down");
+    try {
+        await server.close();
+        await sql.close();
+        console.log("Database connection closed");
+        process.exit(0);
+    } catch (err) {
+        console.error("Error during shutdown:", err.message);
+        process.exit(1);
+    }
 });

@@ -744,13 +744,19 @@ input[type="text"], input[type="email"], input[type="tel"], input[type="date"] {
     text-align: left;
 }
 
-.form-group select, .form-group input[type="number"], .form-group input[type="file"] {
+.form-group select,
+.form-group input[type="number"],
+.form-group input[type="text"] {
     flex-basis: 60%;
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 4px;
     background-color: rgb(240, 240, 240);
+    max-width: calc(150% - 10px);
+    box-sizing: border-box; 
 }
+
+
 
 .verification-form button {
     padding: 10px;
@@ -762,4 +768,132 @@ input[type="text"], input[type="email"], input[type="tel"], input[type="date"] {
     align-self: flex-end;
     width: 100px;
     font-size: 16px;
+}
+
+/* User Medicine Donation */
+.donate-container {
+    padding: 16px;
+    height: 100%;
+}
+
+.donate-form-wrapper {
+    max-width: 768px;
+    margin: 24px auto;
+    border-radius: 8px;
+    border: 1px solid #ced4da;
+    background-color: #ffffff;
+}
+
+.donate-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.donate-header-content {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.donate-header-icon {
+    height: 32px;
+    width: 32px;
+    color: #ced4da;
+    transform: translateY(-14px);
+}
+
+.donate-header h1 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #007bff;
+}
+
+.donate-form-content {
+    padding: 24px;
+}
+
+.donate-form-content p {
+    margin: 0;
+}
+
+.donate-input-group {
+    margin-bottom: 24px;
+}
+
+.donate-input-group input {
+    display: block;
+    width: 100%;
+    border-radius: 4px;
+    border: 1px solid #ced4da;
+    padding: 8px;
+    margin-top: 16px;
+}
+
+.donate-medication-details {
+    margin-bottom: 24px;
+}
+
+.donate-medication-details table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.donate-medication-details caption {
+    text-align: left;
+    caption-side: top;
+}
+
+.donate-medication-details th,
+.donate-medication-details td {
+    text-align: left;
+    padding: 8px;
+    font-size: 0.875rem;
+}
+
+.donate-medication-details input {
+    width: 100%;
+    border-radius: 4px;
+    border: 1px solid #ced4da;
+    padding: 8px;
+    font-size: 0.875rem;
+}
+
+.donate-add-medication {
+    width: 100%;
+    border-radius: 4px;
+    padding: 12px;
+    border: 1px solid #007bff;
+    color: #007bff;
+    background-color: transparent;
+    margin-top: 16px;
+}
+
+.donate-add-icon {
+    width: 16px;
+    height: 16px;
+    margin-right: 8px;
+    vertical-align: middle;
+}
+
+.donate-action-buttons {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: space-between;
+}
+
+.donate-primary-button {
+    border-radius: 4px;
+    background-color: #007bff;
+    padding: 8px 16px;
+    color: #ffffff;
+}
+
+.donate-secondary-button {
+    border-radius: 4px;
+    padding: 8px 16px;
+    border: 1px solid #ff4d4f;
+    color: #ff4d4f;
+    background-color: transparent;
 }

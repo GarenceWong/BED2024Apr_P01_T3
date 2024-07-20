@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/style.css">
+    <title>ZehaoHealthcare</title>
+</head>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        overflow: hidden;
+    }
+</style>
+
+<body>
+    <header class="header">
+        <div class="logo-container">
+            <img src="../Images/Logo.png" alt="Logo" class="logo"/>
+            <a href="userpage.html" class="company-name">Zehao Healthcare</a>
+        </div>
+    
+        <nav class="navbar">
+            <a href="../html/userdonation.html">Donate</a>
+            <a href="../html/aboutus.html">About Us</a>
+            <a href="../html/contactus.html">Contact Us</a>
+            <div class="user-info">
+                <span id="username"></span>
+                <img src="../Images/dropdownarrow.png" alt="dropdownarrow" class="dropdown-arrow" onclick="toggleDropdown()"/>
+                <div id="dropdown-menu" class="dropdown-content">
+                    <a href="../html/updatepersonal.html">Update Personal Details</a>
+                    <a href="../index.html">Sign Out</a>
+                </div>
+        </nav>
+    </header>
+
+    <donate>
+        <div class="donate-container">
+            <div class="donate-form-wrapper">
+                <div class="donate-header">
+                    <div class="donate-header-content">
+                        <svg class="donate-header-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7v6h6V7h6m-2.5 9h-14M7 9h1m8-2h-7m7 4h-2m-1 3h4m-4 0h5m5-9V5h6v1" />
+                        </svg>
+                        <h1>Donate Medicine</h1>
+                    </div>
+                </div>
+                <div class="donate-form-content">
+                    <p>Enter the details below to donate medicine:</p>
+                    
+                    <div class="donate-input-group">
+                        <input type="text" id="username-input" placeholder="Enter your username" alt="Username input" />
+                        <input type="date" id="donation-date" alt="Expiration date input" />
+                    </div>
+                    
+                    <div class="donate-medication-details">
+                        <table>
+                            <caption>Medication Details</caption>
+                            <thead>
+                                <tr>
+                                    <th>Medicine Name</th>
+                                    <th>Quantity</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><input type="text" id="medicine-name" placeholder="Enter medicine name" alt="Medicine name input in table" /></td>
+                                    <td><input type="number" id="quantity" placeholder="0" alt="Quantity input in table" /></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        
+                        <button class="donate-add-medication">
+                            <svg class="donate-add-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7v6h6V7h6m-2.5 9h-14M7 9h1m8-2h-7m7 4h-2m-1 3h4m-4 0h5m5-9V5h6v1" />
+                            </svg>
+                            Add Medication
+                        </button>
+                    </div>
+        
+                    <div class="donate-action-buttons">
+                        <button class="donate-primary-button" alt="Primary button" onclick="submitDonation()">Donate</button>
+                        <button class="donate-secondary-button" alt="Secondary button" onclick="cancelDonation()">Cancel</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </donate>
+
+    <footer class="footer">
+        <div class="footer-container">
+            <p>Copyright © 2024 by Zehao Healthcare Pte Ltd. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const userName = localStorage.getItem('userName');
+        if (userName) {
+            document.getElementById('username').textContent = userName;
+            document.getElementById('username-input').value = userName;
+        }
+    });
+
+    function toggleDropdown() {
+        const dropdown = document.getElementById('dropdown-menu');
+        if (dropdown.style.display === "block") {
+            dropdown.style.display = "none";
+        } else {
+            dropdown.style.display = "block";
+        }
+    }
+
+    window.onclick = function(event) {
+        if (!event.target.matches('.dropdown-arrow')) {
+            const dropdowns = document.getElementsByClassName("dropdown-content");
+            for (let i = 0; i < dropdowns.length; i++) {
+                let openDropdown = dropdowns[i];
+                if (openDropdown.style.display === "block") {
+                    openDropdown.style.display = "none";
+                }
+            }
+        }
+    }
+
+    function cancelDonation() {
+        window.location.href = '../html/userpage.html';
+    }
+
+    async function submitDonation() {
+        const username = document.getElementById('username-input').value;
+        const donationDate = document.getElementById('donation-date').value;
+        const medicineName = document.getElementById('medicine-name').value;
+        const quantity = document.getElementById('quantity').value;
+
+        const donation = {
+            username,
+            donationDate,
+            medicineName,
+            quantity
+        };
+
+        try {
+            const response = await fetch('http://localhost:3003/add-donation', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(donation)
+            });
+
+            if (response.ok) {
+                alert('Thank You for your Donation! We will send someone over to collect the medication shortly.');
+                window.location.href = '../html/userpage.html';
+            } else {
+                alert('Failed to add donation. Please try again.');
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            alert('An error occurred. Please try again later.');
+        }
+    }
+</script>
+
+</body>
+</html>
+

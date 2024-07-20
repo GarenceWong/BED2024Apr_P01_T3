@@ -36,10 +36,16 @@ CREATE TABLE Verification (
     VerificationID INT IDENTITY(1,1) PRIMARY KEY,
     HousingType VARCHAR(50) NOT NULL,
     EmploymentStatus VARCHAR(50) NOT NULL,
-    GrossMonthlyIncome DECIMAL(10, 2) NOT NULL,
-    CPFContributionHistory NVARCHAR(MAX) NULL, 
+    GrossMonthlyIncome VARCHAR(50) NOT NULL,
     NRICFrontBack NVARCHAR(MAX) NULL, 
     VerificationStatus BIT DEFAULT 0 
+);
+
+CREATE TABLE Donations (
+    Username NVARCHAR(100) NOT NULL,
+    DonationDate DATE NOT NULL,
+    MedicineName NVARCHAR(100) NOT NULL,
+    Quantity INT NOT NULL
 );
 
 
@@ -80,15 +86,15 @@ CREATE TABLE DoctorLogin (
 INSERT INTO DoctorLogin (username, password)
 VALUES ('docz@gmail.com', '123456');
 
--- medicalform start
 /* MedicalReports Table */
 CREATE TABLE MedicalReports (
-    reportId INT PRIMARY KEY IDENTITY(1,1),
-    userId INT NOT NULL,
-    condition TEXT NOT NULL,
-    prescribedMedication TEXT NOT NULL,
-    reportDate DATE NOT NULL DEFAULT GETDATE(),
-    FOREIGN KEY (userId) REFERENCES Users(id)
-);
+    id INT PRIMARY KEY IDENTITY(1,1),
+    username VARCHAR(255) NOT NULL,
+    medicalCondition VARCHAR(255) NOT NULL,
+    prescription TEXT,
+    FOREIGN KEY (id) REFERENCES Timeslots(id)
+); 
+
+
 -- medicalform end
 
