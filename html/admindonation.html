@@ -32,10 +32,41 @@
                     <th>Date of Collection</th>
                     <th>Medicine</th>
                     <th>Quantity</th>
-                    <th>Status</th>
                 </tr>
             </thead>
             <tbody id="donations-body">
             </tbody>
         </table>
     </main>
+
+    <script>
+        async function fetchDonations() {
+            try {
+                const response = await fetch('http://localhost:3003/get-donations');
+                if (!response.ok) {
+                    throw new Error('Failed to fetch donations');
+                }
+                const donations = await response.json();
+                const donationsBody = document.getElementById('donations-body');
+                donationsBody.innerHTML = '';
+
+                donations.forEach(donation => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${donation.Username}</td>
+                        <td>${donation.DonationDate}</td>
+                        <td>${donation.MedicineName}</td>
+                        <td>${donation.Quantity}</td>
+                    `;
+                    donationsBody.appendChild(row);
+                });
+            } catch (error) {
+                console.error('Error fetching donations:', error);
+            }
+        }
+
+        window.onload = fetchDonations;
+    </script>
+</body>
+
+</html>
