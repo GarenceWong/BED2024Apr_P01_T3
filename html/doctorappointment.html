@@ -68,7 +68,7 @@
             console.log('Form data:', data); // Log form data
 
             try {
-                const response = await fetch('/submit-medical-report', {
+                const response = await fetch('http://localhost:3003/submit-medical-report', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
