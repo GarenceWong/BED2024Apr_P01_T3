@@ -10,12 +10,11 @@ const { addPersonalDetails, fetchPersonalDetails } = require('./controllers/pers
 const { createTimeslot } = require('./controllers/timeslotController');
 const { getTimeslots } = require('./controllers/doctorhomepagecontroller');
 const { handleDeleteAppointment, handleUpdateAppointment, getUserAppointment } = require('./controllers/userAppointmentController');
-const { submitVerificationDetails, verifyUserHandler, checkVerificationStatus } = require('./controllers/verificationController');
-const { submitMedicalReport } = require('./controllers/doctorappointmentcontroller'); 
+const { submitVerificationDetails} = require('./controllers/verificationController');
+const { submitMedicalReport} = require('./controllers/doctorappointmentcontroller'); 
 const { getEnquiries, getEnquiryByIdHandler } = require('./controllers/enquiryController');
-
-
 const { handleAddDonation } = require('./controllers/userdonationController');
+
 
 
 const app = express();
@@ -24,6 +23,7 @@ const port = process.env.PORT || 3003;
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true })); // Ensure URL-encoded data is parsed
+
 
 // Define routes
 app.post("/signup", signup);
@@ -37,13 +37,11 @@ app.get('/get-timeslots', getTimeslots);
 app.delete('/delete-appointment/:id', handleDeleteAppointment);
 app.put('/update-appointment', handleUpdateAppointment);
 app.get('/get-appointment/:id', getUserAppointment);
-app.post('/submit-verification', submitVerificationDetails);
-app.post('/verify-user', verifyUserHandler);
-app.get('/verification-status/:verificationID', checkVerificationStatus);
 app.post('/add-donation', handleAddDonation);
 app.post('/submit-medical-report', submitMedicalReport);
 app.get('/get-enquiries', getEnquiries);
 app.get('/get-enquiry/:id', getEnquiryByIdHandler);
+app.post('/submit-verification', submitVerificationDetails);
 
 // Additional routes for appointments
 app.post('/new-appointment', async (req, res) => {

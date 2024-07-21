@@ -897,3 +897,6 @@ input[type="text"], input[type="email"], input[type="tel"], input[type="date"] {
     color: #ff4d4f;
     background-color: transparent;
 }
+.error-message {
+    color: red;
+}

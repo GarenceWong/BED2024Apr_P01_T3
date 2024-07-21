@@ -1,49 +1,59 @@
-const sql = require('mssql');
-const dbConfig = require('../dbConfig');
+const sql = require("mssql");
+const dbConfig = require("../dbConfig");
 
-// Function to add verification details
-async function addVerificationDetails(details) {
+class Verification {
+  constructor(id, userName, housingType, employmentStatus, grossMonthlyIncome, nric) {
+    this.id = id;
+    this.userName = userName;
+    this.housingType = housingType;
+    this.employmentStatus = employmentStatus;
+    this.grossMonthlyIncome = grossMonthlyIncome;
+    this.nric = nric;
+  }
+
+  static async createVerification(userName, housingType, employmentStatus, grossMonthlyIncome, nric) {
     try {
-        let pool = await sql.connect(dbConfig);
-        let result = await pool.request()
-            .input('housingType', sql.VarChar(50), details.housingType)
-            .input('employmentStatus', sql.VarChar(50), details.employmentStatus)
-            .input('grossMonthlyIncome', sql.VarChar(50), details.grossMonthlyIncome)
-            .input('nricFrontBack', sql.NVarChar(sql.MAX), details.nricFrontBack)
-            .query(`
-                INSERT INTO Verification (HousingType, EmploymentStatus, GrossMonthlyIncome, NRICFrontBack, VerificationStatus)
-                VALUES (@housingType, @employmentStatus, @grossMonthlyIncome, @nricFrontBack, 'Pending')
-            `);
-        return result;
-    } catch (error) {
-        console.error('SQL error:', error);
-        throw new Error('Database query failed');
+      const connection = await sql.connect(dbConfig);
+
+      const sqlQuery = `
+        INSERT INTO Verification (UserName, HousingType, EmploymentStatus, GrossMonthlyIncome, NRIC)
+        OUTPUT INSERTED.Id, INSERTED.UserName, INSERTED.HousingType, INSERTED.EmploymentStatus, INSERTED.GrossMonthlyIncome, INSERTED.NRIC
+        VALUES (@UserName, @HousingType, @EmploymentStatus, @GrossMonthlyIncome, @NRIC)
+      `;
+
+      const request = connection.request();
+      request.input("UserName", sql.VarChar, userName);
+      request.input("HousingType", sql.VarChar, housingType);
+      request.input("EmploymentStatus", sql.VarChar, employmentStatus);
+      request.input("GrossMonthlyIncome", sql.VarChar, grossMonthlyIncome);
+      request.input("NRIC", sql.VarChar, nric);
+      const result = await request.query(sqlQuery);
+
+      connection.close();
+
+      if (result.recordset.length > 0) {
+        const verification = result.recordset[0];
+        return new Verification(
+          verification.Id,
+          verification.UserName,
+          verification.HousingType,
+          verification.EmploymentStatus,
+          verification.GrossMonthlyIncome,
+          verification.NRIC
+        );
+      }
+
+      return null;
+    } catch (err) {
+      console.error("Error creating verification:", err);
+      throw err;
     }
+  }
 }
 
-// Function to update verification status
-async function updateVerificationStatus(verificationID, status) {
-    try {
-        let pool = await sql.connect(dbConfig);
-        let result = await pool.request()
-            .input('verificationID', sql.Int, verificationID)
-            .input('status', sql.VarChar(50), status)
-            .query(`
-                UPDATE Verification
-                SET VerificationStatus = @status
-                WHERE VerificationID = @verificationID
-            `);
-        return result;
-    } catch (error) {
-        console.error('SQL error:', error);
-        throw new Error('Database query failed');
-    }
-}
+module.exports = Verification;
 
-module.exports = {
-    addVerificationDetails,
-    updateVerificationStatus
-};
+
 
 
 

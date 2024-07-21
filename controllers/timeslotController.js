@@ -16,6 +16,7 @@ async function createTimeslot(req, res) {
     }
 }
 
+
 async function getTimeslots(req, res) {
     try {
         const username = req.query.username;

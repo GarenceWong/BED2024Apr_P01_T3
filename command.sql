@@ -29,16 +29,16 @@ CREATE TABLE Timeslots (
     username VARCHAR(100),
     timeslotDate DATE,
     timeslotTime TIME,
-    status VARCHAR(10)
+    status VARCHAR(20) CHECK (status IN ('confirmed', 'unconfirmed'))
 );
 
-CREATE TABLE Verification (
-    VerificationID INT IDENTITY(1,1) PRIMARY KEY,
+CREATE TABLE Verification(
+    Id INT IDENTITY(1,1) PRIMARY KEY,
+    UserName VARCHAR(100) NOT NULL,
     HousingType VARCHAR(50) NOT NULL,
     EmploymentStatus VARCHAR(50) NOT NULL,
     GrossMonthlyIncome VARCHAR(50) NOT NULL,
-    NRICFrontBack NVARCHAR(MAX) NULL, 
-    VerificationStatus BIT DEFAULT 0 
+    NRIC VARCHAR(20) NOT NULL
 );
 
 CREATE TABLE Donations (

@@ -22,6 +22,7 @@ async function addTimeslot(timeslot) {
         }
     }
 }
+
  
 async function fetchTimeslots(username) {
     let pool;

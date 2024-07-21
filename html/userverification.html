@@ -5,11 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../css/style.css">
     <title>Zehao Healthcare</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-        }
-    </style>
+
 </head>
 <body>
     <header class="header">
@@ -17,7 +13,6 @@
             <img src="../Images/Logo.png" alt="Logo" class="logo"/>
             <a href="userpage.html" class="company-name">Zehao Healthcare</a>
         </div>
-   
         <nav class="navbar">
             <a href="../html/userdonation.html">Donate</a>
             <a href="../html/aboutus.html">About Us</a>
@@ -40,6 +35,7 @@
                 <div class="form-group">
                     <label for="housingType">Housing Type:</label>
                     <select id="housingType" name="housingType" required>
+                        <option value="">Select Housing Type</option>
                         <option value="HDB">HDB</option>
                         <option value="Condo">Condo</option>
                         <option value="Landed">Landed</option>
@@ -49,6 +45,7 @@
                 <div class="form-group">
                     <label for="employmentStatus">Employment Status:</label>
                     <select id="employmentStatus" name="employmentStatus" required>
+                        <option value="">Select Employment Status</option>
                         <option value="Full-Time">Full-Time Employment</option>
                         <option value="Part-Time">Part-Time Employment</option>
                         <option value="Self-Employed">Self-Employed</option>
@@ -62,11 +59,12 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="nricFrontBack">NRIC:</label>
-                    <input type="text" id="nricFrontBack" name="nricFrontBack" required>
+                    <label for="nric">NRIC:</label>
+                    <input type="text" id="nric" name="nric" required>
                 </div>
                 
                 <button type="submit">Submit</button>
+                <div id="error-message" class="error-message"></div>
             </form>
         </section>
     </main>
@@ -77,15 +75,49 @@
             if (userName) {
                 document.getElementById('username').textContent = userName;
             }
+
+            document.getElementById('verificationForm').addEventListener('submit', function(event) {
+                event.preventDefault();
+
+                const data = {
+                    userName: localStorage.getItem('userName'),
+                    housingType: document.getElementById('housingType').value,
+                    employmentStatus: document.getElementById('employmentStatus').value,
+                    grossMonthlyIncome: document.getElementById('grossMonthlyIncome').value,
+                    nric: document.getElementById('nric').value
+                };
+
+                console.log('Form data:', data); // Log form data for debugging
+
+                fetch('/submit-verification', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                })
+                .then(response => response.json())
+                .then(result => {
+                    console.log('Response from server:', result); // Log response for debugging
+                    if (result.message) {
+                        alert(result.message);
+                        if (result.error) {
+                            document.getElementById('error-message').textContent = result.error;
+                        } else {
+                            document.getElementById('error-message').textContent = '';
+                        }
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    document.getElementById('error-message').textContent = 'An error occurred while submitting the form. Please try again.';
+                });
+            });
         });
 
         function toggleDropdown() {
             const dropdown = document.getElementById('dropdown-menu');
-            if (dropdown.style.display === "block") {
-                dropdown.style.display = "none";
-            } else {
-                dropdown.style.display = "block";
-            }
+            dropdown.style.display = (dropdown.style.display === "block") ? "none" : "block";
         }
 
         window.onclick = function(event) {
@@ -99,43 +131,8 @@
                 }
             }
         }
-
-        async function submitVerificationForm() {
-            const form = document.getElementById('verificationForm');
-            const formData = new FormData(form);
-
-            try {
-                const response = await fetch('/submit-verification', {
-                    method: 'POST',
-                    body: formData
-                });
-
-                const contentType = response.headers.get('content-type');
-                if (!contentType || !contentType.includes('application/json')) {
-                    const text = await response.text(); // Read the raw response text
-                    console.log("Raw response text:", text);
-                    throw new Error('Response is not JSON');
-                }
-
-                const result = await response.json(); // Parse the response JSON
-                console.log("Parsed response JSON:", result);
-
-                if (response.ok) {
-                    alert('Verification details submitted successfully.');
-                } else {
-                    alert('Error submitting verification details: ' + result.message);
-                }
-            } catch (error) {
-                alert('Error submitting verification details: ' + error.message);
-                console.error('Error submitting verification details:', error);
-            }
-        }
-
-        document.getElementById('verificationForm').addEventListener('submit', function(event) {
-            event.preventDefault();
-            submitVerificationForm();
-        });
     </script>
 </body>
 </html>
+
 
