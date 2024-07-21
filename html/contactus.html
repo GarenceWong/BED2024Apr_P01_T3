@@ -8,14 +8,21 @@
 <body>
     <header class="header">
         <div class="logo-container">
-            <img src="../Images/Logo.png" alt="Logo" class="logo" />
-            <a href="../index.html" class="company-name">Zehao Healthcare</a>
+            <img src="../Images/Logo.png" alt="Logo" class="logo"/>
+            <a href="userpage.html" class="company-name">Zehao Healthcare</a>
         </div>
-
+    
         <nav class="navbar">
+            <a href="../html/userdonation.html">Donate</a>
             <a href="../html/aboutus.html">About Us</a>
             <a href="../html/contactus.html">Contact Us</a>
-            <span id="username"></span>
+            <div class="user-info">
+                <span id="username"></span>
+                <img src="../Images/dropdownarrow.png" alt="dropdownarrow" class="dropdown-arrow" onclick="toggleDropdown()"/>
+                <div id="dropdown-menu" class="dropdown-content">
+                    <a href="../html/updatepersonal.html">Update Personal Details</a>
+                    <a href="../index.html">Sign Out</a>
+                </div>
         </nav>
     </header>
 
@@ -26,16 +33,12 @@
                 <div class="map">
                     <p>Map</p>
                 </div>
-                <form class="contact-form">
+                <form class="contact-form" id="contactForm">
                     <p>Submit this form and our team will contact you soon.</p>
-                    <label for="full-name">Full Name</label>
-                    <input type="text" id="full-name" name="full-name">
-                    <label for="email">Email</label>
-                    <input type="email" id="email" name="email">
-                    <label for="phone-number">Phone Number</label>
-                    <input type="tel" id="phone-number" name="phone-number">
+                    <label for="title">Title</label>
+                    <input type="text" id="title" name="title" required>
                     <label for="comments">Questions or Comments</label>
-                    <textarea id="comments" name="comments"></textarea>
+                    <textarea id="comments" name="content" required></textarea>
                     <button type="submit">Submit</button>
                 </form>
             </div>
@@ -49,5 +52,79 @@
     <footer>
         <p>Copyright © 2024 by Zehao Healthcare Pte Ltd. All Rights Reserved.</p>
     </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => { 
+            const userName = localStorage.getItem('userName'); 
+            if (userName) { 
+                document.getElementById('username').textContent = userName; 
+            } 
+        }); 
+
+        function toggleDropdown() { 
+    const dropdown = document.getElementById('dropdown-menu'); 
+    if (dropdown.style.display === "block") { 
+        dropdown.style.display = "none"; 
+    } else { 
+        dropdown.style.display = "block"; 
+    } 
+} 
+ 
+window.onclick = function(event) { 
+    if (!event.target.matches('.dropdown-arrow')) { 
+        const dropdowns = document.getElementsByClassName("dropdown-content"); 
+        for (let i = 0; i < dropdowns.length; i++) { 
+            let openDropdown = dropdowns[i]; 
+            if (openDropdown.style.display === "block") { 
+                openDropdown.style.display = "none"; 
+            } 
+        } 
+    } 
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    const contactForm = document.getElementById('contactForm');
+
+    contactForm.addEventListener('submit', async (event) => {
+        event.preventDefault();
+
+        const displayedUsername = document.getElementById('username').textContent.trim();
+        if (!displayedUsername) {
+            alert('Username not found. Please make sure you are logged in.');
+            return;
+        }
+
+        const formData = new FormData(contactForm);
+        const data = Object.fromEntries(formData.entries());
+
+        // Add the username to the form data
+        data.username = displayedUsername;
+
+        try {
+            const response = await fetch('http://localhost:3003/submit-enquiry', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            });
+
+            const result = await response.json();
+
+            if (response.ok) {
+                alert(result.message);
+                contactForm.reset();
+            } else {
+                alert(result.error);
+            }
+        } catch (error) {
+            console.error('Error submitting the form:', error);
+            alert('There was an error submitting the form. Please try again later.');
+        }
+    });
+});
+
+    </script>
+
 </body>
 </html>

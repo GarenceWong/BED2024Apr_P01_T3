@@ -14,6 +14,8 @@ const { submitVerificationDetails} = require('./controllers/verificationControll
 const { submitMedicalReport} = require('./controllers/doctorappointmentcontroller'); 
 const { getEnquiries, getEnquiryByIdHandler } = require('./controllers/enquiryController');
 const { handleAddDonation } = require('./controllers/userdonationController');
+const { submitEnquiry } = require('./controllers/contactuscontroller');
+
 
 
 
@@ -42,6 +44,8 @@ app.post('/submit-medical-report', submitMedicalReport);
 app.get('/get-enquiries', getEnquiries);
 app.get('/get-enquiry/:id', getEnquiryByIdHandler);
 app.post('/submit-verification', submitVerificationDetails);
+app.post('/submit-enquiry', submitEnquiry);
+
 
 // Additional routes for appointments
 app.post('/new-appointment', async (req, res) => {
