@@ -34,7 +34,7 @@
                 <textarea id="prescribed-medication" name="prescription" rows="4" required></textarea>
 
                 <div class="button-container">
-                    <button type="submit" class="prescribe-button">Prescribe</button>
+                    <button type="button" class="prescribe-button" onclick="submitMedicalReport()">Prescribe</button>
                     <button type="button" class="cancel-button" onclick="window.location.href='doctorhomepage.html'">Cancel</button>
                 </div>
             </form>
@@ -43,38 +43,54 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            const form = document.getElementById('medical-report-form');
-            
-            form.addEventListener('submit', async (event) => {
-                event.preventDefault(); // Prevent the default form submission
-                
-                const formData = new FormData(form);
-                const data = {};
-                formData.forEach((value, key) => {
-                    data[key] = value;
-                });
-    
-                try {
-                    const response = await fetch('/submit-medical-report', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                        },
-                        body: JSON.stringify(data),
-                    });
-    
-                    if (response.ok) {
-                        alert('Medical report submitted successfully!');
-                        form.reset(); // Optionally, reset the form fields
-                    } else {
-                        alert('Failed to submit medical report. Please try again.');
-                    }
-                } catch (error) {
-                    console.error('Error submitting medical report:', error);
-                    alert('An error occurred. Please try again later.');
-                }
-            });
+            // Function to get query parameter value
+            const getQueryParam = (param) => {
+                const urlParams = new URLSearchParams(window.location.search);
+                return urlParams.get(param);
+            };
+
+            // Fetch username from URL query parameters and set it to the input field
+            const username = getQueryParam('username');
+            if (username) {
+                document.getElementById('patient-name').value = username;
+            }
         });
+
+        async function submitMedicalReport() {
+            const form = document.getElementById('medical-report-form');
+            const formData = new FormData(form);
+            const data = {};
+
+            formData.forEach((value, key) => {
+                data[key] = value;
+            });
+
+            console.log('Form data:', data); // Log form data
+
+            try {
+                const response = await fetch('/submit-medical-report', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(data),
+                });
+
+                if (response.ok) {
+                    alert('Medical report submitted successfully!');
+                    form.reset(); // Optionally, reset the form fields
+                } else {
+                    const errorText = await response.text(); // Get error message from response
+                    console.error('Server error response:', errorText); // Log server error response
+                    alert('Failed to submit medical report. Please try again.');
+                }
+            } catch (error) {
+                console.error('Error submitting medical report:', error);
+                alert('An error occurred. Please try again later.');
+            }
+        }
     </script>
 </body>
 </html>
+
+

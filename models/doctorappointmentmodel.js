@@ -10,10 +10,14 @@ const addMedicalReport = async (username, medicalCondition, prescription) => {
             .input('prescription', sql.Text, prescription)
             .query('INSERT INTO MedicalReports (username, medicalCondition, prescription) VALUES (@username, @medicalCondition, @prescription)');
 
+        console.log('Insert result:', result); // Log insert result
+
         return result;
     } catch (err) {
+        console.error('Error inserting medical report:', err.message); // Log error
         throw new Error(`Error inserting medical report: ${err.message}`);
     }
 };
 
 module.exports = { addMedicalReport };
+

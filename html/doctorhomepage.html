@@ -72,16 +72,8 @@
                     
                     // Add click event listener to each timeslotRow
                     timeslotRow.addEventListener('click', () => {
-                        // Copy the username to clipboard
-                        const username = timeslot.username;
-                        navigator.clipboard.writeText(username).then(() => {
-                            alert('Patient name copied to clipboard');
-                        }).catch((error) => {
-                            console.error('Failed to copy text:', error);
-                        });
-                        
-                        // Navigate to appointment details page
-                        window.location.href = `doctorappointment.html?id=${timeslot.id}`;
+                        // Navigate to appointment details page with username as a query parameter
+                        window.location.href = `doctorappointment.html?username=${encodeURIComponent(timeslot.username)}`;
                     });
                 
                     timeslotsContainer.appendChild(timeslotRow);
@@ -95,3 +87,4 @@
     </script>
 </body>
 </html>
+
