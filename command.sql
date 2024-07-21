@@ -38,8 +38,10 @@ CREATE TABLE Verification(
     HousingType VARCHAR(50) NOT NULL,
     EmploymentStatus VARCHAR(50) NOT NULL,
     GrossMonthlyIncome VARCHAR(50) NOT NULL,
-    NRIC VARCHAR(20) NOT NULL
+    NRIC VARCHAR(20) NOT NULL,
+    Status VARCHAR(20) DEFAULT 'pending' CHECK (Status IN ('pending', 'approved'))
 );
+
 
 CREATE TABLE Donations (
     Username NVARCHAR(100) NOT NULL,
