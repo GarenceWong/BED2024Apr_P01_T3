@@ -14,12 +14,14 @@ class Verification {
   static async createVerification(userName, housingType, employmentStatus, grossMonthlyIncome, nric) {
     try {
       const connection = await sql.connect(dbConfig);
+      console.log("Connected to database");
 
       const sqlQuery = `
         INSERT INTO Verification (UserName, HousingType, EmploymentStatus, GrossMonthlyIncome, NRIC)
         OUTPUT INSERTED.Id, INSERTED.UserName, INSERTED.HousingType, INSERTED.EmploymentStatus, INSERTED.GrossMonthlyIncome, INSERTED.NRIC
         VALUES (@UserName, @HousingType, @EmploymentStatus, @GrossMonthlyIncome, @NRIC)
       `;
+      console.log("SQL Query:", sqlQuery);
 
       const request = connection.request();
       request.input("UserName", sql.VarChar, userName);
@@ -27,7 +29,11 @@ class Verification {
       request.input("EmploymentStatus", sql.VarChar, employmentStatus);
       request.input("GrossMonthlyIncome", sql.VarChar, grossMonthlyIncome);
       request.input("NRIC", sql.VarChar, nric);
+      
+      console.log("Request inputs set");
+
       const result = await request.query(sqlQuery);
+      console.log("Query result:", result);
 
       connection.close();
 
@@ -52,12 +58,3 @@ class Verification {
 }
 
 module.exports = Verification;
-
-
-
-
-
-
-
-
-

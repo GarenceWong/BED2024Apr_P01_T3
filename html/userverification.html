@@ -70,50 +70,51 @@
     </main>
 
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const userName = localStorage.getItem('userName');
-            if (userName) {
-                document.getElementById('username').textContent = userName;
+document.addEventListener('DOMContentLoaded', () => {
+    const userName = localStorage.getItem('userName');
+    if (userName) {
+        document.getElementById('username').textContent = userName;
+    }
+
+    document.getElementById('verificationForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+
+        const data = {
+            userName: localStorage.getItem('userName'),
+            housingType: document.getElementById('housingType').value,
+            employmentStatus: document.getElementById('employmentStatus').value,
+            grossMonthlyIncome: document.getElementById('grossMonthlyIncome').value,
+            nric: document.getElementById('nric').value
+        };
+
+        console.log('Form data:', data); // Log form data for debugging
+
+        fetch('http://localhost:3003/submit-verification', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        })
+        .then(response => response.json())
+        .then(result => {
+            console.log('Response from server:', result); // Log response for debugging
+            if (result.message) {
+                alert(result.message);
+                if (result.error) {
+                    document.getElementById('error-message').textContent = result.error;
+                } else {
+                    document.getElementById('error-message').textContent = '';
+                }
             }
-
-            document.getElementById('verificationForm').addEventListener('submit', function(event) {
-                event.preventDefault();
-
-                const data = {
-                    userName: localStorage.getItem('userName'),
-                    housingType: document.getElementById('housingType').value,
-                    employmentStatus: document.getElementById('employmentStatus').value,
-                    grossMonthlyIncome: document.getElementById('grossMonthlyIncome').value,
-                    nric: document.getElementById('nric').value
-                };
-
-                console.log('Form data:', data); // Log form data for debugging
-
-                fetch('/submit-verification', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(data)
-                })
-                .then(response => response.json())
-                .then(result => {
-                    console.log('Response from server:', result); // Log response for debugging
-                    if (result.message) {
-                        alert(result.message);
-                        if (result.error) {
-                            document.getElementById('error-message').textContent = result.error;
-                        } else {
-                            document.getElementById('error-message').textContent = '';
-                        }
-                    }
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                    document.getElementById('error-message').textContent = 'An error occurred while submitting the form. Please try again.';
-                });
-            });
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            document.getElementById('error-message').textContent = 'An error occurred while submitting the form. Please try again.';
         });
+    });
+});
+
 
         function toggleDropdown() {
             const dropdown = document.getElementById('dropdown-menu');

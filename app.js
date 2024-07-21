@@ -10,14 +10,11 @@ const { addPersonalDetails, fetchPersonalDetails } = require('./controllers/pers
 const { createTimeslot } = require('./controllers/timeslotController');
 const { getTimeslots } = require('./controllers/doctorhomepagecontroller');
 const { handleDeleteAppointment, handleUpdateAppointment, getUserAppointment } = require('./controllers/userAppointmentController');
-const { submitVerificationDetails} = require('./controllers/verificationController');
-const { submitMedicalReport} = require('./controllers/doctorappointmentcontroller'); 
+const { submitVerificationDetails } = require('./controllers/verificationController');
+const { submitMedicalReport } = require('./controllers/doctorappointmentcontroller'); 
 const { getEnquiries, getEnquiryByIdHandler } = require('./controllers/enquiryController');
 const { handleAddDonation } = require('./controllers/userdonationController');
 const { submitEnquiry } = require('./controllers/contactuscontroller');
-
-
-
 
 const app = express();
 const port = process.env.PORT || 3003;
@@ -25,7 +22,6 @@ const port = process.env.PORT || 3003;
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true })); // Ensure URL-encoded data is parsed
-
 
 // Define routes
 app.post("/signup", signup);
@@ -45,7 +41,6 @@ app.get('/get-enquiries', getEnquiries);
 app.get('/get-enquiry/:id', getEnquiryByIdHandler);
 app.post('/submit-verification', submitVerificationDetails);
 app.post('/submit-enquiry', submitEnquiry);
-
 
 // Additional routes for appointments
 app.post('/new-appointment', async (req, res) => {
