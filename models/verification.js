@@ -2,13 +2,14 @@ const sql = require("mssql");
 const dbConfig = require("../dbConfig");
 
 class Verification {
-  constructor(id, userName, housingType, employmentStatus, grossMonthlyIncome, nric) {
+  constructor(id, userName, housingType, employmentStatus, grossMonthlyIncome, nric, status) {
     this.id = id;
     this.userName = userName;
     this.housingType = housingType;
     this.employmentStatus = employmentStatus;
     this.grossMonthlyIncome = grossMonthlyIncome;
     this.nric = nric;
+    this.status = status; // Add status field
   }
 
   static async createVerification(userName, housingType, employmentStatus, grossMonthlyIncome, nric) {
@@ -17,9 +18,9 @@ class Verification {
       console.log("Connected to database");
 
       const sqlQuery = `
-        INSERT INTO Verification (UserName, HousingType, EmploymentStatus, GrossMonthlyIncome, NRIC)
-        OUTPUT INSERTED.Id, INSERTED.UserName, INSERTED.HousingType, INSERTED.EmploymentStatus, INSERTED.GrossMonthlyIncome, INSERTED.NRIC
-        VALUES (@UserName, @HousingType, @EmploymentStatus, @GrossMonthlyIncome, @NRIC)
+        INSERT INTO Verification (UserName, HousingType, EmploymentStatus, GrossMonthlyIncome, NRIC, Status)
+        OUTPUT INSERTED.Id, INSERTED.UserName, INSERTED.HousingType, INSERTED.EmploymentStatus, INSERTED.GrossMonthlyIncome, INSERTED.NRIC, INSERTED.Status
+        VALUES (@UserName, @HousingType, @EmploymentStatus, @GrossMonthlyIncome, @NRIC, 'pending')
       `;
       console.log("SQL Query:", sqlQuery);
 
@@ -29,7 +30,7 @@ class Verification {
       request.input("EmploymentStatus", sql.VarChar, employmentStatus);
       request.input("GrossMonthlyIncome", sql.VarChar, grossMonthlyIncome);
       request.input("NRIC", sql.VarChar, nric);
-      
+
       console.log("Request inputs set");
 
       const result = await request.query(sqlQuery);
@@ -45,7 +46,8 @@ class Verification {
           verification.HousingType,
           verification.EmploymentStatus,
           verification.GrossMonthlyIncome,
-          verification.NRIC
+          verification.NRIC,
+          verification.Status // Handle status field
         );
       }
 
@@ -56,5 +58,8 @@ class Verification {
     }
   }
 }
+
+module.exports = Verification;
+
 
 module.exports = Verification;
