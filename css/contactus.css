@@ -1,0 +1,134 @@
+/*Color Palette
+#EEEEEE - Light Gray
+#E3CDE2 - Light Pink
+#8E699C - Purple
+#333333 - Black
+*/
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Landing Page */
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 20px;
+    background-color: #EEEEEE;
+    border-bottom: 6px solid #E3CDE2;
+    height: 45px;
+}
+
+.logo-container {
+    display: flex;
+    align-items: center;
+    padding-left: 150px;
+}
+
+.logo {
+    max-height: 30px;
+    margin-right: 10px;
+    padding-right: 10px;
+}
+
+.company-name {
+    text-decoration: none;
+    color: #333333;
+    font-size: 24px;
+}
+
+.navbar {
+    display: flex;
+    gap: 15px;
+    padding-right: 150px;
+}
+
+.navbar a {
+    text-decoration: none;
+    color: #333;
+    padding: 10px 15px;
+    font-size: 20px;
+}
+
+.navbar a:hover {
+    color: #8E699C;
+}
+
+.contact-us {
+    background-color: #E3CDE2;
+    padding: 20px;
+    text-align: center;
+}
+
+.contact-content {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.map {
+    width: 45%;
+    background-color: #d0d0d0;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+}
+
+.contact-form {
+    width: 45%;
+    background-color: #f0f0f0;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.contact-form p {
+    text-align: left;
+}
+
+.contact-form label {
+    display: block;
+    margin: 10px 0 5px;
+}
+
+.contact-form input,
+.contact-form textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.contact-form button {
+    background-color: #8E699C;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.contact-form button:hover {
+    background-color: #E3CDE2;
+}
+
+.contact-info {
+    margin-top: 20px;
+    text-align: center;
+    font-size: 0.9em;
+    color: #666;
+}
+
+footer {
+    background-color: #333;
+    color: white;
+    text-align: center;
+    padding: 10px 0;
+    margin-top: 20px;
+}
