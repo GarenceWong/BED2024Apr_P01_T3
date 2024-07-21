@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../css/style.css">
     <title>Zehao Healthcare</title>
+    <style>
+
+    </style>
 </head>
 <body>
     <header class="header">
@@ -32,26 +35,52 @@
             <h1>Medical Report</h1>
             <form id="medical-report">
                 <label for="condition">Condition</label>
-                <div id="condition" name="condition"></div>
+                <ul id="condition" name="condition" class="medical-list large-text"></ul>
                 <label for="medication">Prescribed Medication</label>
-                <div id="medication" name="medication"></div>
+                <ul id="medication" name="medication" class="medical-list large-text"></ul>
             </form>
         </div>
     </div>
 
-
-
-
-
-
-<script>
-    document.addEventListener('DOMContentLoaded', () => {
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
             const userName = localStorage.getItem('userName');
             if (userName) {
                 document.getElementById('username').textContent = userName;
-                fetchAppointments(userName);
+                fetchMedicalReport(userName);
             }
         });
+
+        function fetchMedicalReport(userName) {
+            fetch(`http://localhost:3003/get-medical-report?username=${userName}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.length > 0) {
+                        const conditions = data[0].medicalCondition.split(' ').map(item => item.trim());
+                        const medications = data[0].prescription ? data[0].prescription.split(' ').map(item => item.trim()) : ['No prescribed medication.'];
+
+                        const conditionList = document.getElementById('condition');
+                        conditionList.innerHTML = '';
+                        conditions.forEach(condition => {
+                            const li = document.createElement('li');
+                            li.textContent = condition;
+                            conditionList.appendChild(li);
+                        });
+
+                        const medicationList = document.getElementById('medication');
+                        medicationList.innerHTML = '';
+                        medications.forEach(medication => {
+                            const li = document.createElement('li');
+                            li.textContent = medication;
+                            medicationList.appendChild(li);
+                        });
+                    } else {
+                        document.getElementById('condition').innerHTML = '<li>No medical report found.</li>';
+                        document.getElementById('medication').innerHTML = '<li>No medical report found.</li>';
+                    }
+                })
+                .catch(error => console.error('Error:', error));
+        }
 
         function toggleDropdown() {
             const dropdown = document.getElementById('dropdown-menu');
@@ -69,7 +98,10 @@
                 }
             }
         }
-
-</script>
+    </script>
 </body>
 </html>
+
+
+
+
