@@ -16,6 +16,7 @@ const { getEnquiries, getEnquiryByIdHandler } = require('./controllers/enquiryCo
 const { handleAddDonation } = require('./controllers/userdonationController');
 const { submitEnquiry } = require('./controllers/contactuscontroller');
 const { getDonations } = require('./controllers/donationsContoller.js')
+const { getMedicalReport } = require('./controllers/medicalReportController'); // Import the medical report controller
 
 const app = express();
 const port = process.env.PORT || 3003;
@@ -43,6 +44,7 @@ app.get('/get-enquiry/:id', getEnquiryByIdHandler);
 app.post('/submit-verification', submitVerificationDetails);
 app.post('/submit-enquiry', submitEnquiry);
 app.get('/get-donations', getDonations);
+app.get('/get-medical-report', getMedicalReport);
 
 // Additional routes for appointments
 app.post('/new-appointment', async (req, res) => {

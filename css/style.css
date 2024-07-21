@@ -678,7 +678,6 @@ input[type="text"], input[type="email"], input[type="tel"], input[type="date"] {
     height: 89vh;
     align-items: center;
     justify-content: center;
-    background-color: #f0f0f0;
 }
 
 .userreport-box {
@@ -700,6 +699,7 @@ input[type="text"], input[type="email"], input[type="tel"], input[type="date"] {
     display: block;
     font-weight: bold;
     font-size: 24px;
+    margin-bottom: -40px;
 }
 
 .userreport-box form {
@@ -710,6 +710,21 @@ input[type="text"], input[type="email"], input[type="tel"], input[type="date"] {
 #medical-report{
     margin-right: 30px;
     margin-left: 30px;
+}
+
+.large-text {
+    font-size: 1.5em; /* Increase the font size */
+}
+.medical-list {
+    list-style-type: none; /* Remove default list style */
+    padding: 0;
+    margin: 0;
+}
+.medical-list li {
+    margin: 0.2em 0; /* Add custom margin for spacing */
+    padding: 0; /* Remove default padding */
+    list-style-type: disc; /* Add bullet points */
+    margin-left: 1.5em; /* Indent list items */
 }
 
 /* User Verification Page */
@@ -900,3 +915,4 @@ input[type="text"], input[type="email"], input[type="tel"], input[type="date"] {
 .error-message {
     color: red;
 }
+
