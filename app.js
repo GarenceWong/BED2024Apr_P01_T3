@@ -15,7 +15,7 @@ const { submitMedicalReport } = require('./controllers/doctorappointmentcontroll
 const { getEnquiries, getEnquiryByIdHandler } = require('./controllers/enquiryController');
 const { handleAddDonation } = require('./controllers/userdonationController');
 const { submitEnquiry } = require('./controllers/contactuscontroller');
-const { getDonations } = require('./controllers/donationsContoller.js')
+const { getDonations, deleteDonation } = require('./controllers/donationsController');
 
 const app = express();
 const port = process.env.PORT || 3003;
@@ -43,6 +43,7 @@ app.get('/get-enquiry/:id', getEnquiryByIdHandler);
 app.post('/submit-verification', submitVerificationDetails);
 app.post('/submit-enquiry', submitEnquiry);
 app.get('/get-donations', getDonations);
+app.delete('/delete-donation/:id', deleteDonation);
 
 // Additional routes for appointments
 app.post('/new-appointment', async (req, res) => {

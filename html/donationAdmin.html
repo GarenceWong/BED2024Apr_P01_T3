@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../css/appointments.css">
-    <title>ZehaoHealthcare</title>
+    <title>Zehao Healthcare</title>
 </head>
 <body>
     <header class="header">
@@ -24,7 +24,6 @@
     </div>
 
     <main>
-        
         <table id="donations-table">
             <thead>
                 <tr>
@@ -32,6 +31,7 @@
                     <th>Date of Collection</th>
                     <th>Medicine</th>
                     <th>Quantity</th>
+                    <th>Action</th>
                 </tr>
             </thead>
             <tbody id="donations-body">
@@ -57,6 +57,7 @@
                         <td>${donation.DonationDate}</td>
                         <td>${donation.MedicineName}</td>
                         <td>${donation.Quantity}</td>
+                        <td><button onclick="deleteDonation(${donation.id})">Delete</button></td>
                     `;
                     donationsBody.appendChild(row);
                 });
@@ -64,9 +65,26 @@
                 console.error('Error fetching donations:', error);
             }
         }
+        
+        async function deleteDonation(id) {
+            try {
+                const response = await fetch(`http://localhost:3003/delete-donation/${id}`, {
+                    method: 'DELETE'
+                });
+
+                if (!response.ok) {
+                    throw new Error('Failed to delete donation');
+                }
+
+                console.log('Donation deleted successfully');
+                // Refresh the donations list after deletion
+                await fetchDonations();
+            } catch (error) {
+                console.error('Error deleting donation:', error);
+            }
+        }
 
         window.onload = fetchDonations;
     </script>
 </body>
-
 </html>
