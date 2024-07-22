@@ -1,3 +1,5 @@
+<!DOCTYPE html>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -29,41 +31,55 @@
 
     <div class="patient-list-container">
         <div class="patient-list-header">
-            <span class="header-patient">Medical Reports</span>
+            <span>Username</span>
+            <span>Condition</span>
+            <span>Prescription</span>
         </div>
         <div id="timeslots-container">
-            <!-- Timeslots will be dynamically populated here -->
+            <!-- Medical reports will be dynamically populated here -->
         </div>
     </div>
 
     <script>
         document.addEventListener('DOMContentLoaded', async () => {
             const container = document.getElementById('timeslots-container');
-                
+            let timeslots = [];
+
             try {
                 const response = await fetch('http://localhost:3003/get-all-medical-reports');
                 const reports = await response.json();
                 console.log('Reports data:', reports);
-            
+
                 if (Array.isArray(reports)) {
-                    reports.forEach(report => {
-                        const reportElement = document.createElement('div');
-                        reportElement.classList.add('patient-list-row');
-                        reportElement.innerHTML = `
-                            <span>${report.username}</span>
-                            <span>${report.medicalCondition}</span>
-                            <span>${report.prescription ? report.prescription : 'N/A'}</span>
-                        `;
-                        container.appendChild(reportElement);
-                    });
+                    timeslots = reports;
+                    displayTimeslots(timeslots);
                 } else {
                     console.error('Unexpected data format:', reports);
                 }
             } catch (error) {
                 console.error('Error fetching medical reports:', error);
             }
+
+            function displayTimeslots(timeslots) {
+                container.innerHTML = '';
+                timeslots.forEach(report => {
+                    const reportElement = document.createElement('div');
+                    reportElement.classList.add('patient-list-row');
+                    reportElement.innerHTML = `
+                        <span>${report.username}</span>
+                        <span>${report.medicalCondition}</span>
+                        <span>${report.prescription ? report.prescription : 'N/A'}</span>
+                    `;
+                    container.appendChild(reportElement);
+                });
+            }
+
+            document.getElementById('searchBar').addEventListener('keyup', (event) => {
+                const searchTerm = event.target.value.toLowerCase();
+                const filteredTimeslots = timeslots.filter(report => report.username.toLowerCase().includes(searchTerm));
+                displayTimeslots(filteredTimeslots);
+            });
         });
     </script>
-        
-
 </body>
+</html>
