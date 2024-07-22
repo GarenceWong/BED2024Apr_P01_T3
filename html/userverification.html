@@ -100,6 +100,7 @@ document.addEventListener('DOMContentLoaded', () => {
         .then(result => {
             console.log('Response from server:', result); // Log response for debugging
             if (result.message) {
+                verificationForm.reset();
                 alert(result.message);
                 if (result.error) {
                     document.getElementById('error-message').textContent = result.error;

@@ -16,7 +16,8 @@ const { getEnquiries, getEnquiryByIdHandler } = require('./controllers/enquiryCo
 const { handleAddDonation } = require('./controllers/userdonationController');
 const { submitEnquiry } = require('./controllers/contactuscontroller');
 const { getDonations, deleteDonation } = require('./controllers/donationsController');
-const { getMedicalReport } = require('./controllers/medicalReportController');
+/*const { getDonations } = require('./controllers/donationsContoller.js')*/
+const { getMedicalReport } = require('./controllers/medicalReportController'); // Import the medical report controller
 
 const app = express();
 const port = process.env.PORT || 3003;
@@ -46,8 +47,6 @@ app.post('/submit-enquiry', submitEnquiry);
 app.get('/get-donations', getDonations);
 app.delete('/delete-donation/:id', deleteDonation);
 app.get('/get-medical-report', getMedicalReport);
-// Add the new PUT route for updating timeslot status (zehao)
-app.put('/update-timeslot-status/:id', updateTimeslotStatus);
 
 // Additional routes for appointments
 app.post('/new-appointment', async (req, res) => {

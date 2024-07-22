@@ -31,7 +31,7 @@
                     <th>Date of Collection</th>
                     <th>Medicine</th>
                     <th>Quantity</th>
-                    <th>Action</th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody id="donations-body">
@@ -57,7 +57,7 @@
                         <td>${donation.DonationDate}</td>
                         <td>${donation.MedicineName}</td>
                         <td>${donation.Quantity}</td>
-                        <td><button onclick="deleteDonation(${donation.id})">Delete</button></td>
+                        <td><button onclick="deleteDonation(${donation.Id})">Delete</button></td>
                     `;
                     donationsBody.appendChild(row);
                 });
