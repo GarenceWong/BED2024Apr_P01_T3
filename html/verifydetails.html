@@ -81,14 +81,16 @@
             <p><strong>NRIC:</strong> <span id="detail-nric"></span></p>
         </div>
     </div>
-    
+
     <script>
         // Function to retrieve the enquiry ID from the query parameters
         function getQueryParam(param) {
             const urlParams = new URLSearchParams(window.location.search);
-            return urlParams.get(param);
+            const value = urlParams.get(param);
+            console.log('Query Parameters:', Array.from(urlParams.entries())); // Log all query parameters
+            console.log(`Retrieved value for ${param}:`, value); // Log the specific parameter
+            return value;
         }
-
         // Function to fetch and display the enquiry details
         async function fetchVerificationDetails(Id) {
             try {
@@ -97,7 +99,8 @@
                     throw new Error('Failed to fetch verification details');
                 }
                 const verify = await response.json();
-                console.log('Verification details fetched successfully:', verify); // Log the response for debugging
+                console.log('Fetched details:', verify); // Log response for debugging
+
                 document.getElementById('detail-username').textContent = verify.UserName;
                 document.getElementById('detail-housing').textContent = verify.HousingType;
                 document.getElementById('detail-employment').textContent = verify.EmploymentStatus;
@@ -109,6 +112,8 @@
             }
         }
 
+
+
         // Function to close the modal and go back to the main page
         function closeModal() {
             window.location.href = 'verify.html';
@@ -116,12 +121,7 @@
 
         // Fetch and display the enquiry details when the page loads
         window.onload = () => {
-            const verifyId = getQueryParam('Id');
-            if (verifyId) {
-                fetchVerificationDetails(verifyId);
-            } else {
-                alert('No verification ID found in query parameters'); // Provide feedback to the user
-            }
+            fetchVerificationDetails(1); // Use a static ID for testing
         };
     </script>
 </body>

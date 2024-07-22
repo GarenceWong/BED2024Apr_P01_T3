@@ -52,8 +52,6 @@ app.get('/get-medical-report', getMedicalReport);
 app.put('/update-timeslot-status/:id', updateTimeslotStatus);
 app.get('/get-verification', getVerification);
 app.get('/get-verification/:id', getVerificationByIdHandler)
-app.get('/get-all-medical-reports', fetchAllMedicalReports); // Zehao
-
 
 // Additional routes for appointments
 app.post('/new-appointment', async (req, res) => {
