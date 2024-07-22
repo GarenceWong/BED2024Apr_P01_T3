@@ -78,10 +78,10 @@
                     const row = document.createElement('tr');
                     row.setAttribute('data-id', enquiry.id);
                     row.innerHTML = `
-                        <td>${enquiry.username}</td>
-                        <td>${enquiry.title}</td>
-                        <td>${enquiry.date}</td>
-                    `;
+                            <td>${enquiry.username}</td>
+                            <td>${enquiry.title}</td>
+                            <td>${enquiry.date}</td>
+                        `;
                     row.addEventListener('click', () => {
                         window.location.href = `enquirydetails.html?id=${enquiry.id}`;
                     });
