@@ -91,27 +91,26 @@
             console.log(`Retrieved value for ${param}:`, value); // Log the specific parameter
             return value;
         }
-
         // Function to fetch and display the enquiry details
-        async function fetchVerificationDetails(id) {
-    try {
-        const response = await fetch(`http://localhost:3003/get-verification/${id}`);
-        if (!response.ok) {
-            throw new Error('Failed to fetch verification details');
-        }
-        const verify = await response.json();
-        console.log('Fetched details:', verify); // Log response for debugging
+        async function fetchVerificationDetails(Id) {
+            try {
+                const response = await fetch(`http://localhost:3003/get-verification/${Id}`);
+                if (!response.ok) {
+                    throw new Error('Failed to fetch verification details');
+                }
+                const verify = await response.json();
+                console.log('Fetched details:', verify); // Log response for debugging
 
-        document.getElementById('detail-username').textContent = verify.UserName;
-        document.getElementById('detail-housing').textContent = verify.HousingType;
-        document.getElementById('detail-employment').textContent = verify.EmploymentStatus;
-        document.getElementById('detail-income').textContent = verify.GrossMonthlyIncome;
-        document.getElementById('detail-nric').textContent = verify.NRIC;
-    } catch (error) {
-        console.error('Error fetching verification details:', error);
-        alert('An error occurred while fetching the verification details. Please try again later.');
-    }
-}
+                document.getElementById('detail-username').textContent = verify.UserName;
+                document.getElementById('detail-housing').textContent = verify.HousingType;
+                document.getElementById('detail-employment').textContent = verify.EmploymentStatus;
+                document.getElementById('detail-income').textContent = verify.GrossMonthlyIncome;
+                document.getElementById('detail-nric').textContent = verify.NRIC;
+            } catch (error) {
+                console.error('Error fetching verification details:', error);
+                alert('An error occurred while fetching the verification details. Please try again later.');
+            }
+        }
 
 
 
@@ -122,13 +121,7 @@
 
         // Fetch and display the enquiry details when the page loads
         window.onload = () => {
-            const verifyid = getQueryParam('Id'); // Ensure this matches the parameter name in the URL
-            console.log('ID retrieved:', verifyid); // Check if ID is correctly retrieved
-            if (verifyid) {
-                fetchVerificationDetails(verifyid);
-            } else {
-                alert('No verification ID found in query parameters');
-            }
+            fetchVerificationDetails(1); // Use a static ID for testing
         };
     </script>
 </body>
