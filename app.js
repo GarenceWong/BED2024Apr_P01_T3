@@ -16,8 +16,7 @@ const { getEnquiries, getEnquiryByIdHandler } = require('./controllers/enquiryCo
 const { handleAddDonation } = require('./controllers/userdonationController');
 const { submitEnquiry } = require('./controllers/contactuscontroller');
 const { getDonations, deleteDonation } = require('./controllers/donationsController');
-/*const { getDonations } = require('./controllers/donationsContoller.js')*/
-const { getMedicalReport } = require('./controllers/medicalReportController'); // Import the medical report controller
+const { getMedicalReport } = require('./controllers/medicalReportController');
 
 const app = express();
 const port = process.env.PORT || 3003;
