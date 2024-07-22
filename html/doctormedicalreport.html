@@ -1,7 +1,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../css/doctorhomepage.css">
+    <link rel="stylesheet" href="../css/doctormedicalreport.css">
     <title>Zehao Healthcare</title>
 </head>
 <body>
@@ -22,5 +22,48 @@
     <div class="appointment-rectangle">
         Medical Reports
     </div>
+
+    <div class="search-bar-container">
+        <input type="text" class="search-bar" placeholder="Search for patient" id="searchBar">
+    </div>
+
+    <div class="patient-list-container">
+        <div class="patient-list-header">
+            <span class="header-patient">Medical Reports</span>
+        </div>
+        <div id="timeslots-container">
+            <!-- Timeslots will be dynamically populated here -->
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            const container = document.getElementById('timeslots-container');
+                
+            try {
+                const response = await fetch('http://localhost:3003/get-all-medical-reports');
+                const reports = await response.json();
+                console.log('Reports data:', reports);
+            
+                if (Array.isArray(reports)) {
+                    reports.forEach(report => {
+                        const reportElement = document.createElement('div');
+                        reportElement.classList.add('patient-list-row');
+                        reportElement.innerHTML = `
+                            <span>${report.username}</span>
+                            <span>${report.medicalCondition}</span>
+                            <span>${report.prescription ? report.prescription : 'N/A'}</span>
+                        `;
+                        container.appendChild(reportElement);
+                    });
+                } else {
+                    console.error('Unexpected data format:', reports);
+                }
+            } catch (error) {
+                console.error('Error fetching medical reports:', error);
+            }
+        });
+    </script>
+        
 
 </body>

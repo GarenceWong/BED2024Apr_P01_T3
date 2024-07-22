@@ -98,5 +98,4 @@ CREATE TABLE MedicalReports (
 ); 
 
 
--- medicalform end
 
