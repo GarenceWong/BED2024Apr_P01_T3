@@ -33,6 +33,9 @@
                 <label for="prescribed-medication">Prescribed Medication</label>
                 <textarea id="prescribed-medication" name="prescription" rows="4" required></textarea>
 
+                <!-- Hidden field for appointment ID -->
+                <input type="hidden" id="appointment-id" name="appointment-id" />
+
                 <div class="button-container">
                     <button type="button" class="prescribe-button" onclick="submitMedicalReport()">Prescribe</button>
                     <button type="button" class="cancel-button" onclick="window.location.href='doctorhomepage.html'">Cancel</button>
@@ -49,10 +52,17 @@
                 return urlParams.get(param);
             };
 
-            // Fetch username from URL query parameters and set it to the input field
+            // Set the username and appointment ID in the input fields
             const username = getQueryParam('username');
+            const appointmentId = getQueryParam('appointmentId'); // Get appointment ID
+
             if (username) {
                 document.getElementById('patient-name').value = username;
+            }
+
+            // Store the appointment ID in a hidden field
+            if (appointmentId) {
+                document.getElementById('appointment-id').value = appointmentId;
             }
         });
 
@@ -65,10 +75,12 @@
                 data[key] = value;
             });
 
-            console.log('Form data:', data); // Log form data
+            const username = data.username;
+            const appointmentId = data['appointment-id']; // Get appointment ID from form data
 
             try {
-                const response = await fetch('http://localhost:3003/submit-medical-report', {
+                // Submit medical report
+                const reportResponse = await fetch('http://localhost:3003/submit-medical-report', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -76,11 +88,37 @@
                     body: JSON.stringify(data),
                 });
 
-                if (response.ok) {
+                if (reportResponse.ok) {
                     alert('Medical report submitted successfully!');
+
+                    // Fetch timeslot details
+                    const timeslotResponse = await fetch('http://localhost:3003/get-timeslots');
+                    const timeslots = await timeslotResponse.json();
+                    const timeslot = timeslots.find(slot => slot.id == appointmentId); // Find the correct timeslot
+
+                    if (timeslot) {
+                        // Update timeslot status to 'confirmed'
+                        const statusResponse = await fetch(`http://localhost:3003/update-timeslot-status/${appointmentId}`, {
+                            method: 'PUT',
+                            headers: {
+                                'Content-Type': 'application/json',
+                            },
+                            body: JSON.stringify({ status: 'confirmed' }),
+                        });
+
+                        if (statusResponse.ok) {
+                            alert('Timeslot status updated successfully');
+                            window.location.href = 'doctorhomepage.html'; // Redirect to homepage
+                        } else {
+                            alert('Failed to update timeslot status');
+                        }
+                    } else {
+                        alert('Timeslot not found');
+                    }
+
                     form.reset(); // Optionally, reset the form fields
                 } else {
-                    const errorText = await response.text(); // Get error message from response
+                    const errorText = await reportResponse.text(); // Get error message from response
                     console.error('Server error response:', errorText); // Log server error response
                     alert('Failed to submit medical report. Please try again.');
                 }
@@ -92,5 +130,3 @@
     </script>
 </body>
 </html>
-
-

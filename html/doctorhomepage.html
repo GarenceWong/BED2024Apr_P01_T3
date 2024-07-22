@@ -51,7 +51,9 @@ async function fetchTimeslots() {
             throw new Error('Failed to fetch timeslots');
         }
         timeslots = await response.json();
-        displayTimeslots(timeslots);
+        // Filter timeslots to only include those with status 'unconfirmed'
+        const unconfirmedTimeslots = timeslots.filter(timeslot => timeslot.status === 'unconfirmed');
+        displayTimeslots(unconfirmedTimeslots);
     } catch (error) {
         console.error('Error fetching timeslots:', error);
     }
@@ -81,8 +83,8 @@ function displayTimeslots(timeslots) {
         
         // Add click event listener to each timeslotRow
         timeslotRow.addEventListener('click', () => {
-            // Navigate to appointment details page with username as a query parameter
-            window.location.href = `doctorappointment.html?username=${encodeURIComponent(timeslot.username)}`;
+            // Navigate to appointment details page with username and appointmentId as query parameters
+            window.location.href = `doctorappointment.html?username=${encodeURIComponent(timeslot.username)}&appointmentId=${timeslot.id}`;
         });
     
         timeslotsContainer.appendChild(timeslotRow);
@@ -99,4 +101,3 @@ window.onload = fetchTimeslots;
     </script>
 </body>
 </html>
-

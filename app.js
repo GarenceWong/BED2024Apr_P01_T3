@@ -8,10 +8,10 @@ const { login } = require('./controllers/loginController');
 const { adminLogin } = require('./controllers/admincontroller');
 const { addPersonalDetails, fetchPersonalDetails } = require('./controllers/personalDetailController');
 const { createTimeslot } = require('./controllers/timeslotController');
-const { getTimeslots } = require('./controllers/doctorhomepagecontroller');
+const { getTimeslots, updateTimeslotStatus } = require('./controllers/doctorhomepagecontroller'); // (zehao - )
 const { handleDeleteAppointment, handleUpdateAppointment, getUserAppointment } = require('./controllers/userAppointmentController');
 const { submitVerificationDetails } = require('./controllers/verificationController');
-const { submitMedicalReport } = require('./controllers/doctorappointmentcontroller'); 
+const { submitMedicalReport } = require('./controllers/doctorappointmentcontroller');
 const { getEnquiries, getEnquiryByIdHandler } = require('./controllers/enquiryController');
 const { handleAddDonation } = require('./controllers/userdonationController');
 const { submitEnquiry } = require('./controllers/contactuscontroller');
@@ -46,6 +46,8 @@ app.post('/submit-enquiry', submitEnquiry);
 app.get('/get-donations', getDonations);
 app.delete('/delete-donation/:id', deleteDonation);
 app.get('/get-medical-report', getMedicalReport);
+// Add the new PUT route for updating timeslot status (zehao)
+app.put('/update-timeslot-status/:id', updateTimeslotStatus);
 
 // Additional routes for appointments
 app.post('/new-appointment', async (req, res) => {
@@ -77,6 +79,7 @@ app.get('/get-appointments', async (req, res) => {
         res.status(500).json({ error: 'Failed to fetch appointments' });
     }
 });
+
 
 // Start server
 const server = app.listen(port, async () => {
