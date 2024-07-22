@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -31,6 +32,7 @@
         }
     </style>
 </head>
+
 <body>
     <header class="header">
         <div class="logo-container">
@@ -45,10 +47,10 @@
     </header>
 
     <div class="subheader">
-        <b>Verify Accounts</b> 
+        <b>Verify Accounts</b>
     </div>
 
-    
+
     <main>
         <table id="verify-table">
             <thead>
@@ -75,13 +77,16 @@
 
                 verification.forEach(verify => {
                     const row = document.createElement('tr');
-                    row.setAttribute('data-id', verify.id);
+                    row.setAttribute('data-Id', verify.id);
                     row.innerHTML = `
                         <td>${verify.UserName}</td>
-                        <td><button onclick="deleteDonation(${verify.Id})">Delete</button></td>
+                        <td><button onclick="deleteDonation(${verify.id})">Delete</button></td>
                     `;
                     row.addEventListener('click', () => {
-                        window.location.href = `verifydetails.html?id=${verify.id}`;
+                        const id = verify.Id; // Make sure this is correctly retrieved
+                        console.log('Redirecting to:',
+                        `verifydetails.html?Id=${id}`); // Log URL for debugging
+                        window.location.href = `verifydetails.html?Id=${id}`;
                     });
                     verificationBody.appendChild(row);
                 });

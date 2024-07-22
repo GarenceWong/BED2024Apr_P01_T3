@@ -7,11 +7,11 @@ async function getAllVerification() {
   return result.recordset;
 }
 
-async function getVerificationById(id) {
+async function getVerificationById(Id) {
   let pool = await sql.connect(dbConfig);
   let result = await pool.request()
-      .input('id', sql.Int, id)
-      .query('SELECT * FROM Verification WHERE id = @id');
+      .input('Id', sql.Int, Id)
+      .query('SELECT * FROM Verification WHERE Id = @Id');
   return result.recordset[0];
 }
 

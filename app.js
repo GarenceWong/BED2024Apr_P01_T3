@@ -49,7 +49,7 @@ app.delete('/delete-donation/:id', deleteDonation);
 app.get('/get-medical-report', getMedicalReport);
 app.put('/update-timeslot-status/:id', updateTimeslotStatus);
 app.get('/get-verification', getVerification);
-app.get('/get-verification/:id', getVerificationByIdHandler)
+app.get('/get-verification/:id', getVerificationByIdHandler);
 
 // Additional routes for appointments
 app.post('/new-appointment', async (req, res) => {

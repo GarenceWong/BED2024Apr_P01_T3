@@ -81,33 +81,39 @@
             <p><strong>NRIC:</strong> <span id="detail-nric"></span></p>
         </div>
     </div>
-    
+
     <script>
         // Function to retrieve the enquiry ID from the query parameters
         function getQueryParam(param) {
             const urlParams = new URLSearchParams(window.location.search);
-            return urlParams.get(param);
+            const value = urlParams.get(param);
+            console.log('Query Parameters:', Array.from(urlParams.entries())); // Log all query parameters
+            console.log(`Retrieved value for ${param}:`, value); // Log the specific parameter
+            return value;
         }
 
         // Function to fetch and display the enquiry details
-        async function fetchVerificationDetails(Id) {
-            try {
-                const response = await fetch(`http://localhost:3003/get-verification/${Id}`);
-                if (!response.ok) {
-                    throw new Error('Failed to fetch verification details');
-                }
-                const verify = await response.json();
-                console.log('Verification details fetched successfully:', verify); // Log the response for debugging
-                document.getElementById('detail-username').textContent = verify.UserName;
-                document.getElementById('detail-housing').textContent = verify.HousingType;
-                document.getElementById('detail-employment').textContent = verify.EmploymentStatus;
-                document.getElementById('detail-income').textContent = verify.GrossMonthlyIncome;
-                document.getElementById('detail-nric').textContent = verify.NRIC;
-            } catch (error) {
-                console.error('Error fetching verification details:', error);
-                alert('An error occurred while fetching the verification details. Please try again later.');
-            }
+        async function fetchVerificationDetails(id) {
+    try {
+        const response = await fetch(`http://localhost:3003/get-verification/${id}`);
+        if (!response.ok) {
+            throw new Error('Failed to fetch verification details');
         }
+        const verify = await response.json();
+        console.log('Fetched details:', verify); // Log response for debugging
+
+        document.getElementById('detail-username').textContent = verify.UserName;
+        document.getElementById('detail-housing').textContent = verify.HousingType;
+        document.getElementById('detail-employment').textContent = verify.EmploymentStatus;
+        document.getElementById('detail-income').textContent = verify.GrossMonthlyIncome;
+        document.getElementById('detail-nric').textContent = verify.NRIC;
+    } catch (error) {
+        console.error('Error fetching verification details:', error);
+        alert('An error occurred while fetching the verification details. Please try again later.');
+    }
+}
+
+
 
         // Function to close the modal and go back to the main page
         function closeModal() {
@@ -116,11 +122,12 @@
 
         // Fetch and display the enquiry details when the page loads
         window.onload = () => {
-            const verifyId = getQueryParam('Id');
-            if (verifyId) {
-                fetchVerificationDetails(verifyId);
+            const verifyid = getQueryParam('Id'); // Ensure this matches the parameter name in the URL
+            console.log('ID retrieved:', verifyid); // Check if ID is correctly retrieved
+            if (verifyid) {
+                fetchVerificationDetails(verifyid);
             } else {
-                alert('No verification ID found in query parameters'); // Provide feedback to the user
+                alert('No verification ID found in query parameters');
             }
         };
     </script>
