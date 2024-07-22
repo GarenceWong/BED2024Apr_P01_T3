@@ -5,6 +5,31 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../css/appointments.css">
     <title>ZehaoHealthcare</title>
+    <style>
+        /* Add some basic styling for the detail view */
+        #verify-details {
+            display: none;
+            margin-top: 20px;
+        }
+
+        /* Add styles for the table rows */
+        #verify-table tr {
+            cursor: pointer;
+            /* Change the cursor to a pointer to indicate clickability */
+            transition: background-color 0.3s;
+            /* Smooth transition for background color change */
+        }
+
+        #verify-table tr:hover {
+            background-color: #f0f0f0;
+            /* Light background color on hover */
+        }
+
+        #verify-table tr:active {
+            background-color: #e0e0e0;
+            /* Slightly darker background color when clicked */
+        }
+    </style>
 </head>
 <body>
     <header class="header">
@@ -56,7 +81,7 @@
                         <td><button onclick="deleteDonation(${verify.Id})">Delete</button></td>
                     `;
                     row.addEventListener('click', () => {
-                        window.location.href = `verificationdetails.html?id=${verify.id}`;
+                        window.location.href = `verifydetails.html?id=${verify.id}`;
                     });
                     verificationBody.appendChild(row);
                 });

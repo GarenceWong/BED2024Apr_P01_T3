@@ -1,4 +1,4 @@
-const { getAllVerification } = require('../models/verifyModel');
+const { getAllVerification, getVerificationById } = require('../models/verifyModel');
 
 async function getVerification(req, res) {
     try {
@@ -11,5 +11,16 @@ async function getVerification(req, res) {
     }
 }
 
+async function getVerificationByIdHandler(req, res) {
+    try {
+      const id = req.params.id;
+      const verify = await getVerificationById(id);
+      res.json(verify);
+      console.log('Fetched verification details successfully');
+    } catch (error) {
+      console.error('Error fetching verification details from database:', error.message);
+      res.status(500).json({ error: 'Failed to fetch verification details' });
+    }
+  }
 
-module.exports = { getVerification };
+module.exports = { getVerification, getVerificationByIdHandler };

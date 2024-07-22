@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/appointments.css">
+    <title>Enquiry Details</title>
+    <style>
+        .modal {
+            display: block;
+            /* Show the modal */
+            z-index: 1;
+            /* Sit on top */
+            padding-top: 50px;
+            /* Location of the box */
+            left: 0;
+            top: 0;
+            width: 100%;
+            /* Full width */
+            height: 100%;
+            /* Full height */
+            overflow: auto;
+            /* Enable scroll if needed */
+            margin-bottom: 1000px;
+
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: 1% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 100%;
+            /* Width of the modal */
+            max-width: 1000px;
+            /* Maximum width of the modal */
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <header class="header">
+        <div class="logo-container">
+            <img src="../Images/Logo.png" alt="Logo" class="logo" />
+            <a href="adminhomepage.html" class="company-name">Zehao Healthcare</a>
+        </div>
+        <nav class="navbar">
+            <a href="../html/aboutus.html">About Us</a>
+            <a href="../html/contactus.html">Contact Us</a>
+            <span id="username"></span>
+        </nav>
+    </header>
+    <div class="subheader">
+        <b>Enquiries</b>
+    </div>
+    <div id="verifyModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <h2>Enquiry Details</h2>
+            <p><strong>Name:</strong> <span id="detail-username"></span></p>
+            <p><strong>Housing Type:</strong> <span id="detail-housing"></span></p>
+            <p><strong>Employment Status:</strong> <span id="detail-employment"></span></p>
+            <p><strong>Gross Monthly Income:</strong> <span id="detail-income"></span></p>
+            <p><strong>NRIC:</strong> <span id="detail-nric"></span></p>
+        </div>
+    </div>
+    
+    <script>
+        // Function to retrieve the enquiry ID from the query parameters
+        function getQueryParam(param) {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(param);
+        }
+
+        // Function to fetch and display the enquiry details
+        async function fetchVerificationDetails(Id) {
+            try {
+                const response = await fetch(`http://localhost:3003/get-verification/${Id}`);
+                if (!response.ok) {
+                    throw new Error('Failed to fetch verification details');
+                }
+                const verify = await response.json();
+                console.log('Verification details fetched successfully:', verify); // Log the response for debugging
+                document.getElementById('detail-username').textContent = verify.UserName;
+                document.getElementById('detail-housing').textContent = verify.HousingType;
+                document.getElementById('detail-employment').textContent = verify.EmploymentStatus;
+                document.getElementById('detail-income').textContent = verify.GrossMonthlyIncome;
+                document.getElementById('detail-nric').textContent = verify.NRIC;
+            } catch (error) {
+                console.error('Error fetching verification details:', error);
+                alert('An error occurred while fetching the verification details. Please try again later.');
+            }
+        }
+
+        // Function to close the modal and go back to the main page
+        function closeModal() {
+            window.location.href = 'verify.html';
+        }
+
+        // Fetch and display the enquiry details when the page loads
+        window.onload = () => {
+            const verifyId = getQueryParam('Id');
+            if (verifyId) {
+                fetchVerificationDetails(verifyId);
+            } else {
+                alert('No verification ID found in query parameters'); // Provide feedback to the user
+            }
+        };
+    </script>
+</body>
+
+</html>

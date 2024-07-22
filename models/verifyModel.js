@@ -7,4 +7,12 @@ async function getAllVerification() {
   return result.recordset;
 }
 
-module.exports = { getAllVerification };
+async function getVerificationById(id) {
+  let pool = await sql.connect(dbConfig);
+  let result = await pool.request()
+      .input('id', sql.Int, id)
+      .query('SELECT * FROM Verification WHERE id = @id');
+  return result.recordset[0];
+}
+
+module.exports = { getAllVerification, getVerificationById };
