@@ -19,6 +19,8 @@ const { getDonations, deleteDonation } = require('./controllers/donationsControl
 const { getMedicalReport } = require('./controllers/medicalReportController'); // Import the medical report controller
 const { getVerification, getVerificationByIdHandler } = require('./controllers/verifyController');
 const { fetchAllMedicalReports } = require('./controllers/docmedicalreportcontroller'); // Zehao
+const { updateMedicalReport } = require('./controllers/updatemedreportcontroller'); // Zehao (update med report)
+
 
 
 const app = express();
@@ -53,6 +55,8 @@ app.put('/update-timeslot-status/:id', updateTimeslotStatus);
 app.get('/get-verification', getVerification);
 app.get('/get-verification/:id', getVerificationByIdHandler)
 app.get('/get-all-medical-reports', fetchAllMedicalReports); // Zehao
+app.put('/update-medical-report', updateMedicalReport); // Zehao
+
 
 
 // Additional routes for appointments

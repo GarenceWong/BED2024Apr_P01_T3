@@ -34,7 +34,7 @@
                 <textarea id="prescribed-medication" name="prescription" rows="4" required></textarea>
 
                 <!-- Hidden field for appointment ID -->
-                <input type="hidden" id="appointment-id" name="appointment-id" />
+                <input type="hidden" id="appointment-id" name="id" />
 
                 <div class="button-container">
                     <button type="button" class="prescribe-button" onclick="submitMedicalReport()">Update</button>
@@ -47,10 +47,14 @@
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const urlParams = new URLSearchParams(window.location.search);
+            const id = urlParams.get('id');
             const username = urlParams.get('username');
             const condition = urlParams.get('condition');
             const prescription = urlParams.get('prescription');
 
+            if (id) {
+                document.getElementById('appointment-id').value = id;
+            }
             if (username) {
                 document.getElementById('patient-name').value = username;
             }
@@ -66,10 +70,33 @@
             const form = document.getElementById('medical-report-form');
             const formData = new FormData(form);
             
-            // Additional code to handle form submission can be added here
-            // For example, sending the data to the backend via fetch
+            const data = {
+                id: formData.get('id'),
+                username: formData.get('username'),
+                medicalCondition: formData.get('medicalCondition'),
+                prescription: formData.get('prescription')
+            };
 
-            console.log('Form Data:', Object.fromEntries(formData.entries()));
+            fetch('http://localhost:3003/update-medical-report', {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.error) {
+                    console.error('Error:', data.error);
+                } else {
+                    console.log('Success:', data.message);
+                    // Redirect or update the UI as needed
+                    window.location.href = 'doctormedicalreport.html'; // Redirect after update
+                }
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
         }
     </script>
 </body>
