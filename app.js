@@ -20,6 +20,8 @@ const { getMedicalReport } = require('./controllers/medicalReportController'); /
 const { getVerification, getVerificationByIdHandler, verifyUser } = require('./controllers/verifyController');
 const { fetchAllMedicalReports } = require('./controllers/docmedicalreportcontroller'); // Zehao
 const { updateMedicalReport } = require('./controllers/updatemedreportcontroller'); // Zehao (update med report)
+const swaggerUi = require("swagger-ui-express");
+const swaggerDocument = require("./swagger-output.json"); // Import generated spec
 
 const app = express();
 const port = process.env.PORT || 3003;
@@ -55,6 +57,8 @@ app.get('/get-verification/:id', getVerificationByIdHandler)
 app.get('/get-all-medical-reports', fetchAllMedicalReports); // Zehao
 app.put('/update-medical-report', updateMedicalReport); // Zehao
 app.put('/verify', verifyUser);
+
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 
 // Additional routes for appointments
