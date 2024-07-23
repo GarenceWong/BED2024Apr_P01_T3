@@ -81,3 +81,67 @@ body {
     margin-top: 20px; /* Adjust margin as needed */
     font-size: 24px;
 }
+
+/* Search Bar */
+.search-bar-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px; /* Adjust margin as needed */
+}
+
+.search-bar {
+    width: 600px;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #333;
+    border-radius: 25px;
+    background-color: #E3CDE2;
+}
+
+.search-bar::placeholder {
+    color: #8E699C;
+    font-weight: 600;
+}
+
+/* Patient List */
+.patient-list-container {
+    width: 80%;
+    height: 600px;
+    margin: 20px auto;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    overflow-y: auto; /* Changed to auto for scroll only when necessary */
+}
+
+.patient-list-header {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    background-color: #8E699C;
+    border-bottom: 1px solid #ccc;
+    font-weight: bold;
+    color: white;
+}
+
+.patient-list-header span {
+    flex: 1;
+    text-align: center;
+}
+
+/* Medical Report Rows */
+.patient-list-row {
+    display: flex;
+    align-items: center;
+    padding: 10px; /* Reduced padding for better alignment */
+    border-bottom: 1px solid #ccc;
+    transition: background-color 0.3s; /* Smooth background color transition */
+}
+
+.patient-list-row:hover {
+    background-color: #EEEEEE; /* Light gray background on hover */
+}
+
+.patient-list-row span {
+    flex: 1;
+    text-align: center;
+}
