@@ -47,14 +47,10 @@
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const urlParams = new URLSearchParams(window.location.search);
-            const id = urlParams.get('id');
             const username = urlParams.get('username');
             const condition = urlParams.get('condition');
             const prescription = urlParams.get('prescription');
-
-            if (id) {
-                document.getElementById('appointment-id').value = id;
-            }
+    
             if (username) {
                 document.getElementById('patient-name').value = username;
             }
@@ -65,18 +61,19 @@
                 document.getElementById('prescribed-medication').value = prescription;
             }
         });
-
+    
         function submitMedicalReport() {
             const form = document.getElementById('medical-report-form');
             const formData = new FormData(form);
             
             const data = {
-                id: formData.get('id'),
                 username: formData.get('username'),
                 medicalCondition: formData.get('medicalCondition'),
                 prescription: formData.get('prescription')
             };
-
+    
+            console.log('Data being sent:', data); // Debugging
+    
             fetch('http://localhost:3003/update-medical-report', {
                 method: 'PUT',
                 headers: {
@@ -90,7 +87,6 @@
                     console.error('Error:', data.error);
                 } else {
                     console.log('Success:', data.message);
-                    // Redirect or update the UI as needed
                     window.location.href = 'doctormedicalreport.html'; // Redirect after update
                 }
             })
