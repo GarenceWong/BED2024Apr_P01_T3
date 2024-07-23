@@ -1,11 +1,12 @@
 const { updateMedicalReportModel } = require('../models/updatemedreportmodel');
 
-// Function to update a specific medical report
 const updateMedicalReport = async (req, res) => {
-    const { id, username, medicalCondition, prescription } = req.body;
+    const { username, medicalCondition, prescription } = req.body;
+
+    console.log('Request body:', req.body); // Debugging
 
     try {
-        let result = await updateMedicalReportModel(id, username, medicalCondition, prescription);
+        let result = await updateMedicalReportModel(username, medicalCondition, prescription);
         res.status(200).send({ message: "Medical report updated successfully", result: result });
     } catch (err) {
         console.error('Error updating medical report:', err.message);
