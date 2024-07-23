@@ -1,8 +1,10 @@
+<!DOCTYPE html>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../css/medicine.css">
-    <title>Zehao Healthcare</title>
+    <title>Zehao Healthcare - Medicines</title>
 </head>
 <body>
     <header class="header">
@@ -12,7 +14,6 @@
         </div>
 
         <nav class="navbar">
-            <a href="../html/doctormedicalreport.html">Medical Report</a>
             <a href="../html/aboutus.html">About Us</a>
             <a href="../html/contactus.html">Contact Us</a>
             <a href="../html/login.html" class="logout-button">Log Out</a>
@@ -20,26 +21,62 @@
     </header>
 
     <div class="appointment-rectangle">
-        Appointment
+        Medicine
     </div>
 
     <div class="search-bar-container">
-        <input type="text" class="search-bar" placeholder="Search for patient" id="searchBar">
+        <input type="text" class="search-bar" placeholder="Search for medicine" id="medicineSearchBar">
     </div>
 
-    <div class="patient-list-container">
-        <div class="patient-list-header">
-            <span class="header-number">#</span>
-            <span class="header-patient">Patient</span>
-            <span class="header-date">Date</span>
-            <span class="header-time">Time</span>
-            <span class="header-status">Status</span>
+    <div class="medicine-list-container">
+        <div class="medicine-list-header">
+            <span class="header-id">ID</span>
+            <span class="header-name">Name</span>
+            <span class="header-availability">Availability</span>
         </div>
-        <div id="timeslots-container">
-            <!-- Timeslots will be dynamically populated here -->
+        <div id="medicines-container">
+            <!-- Medicines will be dynamically populated here -->
         </div>
     </div>
 
+    <script>
+        document.addEventListener("DOMContentLoaded", async () => {
+            try {
+                const response = await fetch('http://localhost:3003/get-medicines');
+                const medicines = await response.json();
+                
+                const container = document.getElementById('medicines-container');
+                medicines.forEach(medicine => {
+                    const medicineDiv = document.createElement('div');
+                    medicineDiv.className = 'medicine';
+                    medicineDiv.innerHTML = `
+                        <span class="medicine-id">${medicine.id}</span>
+                        <span class="medicine-name">${medicine.name}</span>
+                        <span class="medicine-availability">${medicine.availability}</span>
+                    `;
+                    container.appendChild(medicineDiv);
+                });
 
+                // Search functionality
+                const searchBar = document.getElementById('medicineSearchBar');
+                searchBar.addEventListener('input', () => {
+                    const query = searchBar.value.toLowerCase();
+                    const medicines = document.querySelectorAll('.medicine');
+                    medicines.forEach(medicine => {
+                        const name = medicine.querySelector('.medicine-name').textContent.toLowerCase();
+                        if (name.includes(query)) {
+                            medicine.style.display = 'flex';
+                        } else {
+                            medicine.style.display = 'none';
+                        }
+                    });
+                });
+
+            } catch (error) {
+                console.error('Error fetching medicines:', error.message);
+            }
+        });
+    </script>
 
 </body>
+</html>

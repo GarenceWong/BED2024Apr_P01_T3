@@ -18,10 +18,12 @@ const { submitEnquiry } = require('./controllers/contactuscontroller');
 const { getDonations, deleteDonation } = require('./controllers/donationsController');
 const { getMedicalReport } = require('./controllers/medicalReportController'); // Import the medical report controller
 const { getVerification, getVerificationByIdHandler, verifyUser } = require('./controllers/verifyController');
-const { fetchAllMedicalReports } = require('./controllers/docmedicalreportcontroller'); // Zehao
+const { fetchAllMedicalReports } = require('./controllers/docmedicalreportcontroller'); // Zehao (Get all medical reports)
 const { updateMedicalReport } = require('./controllers/updatemedreportcontroller'); // Zehao (update med report)
 const swaggerUi = require("swagger-ui-express");
 const swaggerDocument = require("./swagger-output.json"); // Import generated spec
+const { fetchAllMedicines } = require('./controllers/medicinecontroller'); // Zehao (Import the medicine controller)
+
 
 const app = express();
 const port = process.env.PORT || 3003;
@@ -57,6 +59,8 @@ app.get('/get-verification/:id', getVerificationByIdHandler)
 app.get('/get-all-medical-reports', fetchAllMedicalReports); // Zehao
 app.put('/update-medical-report', updateMedicalReport); // Zehao
 app.put('/verify', verifyUser);
+app.get('/get-medicines', fetchAllMedicines); // Zehao (get all medicines)
+
 
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 

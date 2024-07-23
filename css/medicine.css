@@ -103,8 +103,8 @@ body {
     font-weight: 600;
 }
 
-/* Patient List */
-.patient-list-container {
+/* Medicine List */
+.medicine-list-container {
     width: 80%;
     height: 600px;
     margin: 20px auto;
@@ -113,7 +113,7 @@ body {
     overflow-y: auto; /* Changed to auto for scroll only when necessary */
 }
 
-.patient-list-header {
+.medicine-list-header {
     display: flex;
     align-items: center;
     padding: 10px;
@@ -123,12 +123,12 @@ body {
     color: white;
 }
 
-.patient-list-header span {
+.medicine-list-header span {
     flex: 1;
     text-align: center;
 }
 
-.patient-list-row {
+.medicine {
     display: flex;
     align-items: center;
     padding: 10px; /* Reduced padding for better alignment */
@@ -136,11 +136,12 @@ body {
     transition: background-color 0.3s; /* Smooth background color transition */
 }
 
-.patient-list-row:hover {
+.medicine:hover {
     background-color: #EEEEEE; /* Light gray background on hover */
 }
 
-.patient-list-row span {
+.medicine span {
     flex: 1;
     text-align: center;
 }
+
