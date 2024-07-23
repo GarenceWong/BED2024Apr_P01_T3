@@ -17,11 +17,9 @@ const { handleAddDonation } = require('./controllers/userdonationController');
 const { submitEnquiry } = require('./controllers/contactuscontroller');
 const { getDonations, deleteDonation } = require('./controllers/donationsController');
 const { getMedicalReport } = require('./controllers/medicalReportController'); // Import the medical report controller
-const { getVerification, getVerificationByIdHandler } = require('./controllers/verifyController');
+const { getVerification, getVerificationByIdHandler, verifyUser } = require('./controllers/verifyController');
 const { fetchAllMedicalReports } = require('./controllers/docmedicalreportcontroller'); // Zehao
 const { updateMedicalReport } = require('./controllers/updatemedreportcontroller'); // Zehao (update med report)
-
-
 
 const app = express();
 const port = process.env.PORT || 3003;
@@ -56,7 +54,7 @@ app.get('/get-verification', getVerification);
 app.get('/get-verification/:id', getVerificationByIdHandler)
 app.get('/get-all-medical-reports', fetchAllMedicalReports); // Zehao
 app.put('/update-medical-report', updateMedicalReport); // Zehao
-
+app.put('/verify', verifyUser);
 
 
 // Additional routes for appointments

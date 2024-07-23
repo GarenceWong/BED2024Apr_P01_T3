@@ -15,4 +15,18 @@ async function getVerificationById(id) {
   return result.recordset[0];
 }
 
-module.exports = { getAllVerification, getVerificationById };
+async function updateStatus(id) {
+  try {
+    let pool = await sql.connect(dbConfig);
+    let result = await pool.request()
+      .input('id', sql.Int, id)
+      .query("UPDATE Verification SET status = 'approved' WHERE id = @id");
+    
+    // Return the number of rows affected
+    return { rowsAffected: result.rowsAffected[0] };
+  } catch (err) {
+    throw new Error('Error updating record: ' + err.message);
+  }
+}
+
+module.exports = { getAllVerification, getVerificationById, updateStatus };

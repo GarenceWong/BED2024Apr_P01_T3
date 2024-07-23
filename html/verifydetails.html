@@ -44,6 +44,22 @@
             text-decoration: none;
             cursor: pointer;
         }
+
+        .verify-button {
+            display: block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 16px;
+            color: white;
+            background-color: #8E699C;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .verify-button:hover {
+            background-color: #E3CDE2;
+        }
     </style>
 </head>
 
@@ -71,6 +87,8 @@
             <p><strong>Employment Status:</strong> <span id="detail-employmentstatus"></span></p>
             <p><strong>Gross Monthly Income:</strong> <span id="detail-grossmonthlyincome"></span></p>
             <p><strong>NRIC:</strong> <span id="detail-nric"></span></p>
+            <button class="verify-button" onclick="verifyUser()">Verify</button>
+
         </div>
     </div>
 
@@ -97,6 +115,35 @@
                 document.getElementById('detail-nric').textContent = verify.nric;
             } catch (error) {
                 console.error('Error fetching verification details:', error);
+            }
+        }
+
+                // Function to handle the Verify button click
+                async function verifyUser() {
+            const id = getQueryParam('id');
+            if (!id) {
+                alert('No ID provided');
+                return;
+            }
+
+            try {
+                const response = await fetch('http://localhost:3003/verify', {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ id: id })
+                });
+
+                if (!response.ok) {
+                    throw new Error('Failed to verify user');
+                }
+
+                const message = await response.text();
+                alert(message);
+                closeModal(); // Optionally close the modal after successful verification
+            } catch (error) {
+                console.error('Error verifying user:', error);
             }
         }
 
