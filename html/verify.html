@@ -77,17 +77,18 @@
                 verifyBody.innerHTML = '';
 
                 verify.forEach(verify => {
-                    const row = document.createElement('tr');
-                    row.setAttribute('data-id', verify.id); // Correct attribute name
-                    row.innerHTML = `
-                        <td>${verify.username}</td>
-                        <td>${verify.nric}</td>
-
-                   `;
-                    row.addEventListener('click', () => {
-                        window.location.href = `verifydetails.html?id=${verify.id}`;
-                    });
-                    verifyBody.appendChild(row);
+                    if (verify.status === 'pending') {
+                        const row = document.createElement('tr');
+                        row.setAttribute('data-id', verify.id);
+                        row.innerHTML = `
+                            <td>${verify.username}</td>
+                            <td>${verify.nric}</td>
+                        `;
+                        row.addEventListener('click', () => {
+                            window.location.href = `verifydetails.html?id=${verify.id}`;
+                        });
+                        verifyBody.appendChild(row);
+                    }
                 });
             } catch (error) {
                 console.error('Error fetching verification:', error);
