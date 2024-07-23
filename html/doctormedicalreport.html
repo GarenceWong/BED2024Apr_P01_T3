@@ -44,12 +44,12 @@
         document.addEventListener('DOMContentLoaded', async () => {
             const container = document.getElementById('timeslots-container');
             let timeslots = [];
-
+    
             try {
                 const response = await fetch('http://localhost:3003/get-all-medical-reports');
                 const reports = await response.json();
                 console.log('Reports data:', reports);
-
+    
                 if (Array.isArray(reports)) {
                     timeslots = reports;
                     displayTimeslots(timeslots);
@@ -59,7 +59,7 @@
             } catch (error) {
                 console.error('Error fetching medical reports:', error);
             }
-
+    
             function displayTimeslots(timeslots) {
                 container.innerHTML = '';
                 timeslots.forEach(report => {
@@ -70,10 +70,17 @@
                         <span>${report.medicalCondition}</span>
                         <span>${report.prescription ? report.prescription : 'N/A'}</span>
                     `;
+                    reportElement.addEventListener('click', () => {
+                        const url = new URL('updatemedreport.html', window.location.href);
+                        url.searchParams.set('username', report.username);
+                        url.searchParams.set('condition', report.medicalCondition);
+                        url.searchParams.set('prescription', report.prescription ? report.prescription : 'N/A');
+                        window.location.href = url;
+                    });
                     container.appendChild(reportElement);
                 });
             }
-
+    
             document.getElementById('searchBar').addEventListener('keyup', (event) => {
                 const searchTerm = event.target.value.toLowerCase();
                 const filteredTimeslots = timeslots.filter(report => report.username.toLowerCase().includes(searchTerm));
@@ -81,5 +88,7 @@
             });
         });
     </script>
+    
+    
 </body>
 </html>

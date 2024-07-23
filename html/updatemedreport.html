@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/updatemedreport.css">
+    <title>Zehao Healthcare</title>
+</head>
+<body>
+    <header class="header">
+        <div class="logo-container">
+            <img src="../Images/Logo.png" alt="Logo" class="logo" />
+            <a href="doctorhomepage.html" class="company-name">Zehao Healthcare</a>
+        </div>
+
+        <nav class="navbar">
+            <a href="../html/aboutus.html">About Us</a>
+            <a href="../html/contactus.html">Contact Us</a>
+            <a href="../html/login.html" class="logout-button">Log Out</a>
+        </nav>
+    </header>
+
+    <main class="main-content">
+        <div class="medical-report-container">
+            <h2>Medical Report</h2>
+            <form id="medical-report-form">
+                <label for="patient-name">Patient's Name</label>
+                <input type="text" id="patient-name" name="username" placeholder="Enter patient's name" required />
+
+                <label for="condition">Condition</label>
+                <textarea id="condition" name="medicalCondition" rows="4" required></textarea>
+
+                <label for="prescribed-medication">Prescribed Medication</label>
+                <textarea id="prescribed-medication" name="prescription" rows="4" required></textarea>
+
+                <!-- Hidden field for appointment ID -->
+                <input type="hidden" id="appointment-id" name="appointment-id" />
+
+                <div class="button-container">
+                    <button type="button" class="prescribe-button" onclick="submitMedicalReport()">Update</button>
+                    <button type="button" class="cancel-button" onclick="window.location.href='doctormedicalreport.html'">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const username = urlParams.get('username');
+            const condition = urlParams.get('condition');
+            const prescription = urlParams.get('prescription');
+
+            if (username) {
+                document.getElementById('patient-name').value = username;
+            }
+            if (condition) {
+                document.getElementById('condition').value = condition;
+            }
+            if (prescription) {
+                document.getElementById('prescribed-medication').value = prescription;
+            }
+        });
+
+        function submitMedicalReport() {
+            const form = document.getElementById('medical-report-form');
+            const formData = new FormData(form);
+            
+            // Additional code to handle form submission can be added here
+            // For example, sending the data to the backend via fetch
+
+            console.log('Form Data:', Object.fromEntries(formData.entries()));
+        }
+    </script>
+</body>
+</html>
