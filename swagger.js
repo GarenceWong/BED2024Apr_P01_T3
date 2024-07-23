@@ -1,14 +1,14 @@
 const swaggerAutogen = require("swagger-autogen")();
 
-const outputFile = "./swagger-output.json"; // Output file for the spec
-const routes = ["./app.js"]; // Path to your API route files
+const outputFile = "./swagger-output.json";
+const routes = ["./app.js"]; 
 
 const doc = {
   info: {
     title: "My API",
-    description: "Description of your API",
+    description: "Description of Zehao Healthcare API",
   },
-  host: "localhost:3003", // Replace with your actual host if needed
+  host: "localhost:3003",
 };
 
 swaggerAutogen(outputFile, routes, doc);
