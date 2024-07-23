@@ -56,7 +56,8 @@
             <thead>
                 <tr>
                     <th>Name</th>
-                    <th></th>
+                    <th>NRIC</th>
+
                 </tr>
             </thead>
             <tbody id="verify-body">
@@ -71,27 +72,25 @@
                 if (!response.ok) {
                     throw new Error('Failed to fetch verification');
                 }
-                const verification = await response.json();
-                const verificationBody = document.getElementById('verify-body');
-                verificationBody.innerHTML = '';
+                const verify = await response.json();
+                const verifyBody = document.getElementById('verify-body');
+                verifyBody.innerHTML = '';
 
-                verification.forEach(verify => {
+                verify.forEach(verify => {
                     const row = document.createElement('tr');
-                    row.setAttribute('data-Id', verify.id);
+                    row.setAttribute('data-id', verify.id); // Correct attribute name
                     row.innerHTML = `
-                        <td>${verify.UserName}</td>
-                        <td><button onclick="deleteDonation(${verify.id})">Delete</button></td>
-                    `;
+                        <td>${verify.username}</td>
+                        <td>${verify.nric}</td>
+
+                   `;
                     row.addEventListener('click', () => {
-                        const id = verify.Id; // Make sure this is correctly retrieved
-                        console.log('Redirecting to:',
-                        `verifydetails.html?Id=${id}`); // Log URL for debugging
-                        window.location.href = `verifydetails.html?Id=${id}`;
+                        window.location.href = `verifydetails.html?id=${verify.id}`;
                     });
-                    verificationBody.appendChild(row);
+                    verifyBody.appendChild(row);
                 });
             } catch (error) {
-                console.error('Error fetching verifications:', error);
+                console.error('Error fetching verification:', error);
             }
         }
 

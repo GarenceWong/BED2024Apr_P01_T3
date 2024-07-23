@@ -3,15 +3,15 @@ const dbConfig = require("../dbConfig");
 
 async function getAllVerification() {
   let pool = await sql.connect(dbConfig);
-  let result = await pool.request().query('SELECT UserName FROM verification');
+  let result = await pool.request().query('SELECT * FROM verification');
   return result.recordset;
 }
 
-async function getVerificationById(Id) {
+async function getVerificationById(id) {
   let pool = await sql.connect(dbConfig);
   let result = await pool.request()
-      .input('Id', sql.Int, Id)
-      .query('SELECT * FROM Verification WHERE Id = @Id');
+      .input('id', sql.Int, id)
+      .query('SELECT * FROM Verification WHERE id = @id');
   return result.recordset[0];
 }
 

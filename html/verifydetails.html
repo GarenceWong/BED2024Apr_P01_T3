@@ -5,23 +5,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../css/appointments.css">
-    <title>Enquiry Details</title>
+    <title>Verify Accounts</title>
     <style>
         .modal {
-            display: block;
-            /* Show the modal */
-            z-index: 1;
-            /* Sit on top */
-            padding-top: 50px;
-            /* Location of the box */
+            display: block; /* Show the modal */
+            z-index: 1; /* Sit on top */
+            padding-top: 50px; /* Location of the box */
             left: 0;
             top: 0;
-            width: 100%;
-            /* Full width */
-            height: 100%;
-            /* Full height */
-            overflow: auto;
-            /* Enable scroll if needed */
+            width: 100%; /* Full width */
+            height: 100%; /* Full height */
+            overflow: auto; /* Enable scroll if needed */
             margin-bottom: 1000px;
 
         }
@@ -31,10 +25,8 @@
             margin: 1% auto;
             padding: 20px;
             border: 1px solid #888;
-            width: 100%;
-            /* Width of the modal */
-            max-width: 1000px;
-            /* Maximum width of the modal */
+            width: 100%; /* Width of the modal */
+            max-width: 1000px; /* Maximum width of the modal */
             border-radius: 10px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
         }
@@ -68,16 +60,16 @@
         </nav>
     </header>
     <div class="subheader">
-        <b>Enquiries</b>
+        <b>Verify Accounts</b>
     </div>
     <div id="verifyModal" class="modal">
         <div class="modal-content">
             <span class="close" onclick="closeModal()">&times;</span>
-            <h2>Enquiry Details</h2>
-            <p><strong>Name:</strong> <span id="detail-username"></span></p>
-            <p><strong>Housing Type:</strong> <span id="detail-housing"></span></p>
-            <p><strong>Employment Status:</strong> <span id="detail-employment"></span></p>
-            <p><strong>Gross Monthly Income:</strong> <span id="detail-income"></span></p>
+            <h2>Verification Details</h2>
+            <p><strong>Username:</strong> <span id="detail-username"></span></p>
+            <p><strong>Housing Type:</strong> <span id="detail-housingtype"></span></p>
+            <p><strong>Employment Status:</strong> <span id="detail-employmentstatus"></span></p>
+            <p><strong>Gross Monthly Income:</strong> <span id="detail-grossmonthlyincome"></span></p>
             <p><strong>NRIC:</strong> <span id="detail-nric"></span></p>
         </div>
     </div>
@@ -86,33 +78,27 @@
         // Function to retrieve the enquiry ID from the query parameters
         function getQueryParam(param) {
             const urlParams = new URLSearchParams(window.location.search);
-            const value = urlParams.get(param);
-            console.log('Query Parameters:', Array.from(urlParams.entries())); // Log all query parameters
-            console.log(`Retrieved value for ${param}:`, value); // Log the specific parameter
-            return value;
+            return urlParams.get(param);
         }
+
         // Function to fetch and display the enquiry details
-        async function fetchVerificationDetails(Id) {
+        async function fetchVerificationDetails(id) {
             try {
-                const response = await fetch(`http://localhost:3003/get-verification/${Id}`);
+                const response = await fetch(`http://localhost:3003/get-verification/${id}`);
                 if (!response.ok) {
                     throw new Error('Failed to fetch verification details');
                 }
                 const verify = await response.json();
-                console.log('Fetched details:', verify); // Log response for debugging
 
-                document.getElementById('detail-username').textContent = verify.UserName;
-                document.getElementById('detail-housing').textContent = verify.HousingType;
-                document.getElementById('detail-employment').textContent = verify.EmploymentStatus;
-                document.getElementById('detail-income').textContent = verify.GrossMonthlyIncome;
-                document.getElementById('detail-nric').textContent = verify.NRIC;
+                document.getElementById('detail-username').textContent = verify.username;
+                document.getElementById('detail-housingtype').textContent = verify.housingtype;
+                document.getElementById('detail-employmentstatus').textContent = verify.employmentstatus;
+                document.getElementById('detail-grossmonthlyincome').textContent = verify.grossmonthlyincome;
+                document.getElementById('detail-nric').textContent = verify.nric;
             } catch (error) {
                 console.error('Error fetching verification details:', error);
-                alert('An error occurred while fetching the verification details. Please try again later.');
             }
         }
-
-
 
         // Function to close the modal and go back to the main page
         function closeModal() {
@@ -121,7 +107,10 @@
 
         // Fetch and display the enquiry details when the page loads
         window.onload = () => {
-            fetchVerificationDetails(1); // Use a static ID for testing
+            const verifyId = getQueryParam('id');
+            if (verifyId) {
+                fetchVerificationDetails(verifyId);
+            }
         };
     </script>
 </body>
