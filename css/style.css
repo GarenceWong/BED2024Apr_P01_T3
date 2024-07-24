@@ -796,7 +796,8 @@ input[type="text"], input[type="email"], input[type="tel"], input[type="date"] {
     margin: 24px auto;
     border-radius: 8px;
     border: 1px solid #ced4da;
-    background-color: #ffffff;
+    background-color: #E3CDE2;
+    padding-right: 10px;
 }
 
 .donate-header {
@@ -815,7 +816,7 @@ input[type="text"], input[type="email"], input[type="tel"], input[type="date"] {
 .donate-header-icon {
     height: 32px;
     width: 32px;
-    color: #ced4da;
+    color: #007bff;
     transform: translateY(-14px);
 }
 
@@ -881,7 +882,7 @@ input[type="text"], input[type="email"], input[type="tel"], input[type="date"] {
     padding: 12px;
     border: 1px solid #007bff;
     color: #007bff;
-    background-color: transparent;
+    background-color: white;
     margin-top: 16px;
 }
 
