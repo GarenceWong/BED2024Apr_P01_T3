@@ -100,43 +100,44 @@ CREATE TABLE MedicalReports (
 
 -- medicine table
 CREATE TABLE medicine (
-    id INT PRIMARY KEY,
+    id INT PRIMARY KEY IDENTITY(1,1),
     name VARCHAR(255) NOT NULL,
     availability INT NOT NULL
 );
-INSERT INTO medicine (id, name, availability) VALUES
-(1, 'Acetaminophen', 0),
-(2, 'Ibuprofen', 0),
-(3, 'Naproxen', 0),
-(4, 'Aspirin', 0),
-(5, 'Celecoxib', 0),
-(6, 'Diclofenac', 0),
-(7, 'Indomethacin', 0),
-(8, 'Amoxicillin', 0),
-(9, 'Azithromycin', 0),
-(10, 'Ciprofloxacin', 0),
-(11, 'Doxycycline', 0),
-(12, 'Erythromycin', 0),
-(13, 'Levofloxacin', 0),
-(14, 'Penicillin', 0),
-(15, 'Sulfamethoxazole/Trimethoprim', 0),
-(16, 'Fluoxetine', 0),
-(17, 'Sertraline', 0),
-(18, 'Citalopram', 0),
-(19, 'Escitalopram', 0),
-(20, 'Venlafaxine', 0),
-(21, 'Duloxetine', 0),
-(22, 'Bupropion', 0),
-(23, 'Diphenhydramine', 0),
-(24, 'Loratadine', 0),
-(25, 'Cetirizine', 0),
-(26, 'Fexofenadine', 0),
-(27, 'Desloratadine', 0),
-(28, 'Chlorpheniramine', 0),
-(29, 'Ranitidine', 0),
-(30, 'Omeprazole', 0),
-(31, 'Esomeprazole', 0),
-(32, 'Lansoprazole', 0),
-(33, 'Famotidine', 0);
+
+INSERT INTO medicine (name, availability) VALUES
+('Paracetamol', 0),   -- Acetaminophen
+('Ibuprofen', 0),     -- Ibuprofen
+('Naproxen', 0),      -- Naproxen
+('Aspirin', 0),       -- Aspirin
+('Celebrex', 0),      -- Celecoxib
+('Voltaren', 0),      -- Diclofenac
+('Indocin', 0),       -- Indomethacin
+('Amoxil', 0),        -- Amoxicillin
+('Zithromax', 0),     -- Azithromycin
+('Cipro', 0),         -- Ciprofloxacin
+('Doxycycline', 0),   -- Doxycycline
+('Erythrocin', 0),    -- Erythromycin
+('Levaquin', 0),      -- Levofloxacin
+('Penicillin', 0),    -- Penicillin
+('Bactrim', 0),       -- Sulfamethoxazole/Trimethoprim
+('Prozac', 0),        -- Fluoxetine
+('Zoloft', 0),        -- Sertraline
+('Celexa', 0),        -- Citalopram
+('Lexapro', 0),       -- Escitalopram
+('Effexor', 0),       -- Venlafaxine
+('Cymbalta', 0),      -- Duloxetine
+('Wellbutrin', 0),    -- Bupropion
+('Benadryl', 0),      -- Diphenhydramine
+('Claritin', 0),      -- Loratadine
+('Zyrtec', 0),        -- Cetirizine
+('Allegra', 0),       -- Fexofenadine
+('Clarinex', 0),      -- Desloratadine
+('Chlor-Trimeton', 0),-- Chlorpheniramine
+('Zantac', 0),        -- Ranitidine
+('Prilosec', 0),      -- Omeprazole
+('Nexium', 0),        -- Esomeprazole
+('Prevacid', 0),      -- Lansoprazole
+('Pepcid', 0);        -- Famotidine
 
 

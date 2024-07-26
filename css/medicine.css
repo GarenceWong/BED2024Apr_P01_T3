@@ -70,6 +70,40 @@ body {
     color: #333;
 }
 
+.subheader {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #8E699C;
+    color: #FFFFFF;
+    text-align: center;
+    font-size: 18px;
+    padding: 1px;
+    height: 30px; /* Adjust height as needed */
+}
+
+.header-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 10px;
+}
+
+.new-appointment-btn {
+    padding: 10px 20px;
+    background-color: #8E699C;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+
+.new-appointment-btn:hover {
+    background-color: #E3CDE2;
+}
+
 .appointment-rectangle {
     background-color: #8E699C;
     color: #ffffff;
