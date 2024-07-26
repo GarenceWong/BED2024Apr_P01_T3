@@ -70,6 +70,20 @@ body {
     height: 30px; /* Adjust height as needed */
 }
 
+.navbar .logout-button {
+    background-color: #8E699C;
+    color: #ffffff;
+    border: none;
+    border-radius: 20px;
+    padding: 10px 20px;
+    text-decoration: none;
+}
+
+.navbar .logout-button:hover {
+    background-color: #E3CDE2;
+    color: #333;
+}
+
 /* Table styles */
 main {
     padding: 20px;

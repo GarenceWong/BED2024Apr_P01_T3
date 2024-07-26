@@ -220,3 +220,17 @@ body {
 #patient-icon, #medicine-icon {
     filter: brightness(150%);
 }
+
+.navbar .logout-button {
+    background-color: #8E699C;
+    color: #ffffff;
+    border: none;
+    border-radius: 20px;
+    padding: 10px 20px;
+    text-decoration: none;
+}
+
+.navbar .logout-button:hover {
+    background-color: #E3CDE2;
+    color: #333;
+}
