@@ -102,10 +102,10 @@ CREATE TABLE MedicalReports (
 CREATE TABLE medicine (
     id INT PRIMARY KEY IDENTITY(1,1),
     name VARCHAR(255) NOT NULL,
-    availability INT NOT NULL
+    stock INT NOT NULL
 );
 
-INSERT INTO medicine (name, availability) VALUES
+INSERT INTO medicine (name, stock) VALUES
 ('Paracetamol', 0),   -- Acetaminophen
 ('Ibuprofen', 0),     -- Ibuprofen
 ('Naproxen', 0),      -- Naproxen

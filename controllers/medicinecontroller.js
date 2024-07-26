@@ -1,4 +1,4 @@
-const { getAllMedicines } = require("../models/medicinemodel");
+const { getAllMedicines, updateMedicineStock } = require("../models/medicinemodel");
 
 async function fetchAllMedicines(req, res) {
     try {
@@ -10,6 +10,22 @@ async function fetchAllMedicines(req, res) {
     }
 }
 
+async function handleUpdateMedicine(req, res) {
+    const { id, stock } = req.body;
+
+    try {
+        const affectedRows = await updateMedicineStock(id, stock);
+        if (affectedRows > 0) {
+            res.json({ message: 'Stock updated successfully' });
+        } else {
+            res.status(404).json({ message: 'Medicine not found' });
+        }
+    } catch (err) {
+        res.status(500).json({ message: err.message });
+    }
+}
+
 module.exports = {
-    fetchAllMedicines
+    fetchAllMedicines,
+    handleUpdateMedicine 
 };

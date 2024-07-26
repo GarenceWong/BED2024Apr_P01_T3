@@ -36,7 +36,7 @@
         <div class="medicine-list-header">
             <span class="header-id">ID</span>
             <span class="header-name">Name</span>
-            <span class="header-availability">Availability</span>
+            <span class="header-stock">Stock</span>
         </div>
         <div id="medicines-container">
             <!-- Medicines will be dynamically populated here -->
@@ -56,7 +56,7 @@
                     medicineDiv.innerHTML = `
                         <span class="medicine-id">${medicine.id}</span>
                         <span class="medicine-name">${medicine.name}</span>
-                        <span class="medicine-availability">${medicine.availability}</span>
+                        <span class="medicine-stock">${medicine.stock}</span>
                     `;
                     container.appendChild(medicineDiv);
                 });

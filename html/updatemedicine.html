@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/appointments.css"> <!-- Link to the CSS file -->
+    <title>Update Medicine Stock</title>
+</head>
+
+<body>
+    <header class="header">
+        <div class="logo-container">
+            <img src="../Images/Logo.png" alt="Logo" class="logo" />
+            <a href="adminhomepage.html" class="company-name">Zehao Healthcare</a>
+        </div>
+
+        <nav class="navbar">
+            <a href="../html/aboutus.html">About Us</a>
+            <a href="../html/contactus.html">Contact Us</a>
+            <a href="../html/login.html" class="logout-button">Log Out</a>
+        </nav>
+    </header>
+
+    <div class="subheader">
+        <b>Medicine</b>
+    </div>
+
+    <div class="header-content">
+        <form id="updateMedicineForm">
+            <label for="medicineId">Medicine ID:</label>
+            <input type="text" id="medicineId" name="medicineId" required>
+
+            <label for="medicineStock">New Stock Quantity:</label>
+            <input type="number" id="medicineStock" name="medicineStock" required>
+
+            <button type="submit">Update Stock</button>
+        </form>
+    </div>
+
+    <script>
+        document.getElementById('updateMedicineForm').addEventListener('submit', async (event) => {
+            event.preventDefault(); // Prevent the default form submission
+
+            const medicineId = document.getElementById('medicineId').value;
+            const medicineStock = document.getElementById('medicineStock').value;
+
+            try {
+                const response = await fetch('http://localhost:3003/update-medicine', {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        id: medicineId,
+                        stock: medicineStock
+                    }),
+                });
+
+                const result = await response.json();
+                if (response.ok) {
+                    alert('Stock updated successfully');
+                    // Redirect to medicine.html after successful update
+                    window.location.href = 'medicine.html';
+                } else {
+                    alert('Failed to update stock: ' + result.message);
+                }
+            } catch (error) {
+                console.error('Error updating stock:', error.message);
+            }
+        });
+    </script>
+
+</body>
+
+</html>

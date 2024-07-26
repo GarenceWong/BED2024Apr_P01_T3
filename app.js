@@ -22,7 +22,7 @@ const { fetchAllMedicalReports } = require('./controllers/docmedicalreportcontro
 const { updateMedicalReport } = require('./controllers/updatemedreportcontroller'); // Zehao (update med report)
 const swaggerUi = require("swagger-ui-express");
 const swaggerDocument = require("./swagger-output.json"); // Import generated spec
-const { fetchAllMedicines } = require('./controllers/medicinecontroller'); // Zehao (Import the medicine controller)
+const { fetchAllMedicines,handleUpdateMedicine  } = require('./controllers/medicinecontroller'); // Zehao (Import the medicine controller)
 
 
 const app = express();
@@ -60,7 +60,7 @@ app.get('/get-all-medical-reports', fetchAllMedicalReports); // Zehao
 app.put('/update-medical-report', updateMedicalReport); // Zehao
 app.put('/verify', verifyUser);
 app.get('/get-medicines', fetchAllMedicines); // Zehao (get all medicines)
-
+app.put('/update-medicine', handleUpdateMedicine); // Changed to PUT
 
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 

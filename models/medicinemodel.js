@@ -12,6 +12,20 @@ async function getAllMedicines() {
     }
 }
 
+async function updateMedicineStock(id, stock) {
+    try {
+        const pool = await sql.connect(dbConfig);
+        const result = await pool.request()
+            .input('id', sql.Int, id)
+            .input('stock', sql.Int, stock)
+            .query('UPDATE medicine SET stock = @stock WHERE id = @id');
+        return result.rowsAffected[0]; // Get affected rows count
+    } catch (err) {
+        throw new Error('Database query failed: ' + err.message);
+    }
+}
+
 module.exports = {
-    getAllMedicines
+    getAllMedicines,
+    updateMedicineStock 
 };
