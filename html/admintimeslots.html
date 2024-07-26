@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/doctorhomepage.css">
+    <title>Zehao Healthcare</title>
+</head>
+<body>
+    <header class="header">
+        <div class="logo-container">
+            <img src="../Images/Logo.png" alt="Logo" class="logo" />
+            <a href="adminhomepage.html" class="company-name">Zehao Healthcare</a>
+        </div>
+
+        <nav class="navbar">
+            <a href="../html/aboutus.html">About Us</a>
+            <a href="../html/contactus.html">Contact Us</a>
+            <a href="../html/login.html" class="logout-button">Log Out</a>
+        </nav>
+    </header>
+
+    <div class="appointment-rectangle">
+        Appointments
+    </div>
+
+    <div class="search-bar-container">
+        <input type="text" class="search-bar" placeholder="Search for patient" id="searchBar">
+    </div>
+
+    <div class="patient-list-container">
+        <div class="patient-list-header">
+            <span class="header-number">#</span>
+            <span class="header-patient">Patient</span>
+            <span class="header-date">Date</span>
+            <span class="header-time">Time</span>
+            <span class="header-status">Status</span>
+        </div>
+        <div id="timeslots-container">
+            <!-- Timeslots will be dynamically populated here -->
+        </div>
+    </div>
+
+    <script>
+        let timeslots = [];
+
+async function fetchTimeslots() {
+    try {
+        const response = await fetch('http://localhost:3003/get-timeslots');
+        if (!response.ok) {
+            throw new Error('Failed to fetch timeslots');
+        }
+        timeslots = await response.json();
+        // Filter timeslots to only include those with status 'unconfirmed'
+        const unconfirmedTimeslots = timeslots.filter(timeslot => timeslot.status === 'unconfirmed');
+        displayTimeslots(unconfirmedTimeslots);
+    } catch (error) {
+        console.error('Error fetching timeslots:', error);
+    }
+}
+
+function displayTimeslots(timeslots) {
+    const timeslotsContainer = document.getElementById('timeslots-container');
+    
+    // Clear existing content
+    timeslotsContainer.innerHTML = '';
+
+    timeslots.forEach((timeslot, index) => {
+        const timeslotRow = document.createElement('div');
+        timeslotRow.classList.add('patient-list-row');
+        
+        // Extract the time part (HH:MM) from timeslot.timeslotTime
+        const timeString = timeslot.timeslotTime.split('T')[1];
+        const formattedTime = timeString.split(':').slice(0, 2).join(':'); // HH:MM
+        
+        timeslotRow.innerHTML = `
+            <span class="row-number">${index + 1}</span>
+            <span class="row-patient">${timeslot.username}</span>
+            <span class="row-date">${new Date(timeslot.timeslotDate).toLocaleDateString()}</span>
+            <span class="row-time">${formattedTime}</span>
+            <span class="row-status">${timeslot.status}</span>
+        `;
+        
+        // Add click event listener to each timeslotRow
+        timeslotRow.addEventListener('click', () => {
+            // Navigate to appointment details page with username and appointmentId as query parameters
+            window.location.href = `doctorappointment.html?username=${encodeURIComponent(timeslot.username)}&appointmentId=${timeslot.id}`;
+        });
+    
+        timeslotsContainer.appendChild(timeslotRow);
+    });
+}
+
+document.getElementById('searchBar').addEventListener('keyup', (event) => {
+    const searchTerm = event.target.value.toLowerCase();
+    const filteredTimeslots = timeslots.filter(timeslot => timeslot.username.toLowerCase().includes(searchTerm));
+    displayTimeslots(filteredTimeslots);
+});
+
+window.onload = fetchTimeslots;
+    </script>
+</body>
+</html>
