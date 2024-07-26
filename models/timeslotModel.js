@@ -41,10 +41,31 @@ async function fetchTimeslots(username) {
         }
     }
 }
- 
+
+const createNewTimeslot = async (timeslotDate, timeslotTime, username) => {
+    try {
+        const pool = await sql.connect();
+        const result = await pool.request()
+            .input('timeslotDate', sql.Date, timeslotDate)
+            .input('timeslotTime', sql.VarChar(10), timeslot.timeslotTime) // Store the time as a string
+            .input('username', sql.VarChar, username)
+            .input('status', sql.VarChar, 'unconfirmed')
+            .query(`
+                INSERT INTO Timeslots (timeslotDate, timeslotTime, username, status)
+                VALUES (@timeslotDate, @timeslotTime, @username, @status)
+            `);
+
+        return result;
+    } catch (error) {
+        console.error('SQL error', error);
+        throw error;
+    }
+};
+
 module.exports = {
     addTimeslot,
-    fetchTimeslots
+    fetchTimeslots,
+    createNewTimeslot
 };
 
 

@@ -1,67 +1,72 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>New Appointment</title>
-  <style>
-    .wide-input {
-      width: 300px; /* Adjust width as needed */
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/admintimeslot.css">
+    <title>Zehao Healthcare - Add New Timeslot</title>
 </head>
 <body>
-  <h1>New Appointment</h1>
-  <form id="appointment-form" action="http://localhost:3003/new-appointment" method="POST">
-    <label for="patient-name">Patient Name:</label><br>
-    <input type="text" id="patient-name" name="patientName" class="wide-input" required><br><br>
-    
-    <label for="appointment-date">Appointment Date:</label><br>
-    <input type="text" id="appointment-date" name="appointmentDate" class="wide-input" placeholder="YYYY-MM-DD" required><br><br>
-    
-    <label for="appointment-time">Appointment Time:</label><br>
-    <input type="text" id="appointment-time" name="appointmentTime" class="wide-input" placeholder="HH:mm:ss" required><br><br>
-    
-    <label for="status">Status:</label><br>
-    <input type="text" id="status" name="status" class="wide-input" placeholder="confirmed/unconfirmed" required><br><br>
-    
-    <input type="submit" value="Add Appointment">
-    <button type="button" onclick="window.location.href='appointments.html';">Cancel</button>
-  </form>
-  
-  <script>
-    document.getElementById('appointment-form').addEventListener('submit', async function(event) {
-      event.preventDefault(); // Prevent default form submission
-      
-      const formData = new FormData(this);
-      const requestData = {};
-      
-      // Convert FormData to JSON object
-      formData.forEach((value, key) => {
-        requestData[key] = value;
-      });
+    <header class="header">
+        <div class="logo-container">
+            <img src="../Images/Logo.png" alt="Logo" class="logo" />
+            <a href="adminhomepage.html" class="company-name">Zehao Healthcare</a>
+        </div>
 
-      try {
-        const response = await fetch('http://localhost:3003/new-appointment', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(requestData)
+        <nav class="navbar">
+            <a href="../html/aboutus.html">About Us</a>
+            <a href="../html/contactus.html">Contact Us</a>
+            <a href="../html/login.html" class="logout-button">Log Out</a>
+        </nav>
+    </header>
+
+    <div class="appointment-rectangle">
+        Add New Timeslot
+    </div>
+
+    <div class="form-container">
+        <form id="newTimeslotForm">
+            <label for="timeslotDate">Date:</label>
+            <input type="date" id="timeslotDate" name="timeslotDate" required>
+
+            <label for="timeslotTime">Time:</label>
+            <input type="text" id="timeslotTime" name="timeslotTime" required>
+
+            <label for="username">Patient Name:</label>
+            <input type="text" id="username" name="username" required>
+
+            <button type="submit">Add Timeslot</button>
+        </form>
+    </div>
+
+    <script>
+        document.getElementById('newTimeslotForm').addEventListener('submit', async (event) => {
+            event.preventDefault();
+
+            const timeslotDate = document.getElementById('timeslotDate').value;
+            const timeslotTime = document.getElementById('timeslotTime').value + ':00'; // Ensure time is in HH:MM:SS format
+            const username = document.getElementById('username').value;
+
+            try {
+                const response = await fetch('http://localhost:3003/add-timeslot', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ timeslotDate, timeslotTime, username })
+                });
+
+                if (!response.ok) {
+                    throw new Error('Failed to add timeslot');
+                }
+
+                alert('Timeslot added successfully');
+                window.location.href = 'admintimeslot.html';
+            } catch (error) {
+                console.error('Error adding timeslot:', error);
+                alert('Error adding timeslot');
+            }
         });
-
-        if (!response.ok) {
-          throw new Error(`HTTP error! Status: ${response.status}`);
-        }
-
-        const result = await response.text();
-        alert('Appointment added successfully: ' + result);
-        document.getElementById('appointment-form').reset(); // Reset form after successful submission
-      } catch (error) {
-        console.error('Error adding appointment:', error.message);
-        alert('Failed to add appointment. Please try again later.');
-      }
-    });
-  </script>
+    </script>
 </body>
 </html>

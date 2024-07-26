@@ -7,7 +7,7 @@ const { doctorLogin } = require("./controllers/doctorlogincontroller");
 const { login } = require('./controllers/loginController');
 const { adminLogin } = require('./controllers/admincontroller');
 const { addPersonalDetails, fetchPersonalDetails } = require('./controllers/personalDetailController');
-const { createTimeslot } = require('./controllers/timeslotController');
+const { createTimeslot,addNewTimeslot } = require('./controllers/timeslotController');
 const { getTimeslots, updateTimeslotStatus } = require('./controllers/doctorhomepagecontroller'); // (zehao - )
 const { handleDeleteAppointment, handleUpdateAppointment, getUserAppointment } = require('./controllers/userAppointmentController');
 const { submitVerificationDetails } = require('./controllers/verificationController');
@@ -60,7 +60,9 @@ app.get('/get-all-medical-reports', fetchAllMedicalReports); // Zehao
 app.put('/update-medical-report', updateMedicalReport); // Zehao
 app.put('/verify', verifyUser);
 app.get('/get-medicines', fetchAllMedicines); // Zehao (get all medicines)
-app.put('/update-medicine', handleUpdateMedicine); // Changed to PUT
+app.put('/update-medicine', handleUpdateMedicine);
+app.post('/add-timeslot', addNewTimeslot);
+
 
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
