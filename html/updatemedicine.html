@@ -1,49 +1,54 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../css/appointments.css"> <!-- Link to the CSS file -->
-    <title>Update Medicine Stock</title>
+    <link rel="stylesheet" href="../css/appointments.css">
+    <title>ZehaoHealthcare</title>
 </head>
-
 <body>
     <header class="header">
         <div class="logo-container">
             <img src="../Images/Logo.png" alt="Logo" class="logo" />
             <a href="adminhomepage.html" class="company-name">Zehao Healthcare</a>
         </div>
-
         <nav class="navbar">
             <a href="../html/aboutus.html">About Us</a>
             <a href="../html/contactus.html">Contact Us</a>
-            <a href="../html/login.html" class="logout-button">Log Out</a>
+            <span id="username"></span>
         </nav>
     </header>
 
     <div class="subheader">
-        <b>Medicine</b>
+        <b>Appointments</b>
     </div>
 
-    <div class="header-content">
-        <form id="updateMedicineForm">
-            <label for="medicineId">Medicine ID:</label>
-            <input type="text" id="medicineId" name="medicineId" required>
-
-            <label for="medicineStock">New Stock Quantity:</label>
-            <input type="number" id="medicineStock" name="medicineStock" required>
-
-            <button type="submit">Update Stock</button>
-        </form>
+    <div style="display: flex; align-items: center; justify-content: center; width: 100%; height: 100%; margin-top: 100px;">
+        <div style="width: 100%; max-width: 24rem; padding: 1.5rem; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); background-color: white; border-radius: 0.5rem;">
+            <div style="margin-bottom: 1.5rem;">
+                <h2 style="margin-bottom: 1rem; font-size: 1.5rem; font-weight: 700;">Update Medicine Inventory</h2>
+                    <div>
+                        <label for="medicine-id" style="margin-bottom: 0.25rem; display: inline-block;">Medicine ID</label>
+                        <input id="medicine-id" placeholder="Enter Medicine ID" style="width: 360px; border-radius: 0.25rem; border: 1px solid #d1d5db; padding: 0.5rem 0.75rem;" />
+                    </div>
+                    <div>
+                        <label for="medicine-stock" style="margin-top: 10px; margin-bottom: 0.25rem; display: inline-block;">Medicine Stock</label>
+                        <input id="medicine-stock" type="number" placeholder="Enter Medicine Quantity" value="0" style="width: 360px; border-radius: 0.25rem; border: 1px solid #d1d5db; padding: 0.5rem 0.75rem;" />
+                    </div>
+                </div>
+                <div style="margin-top: 1.5rem;">
+                    <button id="update-button" style="width: 100%; padding: 0.75rem 1rem; border-radius: 0.25rem; background-color: #8E699C; color: white;">Update</button>
+                </div>
+            </div>
+        </div>
     </div>
 
     <script>
-        document.getElementById('updateMedicineForm').addEventListener('submit', async (event) => {
+        document.getElementById('update-button').addEventListener('click', async (event) => {
             event.preventDefault(); // Prevent the default form submission
 
-            const medicineId = document.getElementById('medicineId').value;
-            const medicineStock = document.getElementById('medicineStock').value;
+            const medicineId = document.getElementById('medicine-id').value;
+            const medicineStock = document.getElementById('medicine-stock').value;
 
             try {
                 const response = await fetch('http://localhost:3003/update-medicine', {
@@ -72,5 +77,4 @@
     </script>
 
 </body>
-
 </html>
