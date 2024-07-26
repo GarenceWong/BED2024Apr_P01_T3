@@ -5,7 +5,7 @@ const dbConfig = require("./dbConfig");
 const { signup } = require("./controllers/usersController");
 const { doctorLogin } = require("./controllers/doctorlogincontroller");
 const { login } = require('./controllers/loginController');
-const { adminLogin } = require('./controllers/admincontroller');
+const { adminLogin } = require('./controllers/adminController');
 const { addPersonalDetails, fetchPersonalDetails } = require('./controllers/personalDetailController');
 const { createTimeslot,addNewTimeslot } = require('./controllers/timeslotController');
 const { getTimeslots, updateTimeslotStatus } = require('./controllers/doctorhomepagecontroller'); // (zehao - )
@@ -23,6 +23,7 @@ const { updateMedicalReport } = require('./controllers/updatemedreportcontroller
 const swaggerUi = require("swagger-ui-express");
 const swaggerDocument = require("./swagger-output.json"); // Import generated spec
 const { fetchAllMedicines,handleUpdateMedicine  } = require('./controllers/medicinecontroller'); // Zehao (Import the medicine controller)
+const { getUsers,createUser } = require('./controllers/adminUsersController')
 
 
 const app = express();
@@ -62,6 +63,8 @@ app.put('/verify', verifyUser);
 app.get('/get-medicines', fetchAllMedicines); // Zehao (get all medicines)
 app.put('/update-medicine', handleUpdateMedicine);
 app.post('/add-timeslot', addNewTimeslot);
+app.get('/get-users', getUsers)
+app.post('/create-user', createUser);
 
 
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));

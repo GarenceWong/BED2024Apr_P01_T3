@@ -1,0 +1,338 @@
+/* Search Bar */
+.search-bar-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px; /* Adjust margin as needed */
+}
+
+.search-bar {
+    width: 600px;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #333;
+    border-radius: 25px;
+    background-color: #E3CDE2;
+}
+
+.search-bar::placeholder {
+    color: #8E699C;
+    font-weight: 600;
+}
+
+/*Color Palette
+#EEEEEE - Light Gray
+#E3CDE2 - Light Pink
+#8E699C - Purple
+#333333 - Black
+*/
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Landing Page */
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 20px;
+    background-color: #EEEEEE;
+    border-bottom: 6px solid #E3CDE2;
+    height: 45px;
+}
+
+.logo-container {
+    display: flex;
+    align-items: center;
+    padding-left: 150px;
+}
+
+.logo {
+    max-height: 30px;
+    margin-right: 10px;
+    padding-right: 10px;
+}
+
+.company-name {
+    text-decoration: none;
+    color: #333333;
+    font-size: 24px;
+}
+
+.navbar {
+    display: flex;
+    gap: 15px;
+    padding-right: 150px;
+}
+
+.navbar a {
+    text-decoration: none;
+    color: #333;
+    padding: 10px 15px;
+    font-size: 20px;
+}
+
+.navbar a:hover {
+    color: #8E699C;
+}
+
+.subheader {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #8E699C;
+    color: #FFFFFF;
+    text-align: center;
+    font-size: 18px;
+    padding: 1px;
+    height: 30px; /* Adjust height as needed */
+}
+
+.navbar .logout-button {
+    background-color: #8E699C;
+    color: #ffffff;
+    border: none;
+    border-radius: 20px;
+    padding: 10px 20px;
+    text-decoration: none;
+}
+
+.navbar .logout-button:hover {
+    background-color: #E3CDE2;
+    color: #333;
+}
+
+/* Table styles */
+main {
+    padding: 20px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+th, td {
+    border: 1px solid black;
+    padding: 8px;
+    text-align: left;
+}
+
+th {
+    background-color: #f2f2f2;
+}
+
+.header-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.new-appointment-btn {
+    padding: 10px 20px;
+    background-color: #8E699C;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+
+.new-appointment-btn:hover {
+    background-color: #E3CDE2;
+}
+
+.wide-input {
+    width: 300px; /* Adjust width as needed */
+}
+
+/*medicine*/
+
+/* Form styles */
+form {
+    display: flex;
+    flex-direction: column;
+    max-width: 600px;
+    margin: 20px auto;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #fff;
+}
+
+form label {
+    font-size: 1.1em;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+form input[type="text"],
+form input[type="number"] {
+    padding: 12px;
+    font-size: 1em;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: calc(100% - 24px); /* Adjust width considering padding */
+}
+
+form button {
+    padding: 12px 20px;
+    font-size: 1.1em;
+    color: #fff;
+    background-color: #8E699C;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    width: 100%; /* Full width button */
+}
+
+form button:hover {
+    background-color: #E3CDE2;
+}
+
+form button:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.5);
+}
+
+/* Back button style */
+.back-button {
+    padding: 10px 15px;
+    font-size: 1.1em;
+    color: #007bff;
+    background-color: #f9f9f9;
+    border: 1px solid #007bff;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+    margin-top: 20px;
+}
+
+.back-button:hover {
+    background-color: #007bff;
+    color: #fff;
+}
+
+/* Add some basic styling for the detail view */
+#enquiry-details {
+    display: none;
+    margin-top: 20px;
+}
+
+/* Add styles for the table */
+#users-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    margin-top: 20px;
+    font-family: Arial, sans-serif;
+}
+
+#users-table th, #users-table td {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+}
+
+#users-table th {
+    background-color: #8E699C;
+    color: white;
+    
+}
+
+#users-table tr:last-child td:first-child {
+    border-bottom-left-radius: 8px;
+}
+
+#users-table tr:last-child td:last-child {
+    border-bottom-right-radius: 8px;
+}
+
+/* Add styles for the table rows */
+#users-table tr {
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+#users-table tr:hover {
+    background-color: #f0f0f0;
+}
+
+#users-table tr:active {
+    background-color: #e0e0e0;
+}
+
+.header-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 10px;
+}
+
+.new-appointment-btn {
+    padding: 10px 20px;
+    background-color: #8E699C;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+
+.new-appointment-btn:hover {
+    background-color: #E3CDE2;
+}
+
+
+form {
+    background: white;
+    padding: 2em;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px;
+}
+
+form div {
+    margin-bottom: 1em;
+}
+
+form label {
+    display: block;
+    margin-bottom: 0.5em;
+    font-weight: bold;
+}
+
+form input {
+    width: 100%;
+    padding: 0.5em;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+form button {
+    width: 100%;
+    padding: 0.75em;
+    background-color: #8E699C;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 1em;
+    cursor: pointer;
+}
+
+form button:hover {
+    background-color: #E3CDE2;
+}
+
+form button:active {
+    background-color: #E3CDE2;
+}

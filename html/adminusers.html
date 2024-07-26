@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/adminusers.css">
+    <title>ZehaoHealthcare</title>
+</head>
+
+<body>
+    <header class="header">
+        <div class="logo-container">
+            <img src="../Images/Logo.png" alt="Logo" class="logo" />
+            <a href="adminhomepage.html" class="company-name">Zehao Healthcare</a>
+        </div>
+        <nav class="navbar">
+            <a href="../html/aboutus.html">About Us</a>
+            <a href="../html/contactus.html">Contact Us</a>
+            <a href="../html/login.html" class="logout-button">Log Out</a>
+        </nav>
+    </header>
+    <div class="subheader">
+        <b>User Database</b>
+    </div>
+
+    <div class="header-content">
+        <button onclick="location.href='admincreateuser.html'" class="new-appointment-btn">Create User</button>
+    </div>
+
+    <div class="search-bar-container">
+        <input type="text" class="search-bar" placeholder="Search for patient" id="searchBar">
+    </div>
+
+    <main>
+        <div class="table-container">
+            <table id="users-table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Username</th>
+                        <th>Email</th>
+                        <th>Number</th>
+                    </tr>
+                </thead>
+                <tbody id="users-body">
+                </tbody>
+            </table>
+        </div>
+    </main>
+
+    <script>
+        let users = [];
+
+        async function fetchUsers() {
+            try {
+                const response = await fetch('http://localhost:3003/get-users');
+                if (!response.ok) {
+                    throw new Error('Failed to fetch users');
+                }
+                users = await response.json();
+                displayUsers(users);
+            } catch (error) {
+                console.error('Error fetching users:', error);
+            }
+        }
+
+        function displayUsers(usersToDisplay) {
+            const usersBody = document.getElementById('users-body');
+            usersBody.innerHTML = '';
+
+            usersToDisplay.forEach(user => {
+                const row = document.createElement('tr');
+                row.setAttribute('data-id', user.id);
+                row.innerHTML = `
+                    <td>${user.id}</td>
+                    <td>${user.username}</td>
+                    <td>${user.email}</td>
+                    <td>${user.number}</td>
+                `;
+                row.addEventListener('click', () => {
+                    window.location.href = `adminenquirydetails.html?id=${user.id}`;
+                });
+                usersBody.appendChild(row);
+            });
+        }
+
+        document.getElementById('searchBar').addEventListener('keyup', (event) => {
+            const searchTerm = event.target.value.toLowerCase();
+            const filteredUsers = users.filter(user => user.username.toLowerCase().includes(searchTerm));
+            displayUsers(filteredUsers);
+        });
+
+        window.onload = fetchUsers;
+    </script>
+</body>
+
+</html>

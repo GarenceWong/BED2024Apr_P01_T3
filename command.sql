@@ -62,14 +62,6 @@ INSERT INTO Admin(email, password)
 VALUES
   ('admin@gmail.com', 'admin'),
 
-CREATE TABLE Appointments (
-    id INT PRIMARY KEY IDENTITY(1,1),
-    name VARCHAR(100) NOT NULL,
-    appointmentDate DATE NOT NULL,
-    appointmentTime TIME NOT NULL,
-    status VARCHAR(20) CHECK (status IN ('confirmed', 'unconfirmed'))
-);
-
 CREATE TABLE enquiries (
     id INT IDENTITY(1,1) PRIMARY KEY,
     username NVARCHAR(50),
