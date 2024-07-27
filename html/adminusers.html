@@ -78,9 +78,6 @@
                     <td>${user.email}</td>
                     <td>${user.number}</td>
                 `;
-                row.addEventListener('click', () => {
-                    window.location.href = `adminenquirydetails.html?id=${user.id}`;
-                });
                 usersBody.appendChild(row);
             });
         }
